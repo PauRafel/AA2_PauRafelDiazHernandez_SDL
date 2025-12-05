@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="source\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Vector2.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
