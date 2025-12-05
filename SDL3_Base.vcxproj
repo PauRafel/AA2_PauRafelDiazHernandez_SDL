@@ -19,14 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\Object.cpp" />
     <ClCompile Include="source\RenderManager.cpp" />
+    <ClCompile Include="source\RigidBody.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AABB.h" />
+    <ClInclude Include="source\ImageObject.h" />
+    <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
+    <ClInclude Include="source\Object.h" />
+    <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\RenderManager.h" />
+    <ClInclude Include="source\RigidBody.h" />
     <ClInclude Include="source\TimeManager.h" />
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
