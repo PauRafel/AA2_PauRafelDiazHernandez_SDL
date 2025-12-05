@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\RenderManager.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\TimeManager.h" />
     <ClInclude Include="source\Transform.h" />
