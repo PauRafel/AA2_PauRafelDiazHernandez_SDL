@@ -25,6 +25,7 @@
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\TimeManager.h" />
