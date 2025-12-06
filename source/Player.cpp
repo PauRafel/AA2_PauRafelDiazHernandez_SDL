@@ -80,11 +80,11 @@ void Player::Shoot()
     if ((_currentState == STATE_CA1 || _currentState >= STATE_CA2) && _cannonAmmo > 0)
     {
         Bullet* cannonBullet1 = new Bullet("resources/bullet.png", Vector2(0.f, 0.f), Vector2(32.f, 32.f));
-        cannonBullet1->GetTransform()->position = _transform->position + Vector2(0.f, 20.f);
+        cannonBullet1->GetTransform()->position = _transform->position + Vector2(0.f, -20.f);
         _bulletsVector->push_back(cannonBullet1);
 
         Bullet* cannonBullet2 = new Bullet("resources/bullet.png", Vector2(0.f, 0.f), Vector2(32.f, 32.f));
-        cannonBullet2->GetTransform()->position = _transform->position + Vector2(0.f, -20.f);
+        cannonBullet2->GetTransform()->position = _transform->position + Vector2(0.f, 20.f);
         _bulletsVector->push_back(cannonBullet2);
 
         _cannonAmmo--;
@@ -94,7 +94,7 @@ void Player::Shoot()
     {
         Bullet* laserBullet = new Bullet("resources/bullet.png", Vector2(0.f, 0.f), Vector2(32.f, 32.f));
         laserBullet->GetTransform()->position = _transform->position + Vector2(10.f, 0.f);
-        laserBullet->GetTransform()->scale = Vector2(1.5f, 1.5f);
+        laserBullet->GetTransform()->scale = Vector2(1.5f, 1.5f); 
         _bulletsVector->push_back(laserBullet);
 
         _laserAmmo--;
@@ -116,7 +116,7 @@ void Player::ApplyPowerUp(PowerUpState newState)
         _score += 1000;
         break;
     case STATE_CA1:
-        _cannonAmmo = 50;
+        _cannonAmmo = 50; 
         _currentState = STATE_CA1;
         break;
     case STATE_LA1:
@@ -136,7 +136,7 @@ void Player::ApplyPowerUp(PowerUpState newState)
         _currentState = STATE_LA2;
         break;
     case STATE_SHIELD:
-        _shield = 100; 
+        _shield = 100;
         _currentState = STATE_SHIELD;
         break;
     case STATE_TURRETS:

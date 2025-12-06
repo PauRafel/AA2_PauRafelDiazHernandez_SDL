@@ -11,11 +11,11 @@ enum PowerUpState
     STATE_NONE,
     STATE_CA1,      
     STATE_LA1,     
-    STATE_SPEED, 
-    STATE_CA2,     
-    STATE_LA2,     
+    STATE_SPEED,   
+    STATE_CA2,      
+    STATE_LA2,      
     STATE_SHIELD,   
-    STATE_TURRETS  
+    STATE_TURRETS 
 };
 
 class Player : public ImageObject
@@ -28,8 +28,8 @@ private:
     PowerUpState _currentState = STATE_NONE;
     bool _hasTurrets = false;
     int _cannonAmmo = 0;    
-    int _laserAmmo = 0;    
-    int _shield = 100;  
+    int _laserAmmo = 0;   
+    int _shield = 100;    
     int _score = 0;
 
     float _distanceTraveled = 0.0f;
@@ -44,7 +44,10 @@ public:
     void ApplyPowerUp(PowerUpState newState);
     PowerUpState GetCurrentState() const { return _currentState; }
     int GetScore() const { return _score; }
-    void AddScore(int amount) { _score += amount; }
     int GetShield() const { return _shield; }
+    int GetCannonAmmo() const { return _cannonAmmo; }
+    int GetLaserAmmo() const { return _laserAmmo; }
+
+    void AddScore(int amount) { _score += amount; }
     void TakeDamage(int damage);
 };
