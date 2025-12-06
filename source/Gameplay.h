@@ -25,14 +25,14 @@ private:
     TextObject* _shieldText = nullptr;
     TextObject* _cannonAmmoText = nullptr;
     TextObject* _laserAmmoText = nullptr;
-    TextObject* _powerUpInfoText = nullptr;
+    TextObject* _powerUpInfoText = nullptr;  
 
     int _enemiesKilledInWave = 0;
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
 
     float _enemyRespawnTimer = 0.0f;
-    float _enemyRespawnDelay = 3.0f;
+    float _enemyRespawnDelay = 3.0f; 
     bool _waitingForRespawn = false;
 
     PowerUpType _powerUpCycle[8] = {
@@ -114,7 +114,7 @@ public:
                 SpawnEnemy();
                 _waitingForRespawn = false;
                 _enemyRespawnTimer = 0.0f;
-                _powerUpSpawned = false;  
+                _powerUpSpawned = false;
             }
         }
 
@@ -176,7 +176,7 @@ public:
 
         for (PowerUp* powerup : _powerups)
         {
-            if (!powerup->IsPendingDestroy() && !powerup->IsActivated())
+            if (!powerup->IsPendingDestroy())
             {
                 for (Bullet* bullet : _bullets)
                 {
@@ -185,15 +185,23 @@ public:
                     {
                         bullet->Destroy();
                         powerup->Hit();
-
-                        if (powerup->IsActivated() && _player != nullptr)
-                        {
-                            ApplyPowerUpToPlayer(powerup->GetType());
-                            powerup->Destroy();
-
-                            _powerUpCycleIndex = (_powerUpCycleIndex + 1) % 8;
-                        }
                     }
+                }
+            }
+        }
+
+        if (_player != nullptr)
+        {
+            for (PowerUp* powerup : _powerups)
+            {
+                if (!powerup->IsPendingDestroy() &&
+                    _player->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
+                {
+                    ApplyPowerUpToPlayer(powerup->GetCurrentType());
+
+                    _powerUpCycleIndex = (powerup->GetCycleIndex() + 1) % 8;
+
+                    powerup->Destroy();
                 }
             }
         }
@@ -233,7 +241,7 @@ private:
         _scoreText = new TextObject("SCORE: 000000", "resources/fonts/arial.ttf");
         _scoreText->GetTransform()->position = Vector2(20.f, 20.f);
         _scoreText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _scoreText->SetColor({ 255, 215, 0, 255 });
+        _scoreText->SetColor({ 255, 215, 0, 255 }); 
         _ui.push_back(_scoreText);
 
         _shieldText = new TextObject("SHIELD: 100", "resources/fonts/arial.ttf");
@@ -251,13 +259,13 @@ private:
         _laserAmmoText = new TextObject("LA: 0", "resources/fonts/arial.ttf");
         _laserAmmoText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 50.f);
         _laserAmmoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _laserAmmoText->SetColor({ 255, 0, 255, 255 });
+        _laserAmmoText->SetColor({ 255, 0, 255, 255 }); 
         _ui.push_back(_laserAmmoText);
 
         _powerUpInfoText = new TextObject("NEXT: +1000 SCORE", "resources/fonts/arial.ttf");
         _powerUpInfoText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, 20.f);
         _powerUpInfoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _powerUpInfoText->SetColor({ 100, 255, 100, 255 }); 
+        _powerUpInfoText->SetColor({ 100, 255, 100, 255 });
         _ui.push_back(_powerUpInfoText);
     }
 
@@ -281,19 +289,23 @@ private:
         std::ostringstream laserStream;
         laserStream << "LA: " << _player->GetLaserAmmo();
         _laserAmmoText->SetText(laserStream.str());
-        _powerUpInfoText->SetText(_powerUpNames[_powerUpCycleIndex]);
+
+        std::string powerUpInfo = "NO POWERUP";
+        if (!_powerups.empty() && _powerups[0] != nullptr && !_powerups[0]->IsPendingDestroy())
+        {
+            int index = _powerups[0]->GetCycleIndex();
+            powerUpInfo = "POWERUP: " + _powerUpNames[index];
+        }
+        _powerUpInfoText->SetText(powerUpInfo);
     }
 
     void SpawnPowerUp(Vector2 position)
     {
-        PowerUpType nextType = _powerUpCycle[_powerUpCycleIndex];
-
         PowerUp* powerup = new PowerUp(
             "resources/powerup.png",
             Vector2(0.f, 0.f),
             Vector2(48.f, 48.f),
-            position,
-            nextType
+            position
         );
         _powerups.push_back(powerup);
     }
