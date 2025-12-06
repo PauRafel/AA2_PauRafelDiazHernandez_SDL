@@ -83,5 +83,8 @@
     <ClInclude Include="source\SceneManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\MainMenu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
