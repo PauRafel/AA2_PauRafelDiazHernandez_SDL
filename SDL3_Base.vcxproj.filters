@@ -48,6 +48,9 @@
     <ClCompile Include="source\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Vector2.h">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Bullet.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
