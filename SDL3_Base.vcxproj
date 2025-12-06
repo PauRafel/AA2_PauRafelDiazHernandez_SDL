@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Background.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
+    <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\Bullet.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\Gameplay.h" />
