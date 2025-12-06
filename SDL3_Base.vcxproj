@@ -32,6 +32,7 @@
     <ClCompile Include="source\RigidBody.cpp" />
     <ClCompile Include="source\Scene.cpp" />
     <ClCompile Include="source\SceneManager.cpp" />
+    <ClCompile Include="source\TextRenderer.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +54,7 @@
     <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\SceneManager.h" />
     <ClInclude Include="source\SimpleTextObject.h" />
+    <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
