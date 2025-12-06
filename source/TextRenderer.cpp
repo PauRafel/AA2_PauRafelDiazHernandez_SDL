@@ -1,0 +1,72 @@
+#include "TextRenderer.h"
+
+TextRenderer::TextRenderer(Transform* transform, std::string text, std::string fontPath)
+    : Renderer(transform, fontPath)
+{
+    _textTexture = nullptr;
+    SetText(text);
+}
+
+TextRenderer::~TextRenderer()
+{
+    if (_textTexture != nullptr)
+    {
+        SDL_DestroyTexture(_textTexture);
+        _textTexture = nullptr;
+    }
+}
+
+void TextRenderer::Update(float dt)
+{
+    Vector2 offset = (Vector2(-_transform->size.x, -_transform->size.y) / 2.0f) * _transform->scale;
+
+    _destRect.x = _transform->position.x + offset.x;
+    _destRect.y = _transform->position.y + offset.y;
+
+    if (_autoSize)
+    {
+        _destRect.w = _sourceRect.w * _transform->scale.x;
+        _destRect.h = _sourceRect.h * _transform->scale.y;
+    }
+    else
+    {
+        _destRect.w = _transform->size.x * _transform->scale.x;
+        _destRect.h = _transform->size.y * _transform->scale.y;
+    }
+}
+
+void TextRenderer::Render()
+{
+    SDL_RenderTextureRotated(
+        RM.GetRenderer(),
+        _textTexture,
+        &_sourceRect,
+        &_destRect,
+        _transform->rotation,
+        NULL,
+        SDL_FLIP_NONE
+    );
+}
+
+void TextRenderer::SetText(std::string text)
+{
+    if (_textTexture != nullptr)
+        SDL_DestroyTexture(_textTexture);
+
+    SDL_Surface* surf = TTF_RenderText_Solid(
+        RM.GetFont(_resourcePath),
+        text.c_str(),
+        text.length(),
+        _color
+    );
+    assert(surf);
+
+    _textTexture = SDL_CreateTextureFromSurface(RM.GetRenderer(), surf);
+    assert(_textTexture);
+
+    _sourceRect = { 0.f, 0.f, (float)surf->w, (float)surf->h };
+
+    SDL_DestroySurface(surf);
+
+    _text = text;
+}

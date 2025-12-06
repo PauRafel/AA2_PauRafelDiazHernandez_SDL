@@ -28,6 +28,8 @@ public:
     SDL_Renderer* GetRenderer() { return _renderer; }
     void LoadTexture(std::string path);
     SDL_Texture* GetTexture(std::string path);
+    void LoadFont(std::string path, int size);
+    TTF_Font* GetFont(std::string path);
 
 private:
     RenderManager() = default;
@@ -38,6 +40,7 @@ private:
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
     std::map<std::string, SDL_Texture*> _textures;
+    std::map<std::string, TTF_Font*> _fonts;
 
     void InitSDL();
     void CreateWindowAndRenderer();

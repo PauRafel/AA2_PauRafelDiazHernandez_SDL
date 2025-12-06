@@ -19,29 +19,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Background.cpp" />
+    <ClCompile Include="source\Bullet.cpp" />
+    <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Object.cpp" />
+    <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\RenderManager.cpp" />
     <ClCompile Include="source\RigidBody.cpp" />
     <ClCompile Include="source\Scene.cpp" />
     <ClCompile Include="source\SceneManager.cpp" />
+    <ClCompile Include="source\TextRenderer.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
+    <ClInclude Include="source\Background.h" />
+    <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\Gameplay.h" />
     <ClInclude Include="source\ImageObject.h" />
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\Object.h" />
+    <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\RigidBody.h" />
     <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\SceneManager.h" />
+    <ClInclude Include="source\TextObject.h" />
+    <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
