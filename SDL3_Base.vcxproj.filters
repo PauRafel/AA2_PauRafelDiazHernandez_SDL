@@ -86,5 +86,8 @@
     <ClInclude Include="source\MainMenu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Gameplay.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
