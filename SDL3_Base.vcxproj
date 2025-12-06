@@ -28,6 +28,7 @@
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Object.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\PowerUp.cpp" />
     <ClCompile Include="source\RenderManager.cpp" />
     <ClCompile Include="source\RigidBody.cpp" />
     <ClCompile Include="source\Scene.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\Object.h" />
     <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\PowerUp.h" />
     <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\RigidBody.h" />
