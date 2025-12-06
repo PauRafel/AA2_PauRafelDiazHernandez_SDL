@@ -122,9 +122,6 @@
     <ClInclude Include="source\Game.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\SimpleTextObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\TextRenderer.h">
       <Filter>Source Files</Filter>
     </ClInclude>

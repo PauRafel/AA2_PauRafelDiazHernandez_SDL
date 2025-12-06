@@ -6,14 +6,29 @@ RenderManager::~RenderManager()
 {
     for (std::map<std::string, SDL_Texture*>::iterator it = _textures.begin(); it != _textures.end(); it++)
     {
-        SDL_DestroyTexture(it->second);
-        it->second = nullptr;
+        if (it->second != nullptr)
+        {
+            SDL_DestroyTexture(it->second);
+            it->second = nullptr;
+        }
+    }
+
+    for (std::map<std::string, TTF_Font*>::iterator it = _fonts.begin(); it != _fonts.end(); it++)
+    {
+        if (it->second != nullptr)
+        {
+            TTF_CloseFont(it->second);
+            it->second = nullptr;
+        }
     }
 }
 
 void RenderManager::InitSDL()
 {
     if (!SDL_Init(SDL_INIT_VIDEO))
+        throw SDL_GetError();
+
+    if (!TTF_Init())
         throw SDL_GetError();
 }
 
@@ -49,8 +64,39 @@ void RenderManager::Init()
 
 void RenderManager::Release()
 {
-    SDL_DestroyRenderer(_renderer);
-    SDL_DestroyWindow(_window);
+    for (std::map<std::string, SDL_Texture*>::iterator it = _textures.begin(); it != _textures.end(); it++)
+    {
+        if (it->second != nullptr)
+        {
+            SDL_DestroyTexture(it->second);
+            it->second = nullptr;
+        }
+    }
+    _textures.clear();
+
+    for (std::map<std::string, TTF_Font*>::iterator it = _fonts.begin(); it != _fonts.end(); it++)
+    {
+        if (it->second != nullptr)
+        {
+            TTF_CloseFont(it->second);
+            it->second = nullptr;
+        }
+    }
+    _fonts.clear();
+
+    if (_renderer != nullptr)
+    {
+        SDL_DestroyRenderer(_renderer);
+        _renderer = nullptr;
+    }
+
+    if (_window != nullptr)
+    {
+        SDL_DestroyWindow(_window);
+        _window = nullptr;
+    }
+
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -77,6 +123,23 @@ SDL_Texture* RenderManager::GetTexture(std::string path)
 {
     if (_textures.find(path) != _textures.end())
         return _textures[path];
+
+    return nullptr;
+}
+
+void RenderManager::LoadFont(std::string path, int size)
+{
+    if (_fonts.find(path) != _fonts.end())
+        return;
+
+    _fonts[path] = TTF_OpenFont(path.c_str(), size);
+    assert(_fonts[path]);
+}
+
+TTF_Font* RenderManager::GetFont(std::string path)
+{
+    if (_fonts.find(path) != _fonts.end())
+        return _fonts[path];
 
     return nullptr;
 }

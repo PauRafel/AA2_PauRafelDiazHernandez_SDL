@@ -53,7 +53,6 @@
     <ClInclude Include="source\RigidBody.h" />
     <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\SceneManager.h" />
-    <ClInclude Include="source\SimpleTextObject.h" />
     <ClInclude Include="source\TextObject.h" />
     <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />

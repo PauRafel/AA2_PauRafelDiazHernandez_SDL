@@ -8,6 +8,7 @@ void Game::Init()
 {
     RM.Init();
 
+    RM.LoadFont("resources/fonts/arial.ttf", 48);
     RM.LoadTexture("resources/player.png");
     RM.LoadTexture("resources/bullet.png");
     RM.LoadTexture("resources/enemy.png");
