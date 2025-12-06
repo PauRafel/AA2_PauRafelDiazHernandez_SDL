@@ -60,6 +60,9 @@
     <ClCompile Include="source\TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\PowerUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Vector2.h">
@@ -126,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\TextObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PowerUp.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
