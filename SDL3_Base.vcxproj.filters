@@ -128,5 +128,8 @@
     <ClInclude Include="source\TextRenderer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\TextObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
