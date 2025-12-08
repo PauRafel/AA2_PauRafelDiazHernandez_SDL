@@ -40,6 +40,7 @@
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\Background.h" />
+    <ClInclude Include="source\BubbleEnemy.h" />
     <ClInclude Include="source\Bullet.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\EnemyStateMachine.h" />
