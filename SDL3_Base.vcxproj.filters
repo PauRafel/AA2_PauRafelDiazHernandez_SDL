@@ -146,5 +146,8 @@
     <ClInclude Include="source\HorizontalMedusaEnemy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\KillerWhaleEnemy.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
