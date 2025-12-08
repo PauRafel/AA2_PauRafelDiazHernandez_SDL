@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "BubbleEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -11,6 +12,8 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 
 class Gameplay : public Scene
 {
@@ -25,14 +28,14 @@ private:
     TextObject* _shieldText = nullptr;
     TextObject* _cannonAmmoText = nullptr;
     TextObject* _laserAmmoText = nullptr;
-    TextObject* _powerUpInfoText = nullptr;  
+    TextObject* _powerUpInfoText = nullptr; 
 
     int _enemiesKilledInWave = 0;
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
 
     float _enemyRespawnTimer = 0.0f;
-    float _enemyRespawnDelay = 3.0f; 
+    float _enemyRespawnDelay = 3.0f;
     bool _waitingForRespawn = false;
 
     PowerUpType _powerUpCycle[8] = {
@@ -75,6 +78,8 @@ public:
         _powerUpCycleIndex = 0;
         _waitingForRespawn = false;
         _enemyRespawnTimer = 0.0f;
+
+        srand((unsigned int)time(NULL));
     }
 
     void OnExit() override
@@ -114,7 +119,7 @@ public:
                 SpawnEnemy();
                 _waitingForRespawn = false;
                 _enemyRespawnTimer = 0.0f;
-                _powerUpSpawned = false;
+                _powerUpSpawned = false; 
             }
         }
 
@@ -169,7 +174,7 @@ public:
 
                     _waitingForRespawn = true;
 
-                    break; 
+                    break;
                 }
             }
         }
@@ -184,7 +189,7 @@ public:
                         bullet->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
                     {
                         bullet->Destroy();
-                        powerup->Hit();
+                        powerup->Hit(); 
                     }
                 }
             }
@@ -231,9 +236,26 @@ public:
 private:
     void SpawnEnemy()
     {
-        _enemy = new Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f),
-            Vector2(RM.WINDOW_WIDTH - 300.f, RM.WINDOW_HEIGHT / 2.0f));
-        _objects.push_back(_enemy);
+        
+        int testEnemyType = 0;  
+
+        Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
+        Enemy* newEnemy = nullptr;
+
+        switch (testEnemyType)
+        {
+        case 0: 
+            spawnPos.y = (rand() % 2 == 0) ? 150.0f : RM.WINDOW_HEIGHT - 150.0f;
+            newEnemy = new BubbleEnemy(spawnPos);
+            break;
+
+        }
+
+        if (newEnemy != nullptr)
+        {
+            _enemy = newEnemy;
+            _objects.push_back(_enemy);
+        }
     }
 
     void CreateHUD()
@@ -241,13 +263,13 @@ private:
         _scoreText = new TextObject("SCORE: 000000", "resources/fonts/arial.ttf");
         _scoreText->GetTransform()->position = Vector2(20.f, 20.f);
         _scoreText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _scoreText->SetColor({ 255, 215, 0, 255 }); 
+        _scoreText->SetColor({ 255, 215, 0, 255 });
         _ui.push_back(_scoreText);
 
         _shieldText = new TextObject("SHIELD: 100", "resources/fonts/arial.ttf");
         _shieldText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 120.f);
         _shieldText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _shieldText->SetColor({ 0, 255, 255, 255 });
+        _shieldText->SetColor({ 0, 255, 255, 255 }); 
         _ui.push_back(_shieldText);
 
         _cannonAmmoText = new TextObject("CA: 0", "resources/fonts/arial.ttf");
@@ -265,7 +287,7 @@ private:
         _powerUpInfoText = new TextObject("NEXT: +1000 SCORE", "resources/fonts/arial.ttf");
         _powerUpInfoText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, 20.f);
         _powerUpInfoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _powerUpInfoText->SetColor({ 100, 255, 100, 255 });
+        _powerUpInfoText->SetColor({ 100, 255, 100, 255 }); 
         _ui.push_back(_powerUpInfoText);
     }
 
