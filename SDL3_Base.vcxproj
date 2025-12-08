@@ -22,6 +22,7 @@
     <ClCompile Include="source\Background.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\EnemyStateMachine.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\Bullet.h" />
     <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\EnemyStateMachine.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\Gameplay.h" />
     <ClInclude Include="source\ImageObject.h" />
