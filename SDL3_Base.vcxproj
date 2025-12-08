@@ -46,6 +46,7 @@
     <ClInclude Include="source\EnemyStateMachine.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\Gameplay.h" />
+    <ClInclude Include="source\HorizontalMedusaEnemy.h" />
     <ClInclude Include="source\ImageObject.h" />
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
