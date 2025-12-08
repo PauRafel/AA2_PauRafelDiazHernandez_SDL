@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "BubbleEnemy.h"
+#include "HorizontalMedusaEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -237,7 +238,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 0;  
+        int testEnemyType = 1;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -248,7 +249,10 @@ private:
             spawnPos.y = (rand() % 2 == 0) ? 150.0f : RM.WINDOW_HEIGHT - 150.0f;
             newEnemy = new BubbleEnemy(spawnPos);
             break;
-
+        case 1:
+            spawnPos.y = 100.0f + (rand() % (int)(RM.WINDOW_HEIGHT - 200.0f));
+            newEnemy = new HorizontalMedusaEnemy(spawnPos);
+            break;
         }
 
         if (newEnemy != nullptr)
