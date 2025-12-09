@@ -247,23 +247,31 @@ private:
 
         switch (testEnemyType)
         {
-        case 0: 
+        case 0:
+        {
             spawnPos.y = (rand() % 2 == 0) ? 150.0f : RM.WINDOW_HEIGHT - 150.0f;
             newEnemy = new BubbleEnemy(spawnPos);
+        }
             break;
         case 1:
+        {
             spawnPos.y = 100.0f + (rand() % (int)(RM.WINDOW_HEIGHT - 200.0f));
             newEnemy = new HorizontalMedusaEnemy(spawnPos);
+        }
             break;
         case 2:
+        {
             bool onCeiling = (rand() % 2 == 0); 
             Vector2* playerPos = (_player != nullptr) ? &(_player->GetTransform()->position) : nullptr;
             newEnemy = new KillerWhaleEnemy(spawnPos, onCeiling, playerPos);
+        }
             break;
-        case 4:
-            spawnPos.x = RM.WINDOW_WIDTH - 300.0f; 
+        case 4: 
+        {
+            spawnPos.x = RM.WINDOW_WIDTH - 300.0f;
             spawnPos.y = RM.WINDOW_HEIGHT - 100.0f;
             newEnemy = new VerticalMedusaEnemy(spawnPos);
+        }
             break;
         }
 
