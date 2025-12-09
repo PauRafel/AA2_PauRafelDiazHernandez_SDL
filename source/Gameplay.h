@@ -7,6 +7,7 @@
 #include "KillerWhaleEnemy.h"
 #include "VerticalMedusaEnemy.h"
 #include "BeholderEnemy.h"
+#include "ChomperEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -241,7 +242,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 5;  
+        int testEnemyType = 6;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -279,6 +280,25 @@ private:
             spawnPos.x = RM.WINDOW_WIDTH / 2.0f;
             spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
             newEnemy = new BeholderEnemy(spawnPos);
+        }
+        break;
+        case 6:
+        {
+            float spacing = 90.0f; 
+            int numChompers = 8;  
+
+            for (int i = 0; i < numChompers; i++)
+            {
+                float yPos = (i * spacing) + 50.0f;
+                float startAngle = (i * 3.14159f / 4.0f);  
+
+                ChomperEnemy* chomper = new ChomperEnemy(
+                    Vector2(RM.WINDOW_WIDTH + 50.0f, yPos),
+                    startAngle
+                );
+                _objects.push_back(chomper);
+            }
+            _waitingForRespawn = false; 
         }
         break;
         }
