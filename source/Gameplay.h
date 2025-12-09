@@ -6,6 +6,7 @@
 #include "HorizontalMedusaEnemy.h"
 #include "KillerWhaleEnemy.h"
 #include "VerticalMedusaEnemy.h"
+#include "BeholderEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -240,7 +241,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 4;  
+        int testEnemyType = 5;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -273,6 +274,13 @@ private:
             newEnemy = new VerticalMedusaEnemy(spawnPos);
         }
             break;
+        case 5:
+        {
+            spawnPos.x = RM.WINDOW_WIDTH / 2.0f;
+            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
+            newEnemy = new BeholderEnemy(spawnPos);
+        }
+        break;
         }
 
         if (newEnemy != nullptr)
