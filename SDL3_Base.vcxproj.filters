@@ -158,5 +158,8 @@
     <ClInclude Include="source\ChomperEnemy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\AmoebaEnemy.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
 #include "VerticalMedusaEnemy.h"
 #include "BeholderEnemy.h"
 #include "ChomperEnemy.h"
+#include "AmoebaEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -242,7 +243,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 6;  
+        int testEnemyType = 7;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -299,6 +300,14 @@ private:
                 _objects.push_back(chomper);
             }
             _waitingForRespawn = false; 
+        }
+        break;
+        case 7:
+        {
+            spawnPos.x = -100.0f; 
+            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
+
+            newEnemy = new AmoebaEnemy(spawnPos);
         }
         break;
         }
