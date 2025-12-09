@@ -5,6 +5,7 @@
 #include "BubbleEnemy.h"
 #include "HorizontalMedusaEnemy.h"
 #include "KillerWhaleEnemy.h"
+#include "VerticalMedusaEnemy.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -239,7 +240,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 2;  
+        int testEnemyType = 4;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -258,6 +259,12 @@ private:
             bool onCeiling = (rand() % 2 == 0); 
             Vector2* playerPos = (_player != nullptr) ? &(_player->GetTransform()->position) : nullptr;
             newEnemy = new KillerWhaleEnemy(spawnPos, onCeiling, playerPos);
+            break;
+        case 4:
+            spawnPos.x = RM.WINDOW_WIDTH - 300.0f; 
+            spawnPos.y = RM.WINDOW_HEIGHT - 100.0f;
+            newEnemy = new VerticalMedusaEnemy(spawnPos);
+            break;
         }
 
         if (newEnemy != nullptr)
