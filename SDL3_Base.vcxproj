@@ -22,6 +22,7 @@
     <ClCompile Include="source\Background.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
+    <ClCompile Include="source\EnemyStateMachine.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
@@ -38,14 +39,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
+    <ClInclude Include="source\AmoebaEnemy.h" />
     <ClInclude Include="source\Background.h" />
+    <ClInclude Include="source\BeholderEnemy.h" />
+    <ClInclude Include="source\BioTitanBoss.h" />
+    <ClInclude Include="source\BubbleEnemy.h" />
     <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\ChomperEnemy.h" />
+    <ClInclude Include="source\CirclerEnemy.h" />
     <ClInclude Include="source\Enemy.h" />
+    <ClInclude Include="source\EnemyStateMachine.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\Gameplay.h" />
+    <ClInclude Include="source\HorizontalMedusaEnemy.h" />
     <ClInclude Include="source\ImageObject.h" />
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
+    <ClInclude Include="source\KillerWhaleEnemy.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\Object.h" />
     <ClInclude Include="source\Player.h" />
@@ -60,6 +70,7 @@
     <ClInclude Include="source\TimeManager.h" />
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
+    <ClInclude Include="source\VerticalMedusaEnemy.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

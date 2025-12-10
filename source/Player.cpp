@@ -11,7 +11,7 @@ Player::Player(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize
     _transform->scale = Vector2(1.f, 1.f);
 
     _physics->AddCollider(new AABB(_transform->position, _transform->size));
-    _physics->SetLinearDrag(5.0f);
+    _physics->SetLinearDrag(1.5f);
 }
 
 void Player::Update(float dt)
