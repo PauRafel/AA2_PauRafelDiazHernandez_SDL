@@ -164,5 +164,8 @@
     <ClInclude Include="source\CirclerEnemy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\BioTitanBoss.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

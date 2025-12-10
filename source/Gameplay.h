@@ -10,6 +10,7 @@
 #include "BeholderEnemy.h"
 #include "ChomperEnemy.h"
 #include "AmoebaEnemy.h"
+#include "BioTitanBoss.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -244,7 +245,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 3;  
+        int testEnemyType = 8;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -315,6 +316,14 @@ private:
             spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
 
             newEnemy = new AmoebaEnemy(spawnPos);
+        }
+        break;
+        case 8:
+        {
+            spawnPos.x = RM.WINDOW_WIDTH - 300.0f;
+            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
+
+            newEnemy = new BioTitanBoss(spawnPos, &_bullets);
         }
         break;
         }

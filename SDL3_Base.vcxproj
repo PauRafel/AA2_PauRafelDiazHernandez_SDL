@@ -42,6 +42,7 @@
     <ClInclude Include="source\AmoebaEnemy.h" />
     <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
+    <ClInclude Include="source\BioTitanBoss.h" />
     <ClInclude Include="source\BubbleEnemy.h" />
     <ClInclude Include="source\Bullet.h" />
     <ClInclude Include="source\ChomperEnemy.h" />
