@@ -45,6 +45,7 @@
     <ClInclude Include="source\BubbleEnemy.h" />
     <ClInclude Include="source\Bullet.h" />
     <ClInclude Include="source\ChomperEnemy.h" />
+    <ClInclude Include="source\CirclerEnemy.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\EnemyStateMachine.h" />
     <ClInclude Include="source\Game.h" />

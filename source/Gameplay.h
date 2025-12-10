@@ -5,6 +5,7 @@
 #include "BubbleEnemy.h"
 #include "HorizontalMedusaEnemy.h"
 #include "KillerWhaleEnemy.h"
+#include "CirclerEnemy.h"
 #include "VerticalMedusaEnemy.h"
 #include "BeholderEnemy.h"
 #include "ChomperEnemy.h"
@@ -243,7 +244,7 @@ private:
     void SpawnEnemy()
     {
         
-        int testEnemyType = 7;  
+        int testEnemyType = 3;  
 
         Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
@@ -269,6 +270,12 @@ private:
             newEnemy = new KillerWhaleEnemy(spawnPos, onCeiling, playerPos);
         }
             break;
+        case 3:
+        {
+            spawnPos = Vector2(RM.WINDOW_WIDTH / 2.0f, RM.WINDOW_HEIGHT / 2.0f);
+            newEnemy = new CirclerEnemy(spawnPos);
+        }
+        break;
         case 4: 
         {
             spawnPos.x = RM.WINDOW_WIDTH - 300.0f;
