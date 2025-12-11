@@ -36,6 +36,7 @@
     <ClCompile Include="source\SceneManager.cpp" />
     <ClCompile Include="source\TextRenderer.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
+    <ClCompile Include="source\WaveManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\VerticalMedusaEnemy.h" />
+    <ClInclude Include="source\WaveManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

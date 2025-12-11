@@ -17,6 +17,7 @@
 #include "TextObject.h"
 #include "RenderManager.h"
 #include "TimeManager.h"
+#include "WaveManager.h"
 #include <vector>
 #include <sstream>
 #include <iomanip>
@@ -27,8 +28,8 @@ class Gameplay : public Scene
 {
 private:
     Player* _player = nullptr;
-    Enemy* _enemy = nullptr;
     Background* _background = nullptr;
+    std::vector<Enemy*> _enemies;  
     std::vector<Bullet*> _bullets;
     std::vector<PowerUp*> _powerups;
 
@@ -36,15 +37,11 @@ private:
     TextObject* _shieldText = nullptr;
     TextObject* _cannonAmmoText = nullptr;
     TextObject* _laserAmmoText = nullptr;
-    TextObject* _powerUpInfoText = nullptr; 
+    TextObject* _powerUpInfoText = nullptr;
+    TextObject* _waveInfoText = nullptr; 
 
-    int _enemiesKilledInWave = 0;
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
-
-    float _enemyRespawnTimer = 0.0f;
-    float _enemyRespawnDelay = 3.0f;
-    bool _waitingForRespawn = false;
 
     PowerUpType _powerUpCycle[8] = {
         POWERUP_SCORE,
@@ -68,6 +65,10 @@ private:
         "NEXT: TURRETS"
     };
 
+    float _waveTransitionTimer = 0.0f;
+    float _waveTransitionDelay = 2.0f;
+    bool _waitingForNextWave = false;
+
 public:
     Gameplay() = default;
 
@@ -78,14 +79,20 @@ public:
         _player = new Player("resources/player.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), &_bullets);
         _objects.push_back(_player);
 
-        SpawnEnemy();
         CreateHUD();
 
-        _enemiesKilledInWave = 0;
+        WAVE_MANAGER.Initialize([this](EnemySpawnData data) {
+            this->SpawnEnemy(data);
+            });
+
+        WAVE_MANAGER.LoadLevel1Waves();
+
+        WAVE_MANAGER.StartNextWave();
+
         _powerUpSpawned = false;
         _powerUpCycleIndex = 0;
-        _waitingForRespawn = false;
-        _enemyRespawnTimer = 0.0f;
+        _waitingForNextWave = false;
+        _waveTransitionTimer = 0.0f;
 
         srand((unsigned int)time(NULL));
     }
@@ -93,7 +100,6 @@ public:
     void OnExit() override
     {
         _player = nullptr;
-        _enemy = nullptr;
 
         if (_background != nullptr)
         {
@@ -109,6 +115,12 @@ public:
             delete powerup;
         _powerups.clear();
 
+        for (Enemy* enemy : _enemies)
+            delete enemy;
+        _enemies.clear();
+
+        WAVE_MANAGER.Clear();
+
         Scene::OnExit();
     }
 
@@ -119,15 +131,25 @@ public:
 
         UpdateHUD();
 
-        if (_waitingForRespawn)
+        WAVE_MANAGER.Update(dt);
+
+        if (_waitingForNextWave)
         {
-            _enemyRespawnTimer += dt;
-            if (_enemyRespawnTimer >= _enemyRespawnDelay)
+            _waveTransitionTimer += dt;
+
+            if (_waveTransitionTimer >= _waveTransitionDelay)
             {
-                SpawnEnemy();
-                _waitingForRespawn = false;
-                _enemyRespawnTimer = 0.0f;
-                _powerUpSpawned = false; 
+                if (!WAVE_MANAGER.AllWavesCompleted())
+                {
+                    WAVE_MANAGER.StartNextWave();
+                    _waitingForNextWave = false;
+                    _waveTransitionTimer = 0.0f;
+                    _powerUpSpawned = false;
+                }
+                else
+                {
+                    std::cout << "LEVEL COMPLETED!" << std::endl;
+                }
             }
         }
 
@@ -157,30 +179,60 @@ public:
             }
         }
 
-        if (_enemy != nullptr && !_enemy->IsPendingDestroy())
+        for (int i = _enemies.size() - 1; i >= 0; i--)
         {
+            if (_enemies[i]->IsPendingDestroy())
+            {
+                delete _enemies[i];
+                _enemies.erase(_enemies.begin() + i);
+            }
+            else
+            {
+                _enemies[i]->Update(dt);
+            }
+        }
+
+        for (Enemy* enemy : _enemies)
+        {
+            if (enemy->IsPendingDestroy())
+                continue;
+
             for (Bullet* bullet : _bullets)
             {
-                if (!bullet->IsPendingDestroy() &&
-                    bullet->GetRigidBody()->CheckCollision(_enemy->GetRigidBody()))
+                if (bullet->IsPendingDestroy() || !bullet->IsPlayerBullet())
+                    continue;
+
+                if (bullet->GetRigidBody()->CheckCollision(enemy->GetRigidBody()))
                 {
                     bullet->Destroy();
 
-                    Vector2 enemyPos = _enemy->GetTransform()->position;
+                    Vector2 enemyPos = enemy->GetTransform()->position;
+                    int scoreValue = enemy->GetScoreValue();
 
-                    _enemy->Destroy();
-                    _enemiesKilledInWave++;
+                    enemy->TakeDamage(1);
 
-                    if (_player != nullptr)
-                        _player->AddScore(100);
-
-                    if (!_powerUpSpawned)
+                    if (enemy->IsPendingDestroy())
                     {
-                        SpawnPowerUp(enemyPos);
-                        _powerUpSpawned = true;
-                    }
+                        if (_player != nullptr)
+                            _player->AddScore(scoreValue);
 
-                    _waitingForRespawn = true;
+                        WAVE_MANAGER.OnEnemyKilled();
+
+                        Wave* currentWave = WAVE_MANAGER.GetCurrentWave();
+                        if (currentWave != nullptr && currentWave->IsCompleted())
+                        {
+                            std::cout << "Wave completed! Spawning PowerUp..." << std::endl;
+
+                            if (!_powerUpSpawned)
+                            {
+                                SpawnPowerUp(enemyPos);
+                                _powerUpSpawned = true;
+                            }
+
+                            _waitingForNextWave = true;
+                            _waveTransitionTimer = 0.0f;
+                        }
+                    }
 
                     break;
                 }
@@ -189,16 +241,18 @@ public:
 
         for (PowerUp* powerup : _powerups)
         {
-            if (!powerup->IsPendingDestroy())
+            if (powerup->IsPendingDestroy())
+                continue;
+
+            for (Bullet* bullet : _bullets)
             {
-                for (Bullet* bullet : _bullets)
+                if (bullet->IsPendingDestroy() || !bullet->IsPlayerBullet())
+                    continue;
+
+                if (bullet->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
                 {
-                    if (!bullet->IsPendingDestroy() &&
-                        bullet->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
-                    {
-                        bullet->Destroy();
-                        powerup->Hit(); 
-                    }
+                    bullet->Destroy();
+                    powerup->Hit();
                 }
             }
         }
@@ -207,30 +261,57 @@ public:
         {
             for (PowerUp* powerup : _powerups)
             {
-                if (!powerup->IsPendingDestroy() &&
-                    _player->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
+                if (powerup->IsPendingDestroy())
+                    continue;
+
+                if (_player->GetRigidBody()->CheckCollision(powerup->GetRigidBody()))
                 {
                     ApplyPowerUpToPlayer(powerup->GetCurrentType());
-
                     _powerUpCycleIndex = (powerup->GetCycleIndex() + 1) % 8;
-
                     powerup->Destroy();
                 }
             }
         }
 
-        if (_enemy != nullptr && _enemy->IsPendingDestroy())
+        if (_player != nullptr)
         {
-            _enemy = nullptr;
+            for (Bullet* bullet : _bullets)
+            {
+                if (bullet->IsPendingDestroy() || bullet->IsPlayerBullet())
+                    continue;
+
+                if (bullet->GetRigidBody()->CheckCollision(_player->GetRigidBody()))
+                {
+                    bullet->Destroy();
+                    _player->TakeDamage(10);
+
+                    if (_player->GetShield() <= 0)
+                    {
+                        std::cout << "PLAYER DIED!" << std::endl;
+                    }
+                }
+            }
         }
 
-        Scene::Update(dt);
+        if (_player != nullptr && !_player->IsPendingDestroy())
+        {
+            _player->Update(dt);
+        }
+
+        for (Object* u : _ui)
+        {
+            if (!u->IsPendingDestroy())
+                u->Update(dt);
+        }
     }
 
     void Render() override
     {
         if (_background != nullptr)
             _background->Render();
+
+        for (Enemy* enemy : _enemies)
+            enemy->Render();
 
         Scene::Render();
 
@@ -242,96 +323,56 @@ public:
     }
 
 private:
-    void SpawnEnemy()
+    void SpawnEnemy(EnemySpawnData data)
     {
-        
-        int testEnemyType = 8;  
-
-        Vector2 spawnPos = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.0f);
         Enemy* newEnemy = nullptr;
 
-        switch (testEnemyType)
+        switch (data.type)
         {
-        case 0:
-        {
-            spawnPos.y = (rand() % 2 == 0) ? 150.0f : RM.WINDOW_HEIGHT - 150.0f;
-            newEnemy = new BubbleEnemy(spawnPos);
-        }
+        case ENEMY_BUBBLE:
+            newEnemy = new BubbleEnemy(data.spawnPosition);
             break;
-        case 1:
-        {
-            spawnPos.y = 100.0f + (rand() % (int)(RM.WINDOW_HEIGHT - 200.0f));
-            newEnemy = new HorizontalMedusaEnemy(spawnPos);
-        }
+
+        case ENEMY_HORIZONTAL_MEDUSA:
+            newEnemy = new HorizontalMedusaEnemy(data.spawnPosition);
             break;
-        case 2:
+
+        case ENEMY_KILLER_WHALE:
         {
-            bool onCeiling = (rand() % 2 == 0); 
             Vector2* playerPos = (_player != nullptr) ? &(_player->GetTransform()->position) : nullptr;
-            newEnemy = new KillerWhaleEnemy(spawnPos, onCeiling, playerPos);
-        }
+            newEnemy = new KillerWhaleEnemy(data.spawnPosition, data.onCeiling, playerPos);
             break;
-        case 3:
-        {
-            spawnPos = Vector2(RM.WINDOW_WIDTH / 2.0f, RM.WINDOW_HEIGHT / 2.0f);
-            newEnemy = new CirclerEnemy(spawnPos);
         }
-        break;
-        case 4: 
-        {
-            spawnPos.x = RM.WINDOW_WIDTH - 300.0f;
-            spawnPos.y = RM.WINDOW_HEIGHT - 100.0f;
-            newEnemy = new VerticalMedusaEnemy(spawnPos);
-        }
+
+        case ENEMY_CIRCLER:
+            newEnemy = new CirclerEnemy(data.spawnPosition);
             break;
-        case 5:
-        {
-            spawnPos.x = RM.WINDOW_WIDTH / 2.0f;
-            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
-            newEnemy = new BeholderEnemy(spawnPos);
-        }
-        break;
-        case 6:
-        {
-            float spacing = 90.0f; 
-            int numChompers = 8;  
 
-            for (int i = 0; i < numChompers; i++)
-            {
-                float yPos = (i * spacing) + 50.0f;
-                float startAngle = (i * 3.14159f / 4.0f);  
+        case ENEMY_VERTICAL_MEDUSA:
+            newEnemy = new VerticalMedusaEnemy(data.spawnPosition);
+            break;
 
-                ChomperEnemy* chomper = new ChomperEnemy(
-                    Vector2(RM.WINDOW_WIDTH + 50.0f, yPos),
-                    startAngle
-                );
-                _objects.push_back(chomper);
-            }
-            _waitingForRespawn = false; 
-        }
-        break;
-        case 7:
-        {
-            spawnPos.x = -100.0f; 
-            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
+        case ENEMY_BEHOLDER:
+            newEnemy = new BeholderEnemy(data.spawnPosition);
+            break;
 
-            newEnemy = new AmoebaEnemy(spawnPos);
-        }
-        break;
-        case 8:
-        {
-            spawnPos.x = RM.WINDOW_WIDTH - 300.0f;
-            spawnPos.y = RM.WINDOW_HEIGHT / 2.0f;
+        case ENEMY_CHOMPER:
+            newEnemy = new ChomperEnemy(data.spawnPosition, data.startAngle);
+            break;
 
-            newEnemy = new BioTitanBoss(spawnPos, &_bullets);
-        }
-        break;
+        case ENEMY_AMOEBA:
+            newEnemy = new AmoebaEnemy(data.spawnPosition);
+            break;
+
+        case ENEMY_BIO_TITAN_BOSS:
+            newEnemy = new BioTitanBoss(data.spawnPosition, &_bullets);
+            break;
         }
 
         if (newEnemy != nullptr)
         {
-            _enemy = newEnemy;
-            _objects.push_back(_enemy);
+            _enemies.push_back(newEnemy);
+            std::cout << "Enemy spawned at (" << data.spawnPosition.x << ", " << data.spawnPosition.y << ")" << std::endl;
         }
     }
 
@@ -346,26 +387,32 @@ private:
         _shieldText = new TextObject("SHIELD: 100", "resources/fonts/arial.ttf");
         _shieldText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 120.f);
         _shieldText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _shieldText->SetColor({ 0, 255, 255, 255 }); 
+        _shieldText->SetColor({ 0, 255, 255, 255 });
         _ui.push_back(_shieldText);
 
         _cannonAmmoText = new TextObject("CA: 0", "resources/fonts/arial.ttf");
         _cannonAmmoText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 80.f);
         _cannonAmmoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _cannonAmmoText->SetColor({ 255, 128, 0, 255 }); 
+        _cannonAmmoText->SetColor({ 255, 128, 0, 255 });
         _ui.push_back(_cannonAmmoText);
 
         _laserAmmoText = new TextObject("LA: 0", "resources/fonts/arial.ttf");
         _laserAmmoText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 50.f);
         _laserAmmoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _laserAmmoText->SetColor({ 255, 0, 255, 255 }); 
+        _laserAmmoText->SetColor({ 255, 0, 255, 255 });
         _ui.push_back(_laserAmmoText);
 
         _powerUpInfoText = new TextObject("NEXT: +1000 SCORE", "resources/fonts/arial.ttf");
         _powerUpInfoText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, 20.f);
         _powerUpInfoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _powerUpInfoText->SetColor({ 100, 255, 100, 255 }); 
+        _powerUpInfoText->SetColor({ 100, 255, 100, 255 });
         _ui.push_back(_powerUpInfoText);
+
+        _waveInfoText = new TextObject("WAVE: 1", "resources/fonts/arial.ttf");
+        _waveInfoText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH - 200.f, 20.f);
+        _waveInfoText->GetTransform()->scale = Vector2(0.5f, 0.5f);
+        _waveInfoText->SetColor({ 255, 100, 100, 255 });
+        _ui.push_back(_waveInfoText);
     }
 
     void UpdateHUD()
@@ -396,6 +443,19 @@ private:
             powerUpInfo = "POWERUP: " + _powerUpNames[index];
         }
         _powerUpInfoText->SetText(powerUpInfo);
+
+        std::ostringstream waveStream;
+        Wave* currentWave = WAVE_MANAGER.GetCurrentWave();
+        if (currentWave != nullptr)
+        {
+            waveStream << "WAVE: " << currentWave->GetWaveNumber()
+                << " (" << currentWave->GetEnemiesKilled() << "/" << currentWave->GetTotalEnemies() << ")";
+        }
+        else
+        {
+            waveStream << "WAVE: COMPLETE";
+        }
+        _waveInfoText->SetText(waveStream.str());
     }
 
     void SpawnPowerUp(Vector2 position)
