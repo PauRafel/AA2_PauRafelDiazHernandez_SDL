@@ -24,11 +24,11 @@ struct EnemySpawnData
 {
     EnemyType type;
     Vector2 spawnPosition;
-    float spawnDelay;  
+    float spawnDelay; 
 
     bool onCeiling;       
     float startAngle;    
-    Vector2* playerPos;
+    Vector2* playerPos;    
 
     EnemySpawnData()
         : type(ENEMY_BUBBLE),
@@ -48,9 +48,11 @@ private:
     std::vector<EnemySpawnData> _enemySpawnList;
     int _enemiesSpawned;
     int _enemiesKilled;
+    int _enemiesEscaped;  
     float _waveTimer;
     bool _isActive;
     bool _isCompleted;
+    bool _allEnemiesKilled;  
 
 public:
     Wave(int waveNumber);
@@ -59,13 +61,16 @@ public:
     void Start();
     void Update(float dt);
     void OnEnemyKilled();
+    void OnEnemyEscaped();  
 
     bool IsActive() const { return _isActive; }
     bool IsCompleted() const { return _isCompleted; }
+    bool AllEnemiesKilled() const { return _allEnemiesKilled; }  
     int GetWaveNumber() const { return _waveNumber; }
     int GetTotalEnemies() const { return _enemySpawnList.size(); }
     int GetEnemiesKilled() const { return _enemiesKilled; }
-    float GetWaveTimer() const { return _waveTimer; } 
+    int GetEnemiesEscaped() const { return _enemiesEscaped; }  
+    float GetWaveTimer() const { return _waveTimer; }
 
     std::vector<EnemySpawnData> GetEnemiesToSpawn(float currentTime);
 };
@@ -96,6 +101,7 @@ public:
     void StartNextWave();
     void Update(float dt);
     void OnEnemyKilled();
+    void OnEnemyEscaped(); 
     void Clear();
 
     bool AllWavesCompleted() const;

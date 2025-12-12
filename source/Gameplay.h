@@ -38,7 +38,7 @@ private:
     TextObject* _cannonAmmoText = nullptr;
     TextObject* _laserAmmoText = nullptr;
     TextObject* _powerUpInfoText = nullptr;
-    TextObject* _waveInfoText = nullptr; 
+    TextObject* _waveInfoText = nullptr;
 
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
@@ -144,7 +144,7 @@ public:
                     WAVE_MANAGER.StartNextWave();
                     _waitingForNextWave = false;
                     _waveTransitionTimer = 0.0f;
-                    _powerUpSpawned = false;
+                    _powerUpSpawned = false; 
                 }
                 else
                 {
@@ -181,14 +181,32 @@ public:
 
         for (int i = _enemies.size() - 1; i >= 0; i--)
         {
-            if (_enemies[i]->IsPendingDestroy())
+            Enemy* enemy = _enemies[i];
+
+            if (enemy->IsPendingDestroy())
             {
+                if (enemy->HasEscaped())
+                {
+                    WAVE_MANAGER.OnEnemyEscaped();
+                    std::cout << "Enemy escaped off screen!" << std::endl;
+
+                    Wave* currentWave = WAVE_MANAGER.GetCurrentWave();
+                    if (currentWave != nullptr && currentWave->IsCompleted() && !_waitingForNextWave)
+                    {
+                        std::cout << "Wave completed after enemy escaped!" << std::endl;
+                        std::cout << "Some enemies escaped - NO PowerUp" << std::endl;
+
+                        _waitingForNextWave = true;
+                        _waveTransitionTimer = 0.0f;
+                    }
+                }
+
                 delete _enemies[i];
                 _enemies.erase(_enemies.begin() + i);
             }
             else
             {
-                _enemies[i]->Update(dt);
+                enemy->Update(dt);
             }
         }
 
@@ -221,12 +239,17 @@ public:
                         Wave* currentWave = WAVE_MANAGER.GetCurrentWave();
                         if (currentWave != nullptr && currentWave->IsCompleted())
                         {
-                            std::cout << "Wave completed! Spawning PowerUp..." << std::endl;
+                            std::cout << "Wave completed!" << std::endl;
 
-                            if (!_powerUpSpawned)
+                            if (currentWave->AllEnemiesKilled() && !_powerUpSpawned)
                             {
+                                std::cout << "All enemies killed! Spawning PowerUp..." << std::endl;
                                 SpawnPowerUp(enemyPos);
                                 _powerUpSpawned = true;
+                            }
+                            else if (!currentWave->AllEnemiesKilled())
+                            {
+                                std::cout << "Some enemies escaped - NO PowerUp" << std::endl;
                             }
 
                             _waitingForNextWave = true;

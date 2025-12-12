@@ -6,9 +6,11 @@ Wave::Wave(int waveNumber)
     : _waveNumber(waveNumber),
     _enemiesSpawned(0),
     _enemiesKilled(0),
+    _enemiesEscaped(0),
     _waveTimer(0.f),
     _isActive(false),
-    _isCompleted(false)
+    _isCompleted(false),
+    _allEnemiesKilled(false)
 {
 }
 
@@ -23,7 +25,9 @@ void Wave::Start()
     _waveTimer = 0.f;
     _enemiesSpawned = 0;
     _enemiesKilled = 0;
+    _enemiesEscaped = 0;
     _isCompleted = false;
+    _allEnemiesKilled = false;
 
     std::cout << "Wave " << _waveNumber << " started! Total enemies: " << _enemySpawnList.size() << std::endl;
 }
@@ -42,11 +46,40 @@ void Wave::OnEnemyKilled()
 
     std::cout << "Enemy killed! (" << _enemiesKilled << "/" << _enemySpawnList.size() << ")" << std::endl;
 
-    if (_enemiesKilled >= _enemySpawnList.size())
+    int totalCompleted = _enemiesKilled + _enemiesEscaped;
+
+    if (totalCompleted >= _enemySpawnList.size())
     {
         _isCompleted = true;
         _isActive = false;
-        std::cout << "Wave " << _waveNumber << " completed!" << std::endl;
+
+        if (_enemiesEscaped == 0)
+        {
+            _allEnemiesKilled = true;
+            std::cout << "Wave " << _waveNumber << " completed! ALL ENEMIES KILLED - PowerUp spawned!" << std::endl;
+        }
+        else
+        {
+            std::cout << "Wave " << _waveNumber << " completed! (" << _enemiesKilled << " killed, " << _enemiesEscaped << " escaped - NO PowerUp)" << std::endl;
+        }
+    }
+}
+
+void Wave::OnEnemyEscaped()
+{
+    _enemiesEscaped++;
+
+    std::cout << "Enemy escaped! (" << _enemiesEscaped << " escaped)" << std::endl;
+
+    int totalCompleted = _enemiesKilled + _enemiesEscaped;
+
+    if (totalCompleted >= _enemySpawnList.size())
+    {
+        _isCompleted = true;
+        _isActive = false;
+
+        _allEnemiesKilled = false;
+        std::cout << "Wave " << _waveNumber << " completed! (" << _enemiesKilled << " killed, " << _enemiesEscaped << " escaped - NO PowerUp)" << std::endl;
     }
 }
 
@@ -202,6 +235,14 @@ void WaveManager::OnEnemyKilled()
         return;
 
     _waves[_currentWaveIndex]->OnEnemyKilled();
+}
+
+void WaveManager::OnEnemyEscaped()
+{
+    if (_currentWaveIndex < 0 || _currentWaveIndex >= _waves.size())
+        return;
+
+    _waves[_currentWaveIndex]->OnEnemyEscaped();
 }
 
 void WaveManager::Clear()
