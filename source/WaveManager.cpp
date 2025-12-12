@@ -96,7 +96,7 @@ std::vector<EnemySpawnData> Wave::GetEnemiesToSpawn(float currentTime)
         }
         else
         {
-            break;
+            break; 
         }
     }
 
@@ -119,58 +119,72 @@ void WaveManager::LoadLevel1Waves()
 {
     Clear();
 
-    std::cout << "Loading Level 1 Waves..." << std::endl;
+    std::cout << "Loading Level 1 Waves: SEA OF KARNAUGH..." << std::endl;
 
     Wave* wave1 = new Wave(1);
 
-    EnemySpawnData bubble1;
-    bubble1.type = ENEMY_BUBBLE;
-    bubble1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 150.f);
-    bubble1.spawnDelay = 0.f;
-    wave1->AddEnemy(bubble1);
+    float topY = 150.0f;
+    float bottomY = RM.WINDOW_HEIGHT - 150.0f;
 
-    EnemySpawnData bubble2;
-    bubble2.type = ENEMY_BUBBLE;
-    bubble2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT / 2.f);
-    bubble2.spawnDelay = 1.5f;
-    wave1->AddEnemy(bubble2);
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData bubble;
+        bubble.type = ENEMY_BUBBLE;
+        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);  
+        bubble.spawnDelay = i * 1.0f; 
+        wave1->AddEnemy(bubble);
+    }
 
-    EnemySpawnData bubble3;
-    bubble3.type = ENEMY_BUBBLE;
-    bubble3.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT - 150.f);
-    bubble3.spawnDelay = 3.0f;
-    wave1->AddEnemy(bubble3);
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData bubble;
+        bubble.type = ENEMY_BUBBLE;
+        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);  
+        bubble.spawnDelay = (i * 1.0f) + 0.5f;  
+        wave1->AddEnemy(bubble);
+    }
 
     _waves.push_back(wave1);
 
     Wave* wave2 = new Wave(2);
 
-    for (int i = 0; i < 4; i++)
-    {
-        EnemySpawnData medusa;
-        medusa.type = ENEMY_HORIZONTAL_MEDUSA;
-        medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 100.f + i * 200.f);
-        medusa.spawnDelay = i * 1.0f;
-        wave2->AddEnemy(medusa);
-    }
+    EnemySpawnData whale1;
+    whale1.type = ENEMY_KILLER_WHALE;
+    whale1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 50.f);
+    whale1.spawnDelay = 0.f;
+    whale1.onCeiling = true;
+    wave2->AddEnemy(whale1);
+
+    EnemySpawnData whale2;
+    whale2.type = ENEMY_KILLER_WHALE;
+    whale2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
+    whale2.spawnDelay = 1.5f;
+    whale2.onCeiling = false;
+    wave2->AddEnemy(whale2);
 
     _waves.push_back(wave2);
 
     Wave* wave3 = new Wave(3);
 
-    EnemySpawnData whale1;
-    whale1.type = ENEMY_KILLER_WHALE;
-    whale1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 50.f);
-    whale1.spawnDelay = 0.f;
-    whale1.onCeiling = true;
-    wave3->AddEnemy(whale1);
+    float medusaPositions[8] = {
+        80.f,
+        180.f,
+        280.f,
+        380.f,
+        480.f,
+        580.f,
+        680.f,
+        120.f
+    };
 
-    EnemySpawnData whale2;
-    whale2.type = ENEMY_KILLER_WHALE;
-    whale2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, RM.WINDOW_HEIGHT - 50.f);
-    whale2.spawnDelay = 2.0f;
-    whale2.onCeiling = false;
-    wave3->AddEnemy(whale2);
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData medusa;
+        medusa.type = ENEMY_HORIZONTAL_MEDUSA;
+        medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
+        medusa.spawnDelay = i * 0.6f;
+        wave3->AddEnemy(medusa);
+    }
 
     _waves.push_back(wave3);
 
@@ -184,7 +198,172 @@ void WaveManager::LoadLevel1Waves()
 
     _waves.push_back(wave4);
 
-    Wave* waveBoss = new Wave(5);
+    Wave* wave5 = new Wave(5);
+
+    float verticalMedusaPositionsX[8] = {
+        200.f,
+        400.f,
+        600.f,
+        800.f,
+        1000.f,
+        300.f,
+        700.f,
+        900.f
+    };
+
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData vMedusa;
+        vMedusa.type = ENEMY_VERTICAL_MEDUSA;
+        vMedusa.spawnPosition = Vector2(verticalMedusaPositionsX[i], RM.WINDOW_HEIGHT - 80.f);
+        vMedusa.spawnDelay = i * 0.5f;
+        wave5->AddEnemy(vMedusa);
+    }
+
+    _waves.push_back(wave5);
+
+    Wave* wave6 = new Wave(6);
+
+    float cornerOffset = 100.f;
+    float pairSpacing = 80.f;
+
+    for (int i = 0; i < 2; i++)
+    {
+        EnemySpawnData beholder;
+        beholder.type = ENEMY_BEHOLDER;
+        beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), cornerOffset);
+        beholder.spawnDelay = i * 0.3f;
+        wave6->AddEnemy(beholder);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        EnemySpawnData beholder;
+        beholder.type = ENEMY_BEHOLDER;
+        beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), cornerOffset);
+        beholder.spawnDelay = 0.8f + (i * 0.3f);
+        wave6->AddEnemy(beholder);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        EnemySpawnData beholder;
+        beholder.type = ENEMY_BEHOLDER;
+        beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
+        beholder.spawnDelay = 1.6f + (i * 0.3f);
+        wave6->AddEnemy(beholder);
+    }
+
+    for (int i = 0; i < 2; i++)
+    {
+        EnemySpawnData beholder;
+        beholder.type = ENEMY_BEHOLDER;
+        beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
+        beholder.spawnDelay = 2.4f + (i * 0.3f);
+        wave6->AddEnemy(beholder);
+    }
+
+    _waves.push_back(wave6);
+
+    Wave* wave7 = new Wave(7);
+
+    EnemySpawnData whale7_1;
+    whale7_1.type = ENEMY_KILLER_WHALE;
+    whale7_1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 50.f);
+    whale7_1.spawnDelay = 0.f;
+    whale7_1.onCeiling = true;
+    wave7->AddEnemy(whale7_1);
+
+    EnemySpawnData whale7_2;
+    whale7_2.type = ENEMY_KILLER_WHALE;
+    whale7_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
+    whale7_2.spawnDelay = 1.5f;
+    whale7_2.onCeiling = false;
+    wave7->AddEnemy(whale7_2);
+
+    _waves.push_back(wave7);
+
+    Wave* wave8 = new Wave(8);
+
+    float chomperSpacing = 90.0f;
+    float chomperStartY = 50.0f;
+
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData chomper;
+        chomper.type = ENEMY_CHOMPER;
+        chomper.spawnPosition = Vector2(RM.WINDOW_WIDTH + 50.f, chomperStartY + (i * chomperSpacing));
+        chomper.spawnDelay = i * 0.2f;
+        chomper.startAngle = (i * 3.14159f / 4.0f); 
+        wave8->AddEnemy(chomper);
+    }
+
+    _waves.push_back(wave8);
+
+    Wave* wave9 = new Wave(9);
+
+    EnemySpawnData amoeba;
+    amoeba.type = ENEMY_AMOEBA;
+    amoeba.spawnPosition = Vector2(-100.f, RM.WINDOW_HEIGHT / 2.f);
+    amoeba.spawnDelay = 0.f;
+    wave9->AddEnemy(amoeba);
+
+    _waves.push_back(wave9);
+
+    Wave* wave10 = new Wave(10);
+
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData bubble;
+        bubble.type = ENEMY_BUBBLE;
+        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY); 
+        bubble.spawnDelay = i * 1.0f; 
+        wave10->AddEnemy(bubble);
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData bubble;
+        bubble.type = ENEMY_BUBBLE;
+        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);  
+        bubble.spawnDelay = (i * 1.0f) + 0.5f;  
+        wave10->AddEnemy(bubble);
+    }
+
+    _waves.push_back(wave10);
+
+    Wave* wave11 = new Wave(11);
+
+    EnemySpawnData whale11_1;
+    whale11_1.type = ENEMY_KILLER_WHALE;
+    whale11_1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 50.f);
+    whale11_1.spawnDelay = 0.f;
+    whale11_1.onCeiling = true;
+    wave11->AddEnemy(whale11_1);
+
+    EnemySpawnData whale11_2;
+    whale11_2.type = ENEMY_KILLER_WHALE;
+    whale11_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
+    whale11_2.spawnDelay = 1.5f;
+    whale11_2.onCeiling = false;
+    wave11->AddEnemy(whale11_2);
+
+    _waves.push_back(wave11);
+
+    Wave* wave12 = new Wave(12);
+
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData medusa;
+        medusa.type = ENEMY_HORIZONTAL_MEDUSA;
+        medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
+        medusa.spawnDelay = i * 0.6f;
+        wave12->AddEnemy(medusa);
+    }
+
+    _waves.push_back(wave12);
+
+    Wave* waveBoss = new Wave(13);
 
     EnemySpawnData boss;
     boss.type = ENEMY_BIO_TITAN_BOSS;
@@ -194,7 +373,7 @@ void WaveManager::LoadLevel1Waves()
 
     _waves.push_back(waveBoss);
 
-    std::cout << "Loaded " << _waves.size() << " waves for Level 1" << std::endl;
+    std::cout << "Loaded " << _waves.size() << " waves for Level 1: SEA OF KARNAUGH" << std::endl;
 }
 
 void WaveManager::StartNextWave()
