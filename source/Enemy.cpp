@@ -13,6 +13,7 @@ Enemy::Enemy(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize, 
 
     _health = 1;
     _scoreValue = 100;
+    _escapedOffScreen = false;
 
     _stateMachine->SetStateCircleMove(spawnPosition, 100.0f, 2.0f, 0.0f);
 }
@@ -31,11 +32,12 @@ void Enemy::Update(float dt)
     if (_stateMachine != nullptr)
         _stateMachine->Update(dt);
 
-    if (_transform->position.x + _transform->size.x < 0 ||      
-        _transform->position.x - _transform->size.x > RM.WINDOW_WIDTH ||  
-        _transform->position.y + _transform->size.y < 0 ||      
-        _transform->position.y - _transform->size.y > RM.WINDOW_HEIGHT)  
+    if (_transform->position.x + _transform->size.x < -100.f ||
+        _transform->position.x - _transform->size.x > RM.WINDOW_WIDTH + 100.f ||
+        _transform->position.y + _transform->size.y < -100.f ||
+        _transform->position.y - _transform->size.y > RM.WINDOW_HEIGHT + 100.f)
     {
+        _escapedOffScreen = true;
         Destroy();
     }
 
@@ -51,6 +53,7 @@ void Enemy::TakeDamage(int damage)
     _health -= damage;
     if (_health <= 0)
     {
+        _escapedOffScreen = false;
         Destroy();
     }
 }
