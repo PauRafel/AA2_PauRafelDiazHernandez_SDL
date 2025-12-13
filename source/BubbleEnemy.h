@@ -23,11 +23,11 @@ private:
 
 public:
     BubbleEnemy(Vector2 spawnPosition)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
+        : Enemy("resources/BubbleEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
     {
         _currentPhase = PHASE_SCROLL;
         _targetX = RM.WINDOW_WIDTH / 3.0f;  
-        _scrollSpeed = 200.0f; 
+        _scrollSpeed = 350.0f; 
         _health = 1;
         _scoreValue = 150;
 
@@ -50,7 +50,7 @@ public:
             if (_transform->position.x <= _targetX)
             {
                 _circleStartAngle = 0.0f;
-                _stateMachine->SetStateCircleMove(_transform->position, 80.0f, 3.0f, _circleStartAngle);
+                _stateMachine->SetStateCircleMove(_transform->position, 80.0f, 6.0f, _circleStartAngle);
                 _currentPhase = PHASE_CIRCLE;
             }
             break;
@@ -69,7 +69,7 @@ public:
                     diagonalDirection = Vector2(1.0f, -1.0f);  
 
                 diagonalDirection.Normalize();
-                _stateMachine->SetStateSimpleMove(diagonalDirection, 200.0f);
+                _stateMachine->SetStateSimpleMove(diagonalDirection, 350.0f);
                 _currentPhase = PHASE_DIAGONAL;
             }
             break;
@@ -86,7 +86,7 @@ public:
 
             if (reachedTarget)
             {
-                _stateMachine->SetStateSimpleMove(Vector2(1.0f, 0.0f), 250.0f);
+                _stateMachine->SetStateSimpleMove(Vector2(1.0f, 0.0f), 400.0f);
                 _currentPhase = PHASE_STRAIGHT;
             }
             break;
