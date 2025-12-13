@@ -96,7 +96,7 @@ std::vector<EnemySpawnData> Wave::GetEnemiesToSpawn(float currentTime)
         }
         else
         {
-            break; 
+            break;
         }
     }
 
@@ -128,20 +128,17 @@ void WaveManager::LoadLevel1Waves()
 
     for (int i = 0; i < 4; i++)
     {
-        EnemySpawnData bubble;
-        bubble.type = ENEMY_BUBBLE;
-        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);  
-        bubble.spawnDelay = i * 1.0f; 
-        wave1->AddEnemy(bubble);
-    }
+        EnemySpawnData bubbleTop;
+        bubbleTop.type = ENEMY_BUBBLE;
+        bubbleTop.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);
+        bubbleTop.spawnDelay = i * 1.0f; 
+        wave1->AddEnemy(bubbleTop);
 
-    for (int i = 0; i < 4; i++)
-    {
-        EnemySpawnData bubble;
-        bubble.type = ENEMY_BUBBLE;
-        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);  
-        bubble.spawnDelay = (i * 1.0f) + 0.5f;  
-        wave1->AddEnemy(bubble);
+        EnemySpawnData bubbleBottom;
+        bubbleBottom.type = ENEMY_BUBBLE;
+        bubbleBottom.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);
+        bubbleBottom.spawnDelay = (i * 1.0f) + 0.5f;  
+        wave1->AddEnemy(bubbleBottom);
     }
 
     _waves.push_back(wave1);
@@ -314,20 +311,17 @@ void WaveManager::LoadLevel1Waves()
 
     for (int i = 0; i < 4; i++)
     {
-        EnemySpawnData bubble;
-        bubble.type = ENEMY_BUBBLE;
-        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY); 
-        bubble.spawnDelay = i * 1.0f; 
-        wave10->AddEnemy(bubble);
-    }
+        EnemySpawnData bubbleTop;
+        bubbleTop.type = ENEMY_BUBBLE;
+        bubbleTop.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);
+        bubbleTop.spawnDelay = i * 1.0f; 
+        wave10->AddEnemy(bubbleTop);
 
-    for (int i = 0; i < 4; i++)
-    {
-        EnemySpawnData bubble;
-        bubble.type = ENEMY_BUBBLE;
-        bubble.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);  
-        bubble.spawnDelay = (i * 1.0f) + 0.5f;  
-        wave10->AddEnemy(bubble);
+        EnemySpawnData bubbleBottom;
+        bubbleBottom.type = ENEMY_BUBBLE;
+        bubbleBottom.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);
+        bubbleBottom.spawnDelay = (i * 1.0f) + 0.5f; 
+        wave10->AddEnemy(bubbleBottom);
     }
 
     _waves.push_back(wave10);
