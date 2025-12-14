@@ -13,7 +13,8 @@ void Game::Init()
     RM.LoadTexture("resources/bullet.png");
     RM.LoadTexture("resources/enemy.png");
     RM.LoadTexture("resources/background.png");
-    RM.LoadTexture("resources/powerup.png"); 
+    RM.LoadTexture("resources/powerup.png");
+    RM.LoadTexture("resources/BubbleEnemy.png");
 
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
