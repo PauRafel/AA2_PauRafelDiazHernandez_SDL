@@ -137,7 +137,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData bubbleBottom;
         bubbleBottom.type = ENEMY_BUBBLE;
         bubbleBottom.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);
-        bubbleBottom.spawnDelay = (i * 0.3f) + 0.3f;  
+        bubbleBottom.spawnDelay = (i * 0.3f) + 0.3f;
         wave1->AddEnemy(bubbleBottom);
     }
 
@@ -155,7 +155,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale2;
     whale2.type = ENEMY_KILLER_WHALE;
     whale2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale2.spawnDelay = 1.5f;
+    whale2.spawnDelay = 2.0f;
     whale2.onCeiling = false;
     wave2->AddEnemy(whale2);
 
@@ -274,7 +274,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale7_2;
     whale7_2.type = ENEMY_KILLER_WHALE;
     whale7_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale7_2.spawnDelay = 1.5f;
+    whale7_2.spawnDelay = 2.0f;
     whale7_2.onCeiling = false;
     wave7->AddEnemy(whale7_2);
 
@@ -314,7 +314,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData bubbleTop;
         bubbleTop.type = ENEMY_BUBBLE;
         bubbleTop.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);
-        bubbleTop.spawnDelay = i * 0.3f; 
+        bubbleTop.spawnDelay = i * 0.3f;
         wave10->AddEnemy(bubbleTop);
 
         EnemySpawnData bubbleBottom;
@@ -338,7 +338,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale11_2;
     whale11_2.type = ENEMY_KILLER_WHALE;
     whale11_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale11_2.spawnDelay = 1.5f;
+    whale11_2.spawnDelay = 2.0f;
     whale11_2.onCeiling = false;
     wave11->AddEnemy(whale11_2);
 

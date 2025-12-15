@@ -27,7 +27,7 @@ public:
     {
         _currentPhase = PHASE_SCROLL;
         _targetX = RM.WINDOW_WIDTH / 3.0f;  
-        _scrollSpeed = 350.0f; 
+        _scrollSpeed = 400.0f; 
         _health = 1;
         _scoreValue = 150;
 
@@ -69,7 +69,7 @@ public:
                     diagonalDirection = Vector2(1.0f, -1.0f);  
 
                 diagonalDirection.Normalize();
-                _stateMachine->SetStateSimpleMove(diagonalDirection, 350.0f);
+                _stateMachine->SetStateSimpleMove(diagonalDirection, 400.0f);
                 _currentPhase = PHASE_DIAGONAL;
             }
             break;
@@ -86,7 +86,7 @@ public:
 
             if (reachedTarget)
             {
-                _stateMachine->SetStateSimpleMove(Vector2(1.0f, 0.0f), 400.0f);
+                _stateMachine->SetStateSimpleMove(Vector2(1.0f, 0.0f), 500.0f);
                 _currentPhase = PHASE_STRAIGHT;
             }
             break;

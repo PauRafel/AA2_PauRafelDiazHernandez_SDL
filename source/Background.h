@@ -5,7 +5,7 @@
 class Background : public ImageObject
 {
 private:
-    float _scrollSpeed = 100.0f;
+    float _scrollSpeed = 200.0f;
     float _offset1;
     float _offset2;
     SDL_FRect _rect1;
