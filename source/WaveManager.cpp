@@ -229,7 +229,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), cornerOffset);
-        beholder.spawnDelay = i * 0.3f;
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 
@@ -238,7 +238,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), cornerOffset);
-        beholder.spawnDelay = 0.8f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f;
         wave6->AddEnemy(beholder);
     }
 
@@ -247,7 +247,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
-        beholder.spawnDelay = 1.6f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 
@@ -256,7 +256,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
-        beholder.spawnDelay = 2.4f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 

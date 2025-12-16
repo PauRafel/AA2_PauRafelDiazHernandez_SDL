@@ -20,6 +20,7 @@ void Game::Init()
     RM.LoadTexture("resources/VerticalMedusaEnemy.png");
     RM.LoadTexture("resources/CirclerEnemy_Head.png");
     RM.LoadTexture("resources/CirclerEnemy_Body.png");
+    RM.LoadTexture("resources/BeholderEnemy.png");
     
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
