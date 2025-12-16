@@ -189,7 +189,7 @@ void WaveManager::LoadLevel1Waves()
 
     EnemySpawnData circler;
     circler.type = ENEMY_CIRCLER;
-    circler.spawnPosition = Vector2(RM.WINDOW_WIDTH / 2.f, RM.WINDOW_HEIGHT / 2.f);
+    circler.spawnPosition = Vector2(RM.WINDOW_WIDTH / 2.f, -100.f);
     circler.spawnDelay = 0.f;
     wave4->AddEnemy(circler);
 
