@@ -16,6 +16,7 @@ void Game::Init()
     RM.LoadTexture("resources/powerup.png");
     RM.LoadTexture("resources/BubbleEnemy.png");
     RM.LoadTexture("resources/KillerWhaleEnemy.png");
+    RM.LoadTexture("resources/HorizontalMedusaEnemy.png");
     
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));

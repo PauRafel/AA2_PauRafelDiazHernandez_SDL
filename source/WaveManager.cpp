@@ -164,14 +164,14 @@ void WaveManager::LoadLevel1Waves()
     Wave* wave3 = new Wave(3);
 
     float medusaPositions[8] = {
-        80.f,
-        180.f,
-        280.f,
+        200.f,
         380.f,
-        480.f,
-        580.f,
-        680.f,
-        120.f
+        560.f,
+        320.f,
+        200.f,
+        300.f,
+        260.f,
+        520.f
     };
 
     for (int i = 0; i < 8; i++)
@@ -179,7 +179,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData medusa;
         medusa.type = ENEMY_HORIZONTAL_MEDUSA;
         medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
-        medusa.spawnDelay = i * 0.6f;
+        medusa.spawnDelay = i * 0.3f;
         wave3->AddEnemy(medusa);
     }
 
@@ -351,7 +351,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData medusa;
         medusa.type = ENEMY_HORIZONTAL_MEDUSA;
         medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
-        medusa.spawnDelay = i * 0.6f;
+        medusa.spawnDelay = i * 0.3f;
         wave12->AddEnemy(medusa);
     }
 

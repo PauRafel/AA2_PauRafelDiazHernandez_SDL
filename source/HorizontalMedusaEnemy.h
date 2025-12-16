@@ -10,11 +10,11 @@ private:
 
 public:
     HorizontalMedusaEnemy(Vector2 spawnPosition)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
+        : Enemy("resources/HorizontalMedusaEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
     {
-        _health = 1;
-        _scoreValue = 100;
-        _speed = 100.0f + (rand() % 201);
+        _health = 3;
+        _scoreValue = 150;
+        _speed = 350.0f + (rand() % 101);
         _stateMachine->SetStateSimpleMove(Vector2(-1.0f, 0.0f), _speed);
     }
 };
