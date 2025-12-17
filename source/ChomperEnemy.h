@@ -7,25 +7,27 @@
 class ChomperEnemy : public Enemy
 {
 private:
-    Vector2 _circleCenter;      
+    Vector2 _circleCenter;
     float _circleRadius;
     float _circleAngle;
     float _angularSpeed;
-    float _driftSpeed;          
+    float _driftSpeed;
 
 public:
     ChomperEnemy(Vector2 spawnPosition, float startAngle = 0.0f)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
+        : Enemy("resources/ChomperEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
     {
-        _health = 1;
-        _scoreValue = 130;
+        _health = 3;
+        _scoreValue = 150;
 
         _circleCenter = spawnPosition;
-        _circleRadius = 60.0f;          
-        _circleAngle = startAngle;      
-        _angularSpeed = 4.0f;           
-        _driftSpeed = 80.0f;            
+        _circleRadius = 60.0f;     
+        _circleAngle = startAngle;
+        _angularSpeed = 4.0f;
+        _driftSpeed = 80.0f;
 
+        _transform->position.x = _circleCenter.x + _circleRadius * cos(_circleAngle);
+        _transform->position.y = _circleCenter.y + _circleRadius * sin(_circleAngle);
     }
 
     void Update(float dt) override
@@ -46,8 +48,9 @@ public:
         Vector2 offset = (Vector2(-_transform->size.x, -_transform->size.y) / 2.0f) * _transform->scale;
         _physics->AddCollider(new AABB(_transform->position + offset, _transform->size * _transform->scale));
 
-        if (_transform->position.x + _transform->size.x < 0)
+        if (_transform->position.x + _transform->size.x < -100.0f)
         {
+            _escapedOffScreen = true;
             Destroy();
         }
     }

@@ -282,16 +282,16 @@ void WaveManager::LoadLevel1Waves()
 
     Wave* wave8 = new Wave(8);
 
-    float chomperSpacing = 90.0f;
-    float chomperStartY = 50.0f;
+    float chomperSpacing = 30.0f; 
+    float chomperStartY = 250.0f;
 
     for (int i = 0; i < 8; i++)
     {
         EnemySpawnData chomper;
         chomper.type = ENEMY_CHOMPER;
         chomper.spawnPosition = Vector2(RM.WINDOW_WIDTH + 50.f, chomperStartY + (i * chomperSpacing));
-        chomper.spawnDelay = i * 0.2f;
-        chomper.startAngle = (i * 3.14159f / 4.0f); 
+        chomper.spawnDelay = 0.0f;
+        chomper.startAngle = (i * 3.14159f / 4.0f);
         wave8->AddEnemy(chomper);
     }
 

@@ -21,6 +21,7 @@ void Game::Init()
     RM.LoadTexture("resources/CirclerEnemy_Head.png");
     RM.LoadTexture("resources/CirclerEnemy_Body.png");
     RM.LoadTexture("resources/BeholderEnemy.png");
+    RM.LoadTexture("resources/ChomperEnemy.png");
     
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
