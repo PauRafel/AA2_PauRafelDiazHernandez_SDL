@@ -23,6 +23,7 @@ void Game::Init()
     RM.LoadTexture("resources/BeholderEnemy.png");
     RM.LoadTexture("resources/ChomperEnemy.png");
     RM.LoadTexture("resources/AmoebaEnemy.png");
+    RM.LoadTexture("resources/BioTitanBoss_Bullet.png");
     
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));

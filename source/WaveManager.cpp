@@ -361,7 +361,7 @@ void WaveManager::LoadLevel1Waves()
 
     EnemySpawnData boss;
     boss.type = ENEMY_BIO_TITAN_BOSS;
-    boss.spawnPosition = Vector2(RM.WINDOW_WIDTH - 300.f, RM.WINDOW_HEIGHT / 2.f);
+    boss.spawnPosition = Vector2(RM.WINDOW_WIDTH + 200.f, RM.WINDOW_HEIGHT / 2.f);
     boss.spawnDelay = 0.f;
     waveBoss->AddEnemy(boss);
 

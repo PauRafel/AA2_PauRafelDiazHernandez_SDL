@@ -90,6 +90,15 @@ private:
     SpawnEnemyCallback _spawnCallback;
 
 public:
+    bool IsCurrentWaveBoss() const
+    {
+        Wave* currentWave = GetCurrentWave();
+        if (currentWave == nullptr)
+            return false;
+
+        return currentWave->GetWaveNumber() == 13;
+    }
+
     static WaveManager& Instance()
     {
         static WaveManager instance;

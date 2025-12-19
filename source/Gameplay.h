@@ -43,6 +43,9 @@ private:
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
 
+    bool _isBossFight = false;
+    bool _bossIntroStarted = false;
+
     PowerUpType _powerUpCycle[8] = {
         POWERUP_SCORE,
         POWERUP_CA1,
@@ -132,6 +135,19 @@ public:
         UpdateHUD();
 
         WAVE_MANAGER.Update(dt);
+
+        if (WAVE_MANAGER.IsCurrentWaveBoss() && !_bossIntroStarted)
+        {
+            _bossIntroStarted = true;
+            _isBossFight = true;
+
+            if (_background != nullptr)
+            {
+                _background->StopScrolling();
+                std::cout << "=== BOSS FIGHT STARTED ===" << std::endl;
+                std::cout << "Background scroll STOPPED!" << std::endl;
+            }
+        }
 
         if (_waitingForNextWave)
         {
