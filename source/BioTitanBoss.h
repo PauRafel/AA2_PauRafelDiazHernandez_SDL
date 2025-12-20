@@ -37,7 +37,7 @@ private:
 
 public:
     BioTitanBoss(Vector2 bossPosition, std::vector<Bullet*>* bulletsVector)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), bossPosition)
+        : Enemy("resources/BioTitanBossEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), bossPosition)
     {
         _currentPhase = PHASE_ENTERING;
         _health = 50;
