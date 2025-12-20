@@ -381,25 +381,25 @@ public:
         if (_background != nullptr)
             _background->Render();
 
-        SDL_FRect hudBackground;
-        hudBackground.x = 0.f;
-        hudBackground.y = RM.WINDOW_HEIGHT - 50.f; 
-        hudBackground.w = (float)RM.WINDOW_WIDTH;
-        hudBackground.h = 50.f;
-
-        SDL_SetRenderDrawColor(RM.GetRenderer(), 0, 0, 0, 255);
-        SDL_RenderFillRect(RM.GetRenderer(), &hudBackground);
-
         for (Enemy* enemy : _enemies)
             enemy->Render();
-
-        Scene::Render();
 
         for (Bullet* bullet : _bullets)
             bullet->Render();
 
         for (PowerUp* powerup : _powerups)
             powerup->Render();
+
+        SDL_FRect hudBackground;
+        hudBackground.x = 0.f;
+        hudBackground.y = RM.WINDOW_HEIGHT - 50.f;
+        hudBackground.w = (float)RM.WINDOW_WIDTH;
+        hudBackground.h = 50.f;
+
+        SDL_SetRenderDrawColor(RM.GetRenderer(), 0, 0, 0, 255);
+        SDL_RenderFillRect(RM.GetRenderer(), &hudBackground);
+
+        Scene::Render();
     }
 
 private:
@@ -463,49 +463,49 @@ private:
         float textScale = 0.6f;
 
         _scoreLabel = new TextObject("SC:", "resources/fonts/arial.ttf");
-        _scoreLabel->GetTransform()->position = Vector2(20.f, hudY);
+        _scoreLabel->GetTransform()->position = Vector2(40.f, hudY);
         _scoreLabel->GetTransform()->scale = Vector2(textScale, textScale);
         _scoreLabel->SetColor(cyanColor);
         _ui.push_back(_scoreLabel);
 
         _scoreValue = new TextObject("000000", "resources/fonts/arial.ttf");
-        _scoreValue->GetTransform()->position = Vector2(80.f, hudY);
+        _scoreValue->GetTransform()->position = Vector2(100.f, hudY);
         _scoreValue->GetTransform()->scale = Vector2(textScale, textScale);
         _scoreValue->SetColor(cyanColor);
         _ui.push_back(_scoreValue);
 
         _energyLabel = new TextObject("EN:", "resources/fonts/arial.ttf");
-        _energyLabel->GetTransform()->position = Vector2(250.f, hudY);
+        _energyLabel->GetTransform()->position = Vector2(270.f, hudY);
         _energyLabel->GetTransform()->scale = Vector2(textScale, textScale);
         _energyLabel->SetColor(cyanColor);
         _ui.push_back(_energyLabel);
 
         _energyBars = new TextObject("==========", "resources/fonts/arial.ttf");
-        _energyBars->GetTransform()->position = Vector2(310.f, hudY);
+        _energyBars->GetTransform()->position = Vector2(330.f, hudY);
         _energyBars->GetTransform()->scale = Vector2(textScale, textScale);
         _energyBars->SetColor(cyanColor);
         _ui.push_back(_energyBars);
 
         _cannonLabel = new TextObject("CA:", "resources/fonts/arial.ttf");
-        _cannonLabel->GetTransform()->position = Vector2(580.f, hudY);
+        _cannonLabel->GetTransform()->position = Vector2(600.f, hudY);
         _cannonLabel->GetTransform()->scale = Vector2(textScale, textScale);
         _cannonLabel->SetColor(cyanColor);
         _ui.push_back(_cannonLabel);
 
         _cannonBars = new TextObject("==========", "resources/fonts/arial.ttf");
-        _cannonBars->GetTransform()->position = Vector2(640.f, hudY);
+        _cannonBars->GetTransform()->position = Vector2(660.f, hudY);
         _cannonBars->GetTransform()->scale = Vector2(textScale, textScale);
         _cannonBars->SetColor(cyanColor);
         _ui.push_back(_cannonBars);
 
         _laserLabel = new TextObject("LA:", "resources/fonts/arial.ttf");
-        _laserLabel->GetTransform()->position = Vector2(910.f, hudY);
+        _laserLabel->GetTransform()->position = Vector2(930.f, hudY);
         _laserLabel->GetTransform()->scale = Vector2(textScale, textScale);
         _laserLabel->SetColor(cyanColor);
         _ui.push_back(_laserLabel);
 
         _laserBars = new TextObject("==========", "resources/fonts/arial.ttf");
-        _laserBars->GetTransform()->position = Vector2(970.f, hudY);
+        _laserBars->GetTransform()->position = Vector2(990.f, hudY);
         _laserBars->GetTransform()->scale = Vector2(textScale, textScale);
         _laserBars->SetColor(cyanColor);
         _ui.push_back(_laserBars);
