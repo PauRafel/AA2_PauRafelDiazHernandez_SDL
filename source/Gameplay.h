@@ -45,6 +45,9 @@ private:
 
     bool _isBossFight = false;
     bool _bossIntroStarted = false;
+    bool _bossWaveStarted = false;     
+    bool _bossFullyVisible = false;    
+    BioTitanBoss* _boss = nullptr;   
 
     PowerUpType _powerUpCycle[8] = {
         POWERUP_SCORE,
@@ -136,16 +139,40 @@ public:
 
         WAVE_MANAGER.Update(dt);
 
-        if (WAVE_MANAGER.IsCurrentWaveBoss() && !_bossIntroStarted)
+        if (WAVE_MANAGER.IsCurrentWaveBoss() && !_bossWaveStarted)
         {
-            _bossIntroStarted = true;
-            _isBossFight = true;
+            _bossWaveStarted = true;
+            std::cout << "=== BOSS WAVE STARTED - Keep scrolling... ===" << std::endl;
+        }
 
-            if (_background != nullptr)
+        if (_bossWaveStarted && _boss == nullptr && !_enemies.empty())
+        {
+            for (Enemy* enemy : _enemies)
             {
-                _background->StopScrolling();
-                std::cout << "=== BOSS FIGHT STARTED ===" << std::endl;
-                std::cout << "Background scroll STOPPED!" << std::endl;
+                BioTitanBoss* potentialBoss = dynamic_cast<BioTitanBoss*>(enemy);
+                if (potentialBoss != nullptr)
+                {
+                    _boss = potentialBoss;
+                    std::cout << "Boss found in enemy list!" << std::endl;
+                    break;
+                }
+            }
+        }
+
+        if (_boss != nullptr && !_bossFullyVisible && !_isBossFight)
+        {
+            if (_boss->IsFullyVisible())
+            {
+                _bossFullyVisible = true;
+                _isBossFight = true;
+
+                if (_background != nullptr)
+                {
+                    _background->StopScrolling();
+                    std::cout << "=== BOSS FULLY VISIBLE ===" << std::endl;
+                    std::cout << "Background scroll STOPPED!" << std::endl;
+                    std::cout << "=== BOSS FIGHT START ===" << std::endl;
+                }
             }
         }
 

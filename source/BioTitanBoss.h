@@ -12,9 +12,9 @@ class BioTitanBoss : public Enemy
 private:
     enum BossPhase
     {
-        PHASE_ENTERING,    
+        PHASE_ENTERING,   
         PHASE_FIGHTING,    
-        PHASE_DYING        
+        PHASE_DYING
     };
 
     BossPhase _currentPhase;
@@ -24,6 +24,7 @@ private:
     Vector2 _eyeSize;
     Vector2 _targetPosition;
     float _entrySpeed;
+    float _backgroundScrollSpeed;  
 
     float _shootTimer;
     float _shootCooldown;
@@ -32,6 +33,7 @@ private:
     float _bulletSpeed;
 
     Vector2 _spriteSize;
+    bool _isFullyVisible;
 
 public:
     BioTitanBoss(Vector2 bossPosition, std::vector<Bullet*>* bulletsVector)
@@ -46,11 +48,18 @@ public:
         _transform->size = _spriteSize;
         _transform->scale = Vector2(2.0f, 2.0f);
 
-        _eyePosition = bossPosition;
+        float bossWidth = _spriteSize.x * _transform->scale.x; 
+
+        _transform->position = Vector2(RM.WINDOW_WIDTH + bossWidth, RM.WINDOW_HEIGHT / 2.f);
+
+        _eyePosition = _transform->position;
         _eyeSize = Vector2(80.f, 80.f);
 
-        _targetPosition = Vector2(RM.WINDOW_WIDTH - 200.f, RM.WINDOW_HEIGHT / 2.f);
-        _entrySpeed = 100.0f;
+        _targetPosition = Vector2(RM.WINDOW_WIDTH - (bossWidth / 2.f) - 50.f, RM.WINDOW_HEIGHT / 2.f);
+
+        _entrySpeed = 0.0f;
+        _backgroundScrollSpeed = 200.0f;  
+        _isFullyVisible = false;
 
         _shootTimer = 0.0f;
         _shootCooldown = 2.0f;
@@ -93,6 +102,9 @@ public:
 
     void TakeDamage(int damage)
     {
+        if (_currentPhase != PHASE_FIGHTING)
+            return;
+
         _health -= damage;
 
         if (_health <= 0)
@@ -103,22 +115,19 @@ public:
         }
     }
 
+    bool IsFullyVisible() const { return _isFullyVisible; }
+
 private:
     void UpdateEntering(float dt)
     {
-        Vector2 direction = _targetPosition - _transform->position;
-        float distance = direction.Magnitude();
+        _transform->position.x -= _backgroundScrollSpeed * dt;
+        _eyePosition = _transform->position;
 
-        if (distance > 5.0f)
+        if (_transform->position.x <= _targetPosition.x)
         {
-            direction.Normalize();
-            _transform->position = _transform->position + direction * _entrySpeed * dt;
-            _eyePosition = _transform->position; 
-        }
-        else
-        {
-            _transform->position = _targetPosition;
-            _eyePosition = _targetPosition;
+            _transform->position.x = _targetPosition.x;
+            _eyePosition.x = _targetPosition.x;
+            _isFullyVisible = true;
             _currentPhase = PHASE_FIGHTING;
             std::cout << "BOSS READY TO FIGHT!" << std::endl;
         }
