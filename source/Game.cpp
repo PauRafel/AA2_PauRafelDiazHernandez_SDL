@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
+#include "IntroSequence.h"
 #include <cassert>
 #include <iostream>
 
@@ -9,6 +10,14 @@ void Game::Init()
     RM.Init();
 
     RM.LoadFont("resources/fonts/arial.ttf", 48);
+
+
+    RM.LoadTexture("resources/intro/splash_title.png");
+    RM.LoadTexture("resources/intro/splash_art.png");
+    RM.LoadTexture("resources/intro/panel_settings.png");
+    RM.LoadTexture("resources/intro/panel_scoreboard.png");
+    RM.LoadTexture("resources/intro/panel_powerups.png");
+    RM.LoadTexture("resources/intro/splash_level1.png");
 
 
     RM.LoadTexture("resources/player.png");
@@ -44,10 +53,11 @@ void Game::Init()
     RM.LoadTexture("resources/BioTitanBossEnemy.png");
     
 
+    assert(SM.AddScene("IntroSequence", new IntroSequence()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
 
-    assert(SM.InitFirstScene("MainMenu"));
+    assert(SM.InitFirstScene("IntroSequence"));
 
     _isRunning = true;
 

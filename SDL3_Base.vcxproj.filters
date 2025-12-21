@@ -66,6 +66,9 @@
     <ClCompile Include="source\EnemyStateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\WaveManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Vector2.h">
@@ -165,6 +168,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\BioTitanBoss.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WaveManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\IntroSequence.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
