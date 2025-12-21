@@ -9,11 +9,28 @@ void Game::Init()
     RM.Init();
 
     RM.LoadFont("resources/fonts/arial.ttf", 48);
+
+
     RM.LoadTexture("resources/player.png");
     RM.LoadTexture("resources/bullet.png");
+
+
     RM.LoadTexture("resources/enemy.png");
     RM.LoadTexture("resources/background.png");
+
+
     RM.LoadTexture("resources/powerup.png");
+    RM.LoadTexture("resources/powerups/powerup_score.png");
+    RM.LoadTexture("resources/powerups/powerup_ca1.png");
+    RM.LoadTexture("resources/powerups/powerup_la1.png");
+    RM.LoadTexture("resources/powerups/powerup_speed.png");
+    RM.LoadTexture("resources/powerups/powerup_ca2.png");
+    RM.LoadTexture("resources/powerups/powerup_la2.png");
+    RM.LoadTexture("resources/powerups/powerup_shield.png");
+    RM.LoadTexture("resources/powerups/powerup_turrets.png");
+    RM.LoadTexture("resources/powerups/powerup_full_shield.png");
+
+
     RM.LoadTexture("resources/BubbleEnemy.png");
     RM.LoadTexture("resources/KillerWhaleEnemy.png");
     RM.LoadTexture("resources/HorizontalMedusaEnemy.png");
@@ -26,6 +43,7 @@ void Game::Init()
     RM.LoadTexture("resources/BioTitanBoss_Bullet.png");
     RM.LoadTexture("resources/BioTitanBossEnemy.png");
     
+
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
 

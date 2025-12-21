@@ -9,11 +9,13 @@ PowerUp::PowerUp(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSi
     _currentHits = 0;
     _scrollSpeed = 100.0f; 
 
-    _transform->size = Vector2(48.f, 48.f);
+    _transform->size = Vector2(60.f, 32.f);
     _transform->scale = Vector2(1.f, 1.f);
     _transform->position = spawnPosition;
 
     _physics->AddCollider(new AABB(_transform->position, _transform->size));
+
+    UpdateSprite();
 }
 
 void PowerUp::Update(float dt)
@@ -39,7 +41,25 @@ void PowerUp::Hit()
     if (_currentHits >= _hitsToNextState)
     {
         _currentHits = 0;  
-        _cycleIndex = (_cycleIndex + 1) % 8; 
+        _cycleIndex = (_cycleIndex + 1) % 9; 
         _currentType = _powerUpCycle[_cycleIndex];
+
+        UpdateSprite();
+    }
+}
+
+void PowerUp::UpdateSprite()
+{
+    ImageRenderer* imgRenderer = dynamic_cast<ImageRenderer*>(_renderer);
+
+    if (imgRenderer != nullptr)
+    {
+        delete _renderer;
+        _renderer = new ImageRenderer(
+            _transform,
+            _powerUpTextures[_cycleIndex],
+            Vector2(0.f, 0.f),
+            Vector2(60.f, 32.f)
+        );
     }
 }

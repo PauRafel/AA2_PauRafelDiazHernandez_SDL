@@ -54,7 +54,7 @@ private:
     bool _bossFullyVisible = false;    
     BioTitanBoss* _boss = nullptr;   
 
-    PowerUpType _powerUpCycle[8] = {
+    PowerUpType _powerUpCycle[9] = {
         POWERUP_SCORE,
         POWERUP_CA1,
         POWERUP_LA1,
@@ -62,10 +62,11 @@ private:
         POWERUP_CA2,
         POWERUP_LA2,
         POWERUP_SHIELD,
-        POWERUP_TURRETS
+        POWERUP_TURRETS,
+        POWERUP_FULL_SHIELD
     };
 
-    std::string _powerUpNames[8] = {
+    std::string _powerUpNames[9] = {
         "NEXT: +1000 SCORE",
         "NEXT: CANNONS LV1",
         "NEXT: LASER LV1",
@@ -73,7 +74,8 @@ private:
         "NEXT: CANNONS LV2",
         "NEXT: LASER LV2",
         "NEXT: SHIELD RESTORE",
-        "NEXT: TURRETS"
+        "NEXT: TURRETS",
+        "NEXT: FULL_SHIELD"
     };
 
     float _waveTransitionTimer = 0.0f;
@@ -581,9 +583,9 @@ private:
     void SpawnPowerUp(Vector2 position)
     {
         PowerUp* powerup = new PowerUp(
-            "resources/powerup.png",
+            "resources/powerups/powerup_score.png",
             Vector2(0.f, 0.f),
-            Vector2(48.f, 48.f),
+            Vector2(60.f, 32.f),
             position
         );
         _powerups.push_back(powerup);
@@ -619,6 +621,9 @@ private:
             break;
         case POWERUP_TURRETS:
             _player->ApplyPowerUp(STATE_TURRETS);
+            break;
+        case POWERUP_FULL_SHIELD: 
+            _player->ApplyPowerUp(STATE_FULL_SHIELD);
             break;
         }
     }
