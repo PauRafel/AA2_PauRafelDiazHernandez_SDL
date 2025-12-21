@@ -10,10 +10,21 @@
 class BioTitanBoss : public Enemy
 {
 private:
+    enum BossPhase
+    {
+        PHASE_ENTERING,   
+        PHASE_FIGHTING,    
+        PHASE_DYING
+    };
+
+    BossPhase _currentPhase;
     std::vector<Bullet*>* _bulletsVector;
 
     Vector2 _eyePosition;
     Vector2 _eyeSize;
+    Vector2 _targetPosition;
+    float _entrySpeed;
+    float _backgroundScrollSpeed;  
 
     float _shootTimer;
     float _shootCooldown;
@@ -22,21 +33,33 @@ private:
     float _bulletSpeed;
 
     Vector2 _spriteSize;
+    bool _isFullyVisible;
 
 public:
     BioTitanBoss(Vector2 bossPosition, std::vector<Bullet*>* bulletsVector)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), bossPosition)
+        : Enemy("resources/BioTitanBossEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), bossPosition)
     {
-        _health = 50; 
+        _currentPhase = PHASE_ENTERING;
+        _health = 50;
         _scoreValue = 5000;
         _bulletsVector = bulletsVector;
 
         _spriteSize = Vector2(256.f, 256.f);
         _transform->size = _spriteSize;
-        _transform->scale = Vector2(2.0f, 2.0f); 
+        _transform->scale = Vector2(2.0f, 2.0f);
 
-        _eyePosition = bossPosition;  
-        _eyeSize = Vector2(48.f, 48.f); 
+        float bossWidth = _spriteSize.x * _transform->scale.x; 
+
+        _transform->position = Vector2(RM.WINDOW_WIDTH + bossWidth, RM.WINDOW_HEIGHT / 2.f);
+
+        _eyePosition = _transform->position;
+        _eyeSize = Vector2(80.f, 80.f);
+
+        _targetPosition = Vector2(RM.WINDOW_WIDTH - (bossWidth / 2.f) - 50.f, RM.WINDOW_HEIGHT / 2.f);
+
+        _entrySpeed = 0.0f;
+        _backgroundScrollSpeed = 200.0f;  
+        _isFullyVisible = false;
 
         _shootTimer = 0.0f;
         _shootCooldown = 2.0f;
@@ -51,12 +74,18 @@ public:
 
     void Update(float dt) override
     {
-        _shootTimer += dt;
-
-        if (_shootTimer >= _shootCooldown)
+        switch (_currentPhase)
         {
-            Shoot();
-            _shootTimer = 0.0f;
+        case PHASE_ENTERING:
+            UpdateEntering(dt);
+            break;
+
+        case PHASE_FIGHTING:
+            UpdateFighting(dt);
+            break;
+
+        case PHASE_DYING:
+            break;
         }
 
         if (_renderer != nullptr)
@@ -73,16 +102,48 @@ public:
 
     void TakeDamage(int damage)
     {
+        if (_currentPhase != PHASE_FIGHTING)
+            return;
+
         _health -= damage;
 
         if (_health <= 0)
         {
             _health = 0;
+            _currentPhase = PHASE_DYING;
             Destroy();
         }
     }
 
+    bool IsFullyVisible() const { return _isFullyVisible; }
+
 private:
+    void UpdateEntering(float dt)
+    {
+        _transform->position.x -= _backgroundScrollSpeed * dt;
+        _eyePosition = _transform->position;
+
+        if (_transform->position.x <= _targetPosition.x)
+        {
+            _transform->position.x = _targetPosition.x;
+            _eyePosition.x = _targetPosition.x;
+            _isFullyVisible = true;
+            _currentPhase = PHASE_FIGHTING;
+            std::cout << "BOSS READY TO FIGHT!" << std::endl;
+        }
+    }
+
+    void UpdateFighting(float dt)
+    {
+        _shootTimer += dt;
+
+        if (_shootTimer >= _shootCooldown)
+        {
+            Shoot();
+            _shootTimer = 0.0f;
+        }
+    }
+
     void UpdateEyeCollider()
     {
         Vector2 eyeOffset = (Vector2(-_eyeSize.x, -_eyeSize.y) / 2.0f);
@@ -125,9 +186,9 @@ private:
 
             float angleRad = finalAngle * 3.14159f / 180.0f;
 
-            Bullet* bullet = new Bullet("resources/bullet.png", Vector2(0.f, 0.f), Vector2(32.f, 32.f));
-            bullet->GetTransform()->position = shootOrigin;  
-            bullet->GetTransform()->scale = Vector2(1.5f, 1.5f);  
+            Bullet* bullet = new Bullet("resources/BioTitanBoss_Bullet.png", Vector2(0.f, 0.f), Vector2(32.f, 32.f));
+            bullet->GetTransform()->position = shootOrigin;
+            bullet->GetTransform()->scale = Vector2(1.5f, 1.5f);
 
             bullet->SetIsPlayerBullet(false);
 

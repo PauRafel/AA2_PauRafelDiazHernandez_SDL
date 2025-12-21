@@ -14,21 +14,24 @@ Background::Background(std::string texturePath)
 
 void Background::Update(float dt)
 {
-    _offset1 -= _scrollSpeed * dt;
-    _offset2 -= _scrollSpeed * dt;
-
-    if (_offset1 + RM.WINDOW_WIDTH <= 0)
+    if (_isScrolling)
     {
-        _offset1 = _offset2 + RM.WINDOW_WIDTH;
-    }
+        _offset1 -= _scrollSpeed * dt;
+        _offset2 -= _scrollSpeed * dt;
 
-    if (_offset2 + RM.WINDOW_WIDTH <= 0)
-    {
-        _offset2 = _offset1 + RM.WINDOW_WIDTH;
-    }
+        if (_offset1 + RM.WINDOW_WIDTH <= 0)
+        {
+            _offset1 = _offset2 + RM.WINDOW_WIDTH;
+        }
 
-    _rect1.x = _offset1;
-    _rect2.x = _offset2;
+        if (_offset2 + RM.WINDOW_WIDTH <= 0)
+        {
+            _offset2 = _offset1 + RM.WINDOW_WIDTH;
+        }
+
+        _rect1.x = _offset1;
+        _rect2.x = _offset2;
+    }
 }
 
 void Background::Render()

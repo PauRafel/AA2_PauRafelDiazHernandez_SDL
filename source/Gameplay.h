@@ -29,21 +29,32 @@ class Gameplay : public Scene
 private:
     Player* _player = nullptr;
     Background* _background = nullptr;
-    std::vector<Enemy*> _enemies;  
+    std::vector<Enemy*> _enemies;
     std::vector<Bullet*> _bullets;
     std::vector<PowerUp*> _powerups;
 
-    TextObject* _scoreText = nullptr;
-    TextObject* _shieldText = nullptr;
-    TextObject* _cannonAmmoText = nullptr;
-    TextObject* _laserAmmoText = nullptr;
+    TextObject* _scoreLabel = nullptr;
+    TextObject* _scoreValue = nullptr;
+    TextObject* _energyLabel = nullptr;
+    TextObject* _energyBars = nullptr;
+    TextObject* _cannonLabel = nullptr;
+    TextObject* _cannonBars = nullptr;
+    TextObject* _laserLabel = nullptr;
+    TextObject* _laserBars = nullptr;
+
     TextObject* _powerUpInfoText = nullptr;
     TextObject* _waveInfoText = nullptr;
 
     bool _powerUpSpawned = false;
     int _powerUpCycleIndex = 0;
 
-    PowerUpType _powerUpCycle[8] = {
+    bool _isBossFight = false;
+    bool _bossIntroStarted = false;
+    bool _bossWaveStarted = false;     
+    bool _bossFullyVisible = false;    
+    BioTitanBoss* _boss = nullptr;   
+
+    PowerUpType _powerUpCycle[9] = {
         POWERUP_SCORE,
         POWERUP_CA1,
         POWERUP_LA1,
@@ -51,10 +62,11 @@ private:
         POWERUP_CA2,
         POWERUP_LA2,
         POWERUP_SHIELD,
-        POWERUP_TURRETS
+        POWERUP_TURRETS,
+        POWERUP_FULL_SHIELD
     };
 
-    std::string _powerUpNames[8] = {
+    std::string _powerUpNames[9] = {
         "NEXT: +1000 SCORE",
         "NEXT: CANNONS LV1",
         "NEXT: LASER LV1",
@@ -62,7 +74,8 @@ private:
         "NEXT: CANNONS LV2",
         "NEXT: LASER LV2",
         "NEXT: SHIELD RESTORE",
-        "NEXT: TURRETS"
+        "NEXT: TURRETS",
+        "NEXT: FULL_SHIELD"
     };
 
     float _waveTransitionTimer = 0.0f;
@@ -132,6 +145,43 @@ public:
         UpdateHUD();
 
         WAVE_MANAGER.Update(dt);
+
+        if (WAVE_MANAGER.IsCurrentWaveBoss() && !_bossWaveStarted)
+        {
+            _bossWaveStarted = true;
+            std::cout << "=== BOSS WAVE STARTED - Keep scrolling... ===" << std::endl;
+        }
+
+        if (_bossWaveStarted && _boss == nullptr && !_enemies.empty())
+        {
+            for (Enemy* enemy : _enemies)
+            {
+                BioTitanBoss* potentialBoss = dynamic_cast<BioTitanBoss*>(enemy);
+                if (potentialBoss != nullptr)
+                {
+                    _boss = potentialBoss;
+                    std::cout << "Boss found in enemy list!" << std::endl;
+                    break;
+                }
+            }
+        }
+
+        if (_boss != nullptr && !_bossFullyVisible && !_isBossFight)
+        {
+            if (_boss->IsFullyVisible())
+            {
+                _bossFullyVisible = true;
+                _isBossFight = true;
+
+                if (_background != nullptr)
+                {
+                    _background->StopScrolling();
+                    std::cout << "=== BOSS FULLY VISIBLE ===" << std::endl;
+                    std::cout << "Background scroll STOPPED!" << std::endl;
+                    std::cout << "=== BOSS FIGHT START ===" << std::endl;
+                }
+            }
+        }
 
         if (_waitingForNextWave)
         {
@@ -336,13 +386,22 @@ public:
         for (Enemy* enemy : _enemies)
             enemy->Render();
 
-        Scene::Render();
-
         for (Bullet* bullet : _bullets)
             bullet->Render();
 
         for (PowerUp* powerup : _powerups)
             powerup->Render();
+
+        SDL_FRect hudBackground;
+        hudBackground.x = 0.f;
+        hudBackground.y = RM.WINDOW_HEIGHT - 50.f;
+        hudBackground.w = (float)RM.WINDOW_WIDTH;
+        hudBackground.h = 50.f;
+
+        SDL_SetRenderDrawColor(RM.GetRenderer(), 0, 0, 0, 255);
+        SDL_RenderFillRect(RM.GetRenderer(), &hudBackground);
+
+        Scene::Render();
     }
 
 private:
@@ -401,29 +460,57 @@ private:
 
     void CreateHUD()
     {
-        _scoreText = new TextObject("SCORE: 000000", "resources/fonts/arial.ttf");
-        _scoreText->GetTransform()->position = Vector2(20.f, 20.f);
-        _scoreText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _scoreText->SetColor({ 255, 215, 0, 255 });
-        _ui.push_back(_scoreText);
+        float hudY = RM.WINDOW_HEIGHT - 15.f; 
+        SDL_Color cyanColor = { 0, 255, 255, 255 };  
+        float textScale = 0.6f;
 
-        _shieldText = new TextObject("SHIELD: 100", "resources/fonts/arial.ttf");
-        _shieldText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 120.f);
-        _shieldText->GetTransform()->scale = Vector2(0.5f, 0.5f);
-        _shieldText->SetColor({ 0, 255, 255, 255 });
-        _ui.push_back(_shieldText);
+        _scoreLabel = new TextObject("SC:", "resources/fonts/arial.ttf");
+        _scoreLabel->GetTransform()->position = Vector2(40.f, hudY);
+        _scoreLabel->GetTransform()->scale = Vector2(textScale, textScale);
+        _scoreLabel->SetColor(cyanColor);
+        _ui.push_back(_scoreLabel);
 
-        _cannonAmmoText = new TextObject("CA: 0", "resources/fonts/arial.ttf");
-        _cannonAmmoText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 80.f);
-        _cannonAmmoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _cannonAmmoText->SetColor({ 255, 128, 0, 255 });
-        _ui.push_back(_cannonAmmoText);
+        _scoreValue = new TextObject("000000", "resources/fonts/arial.ttf");
+        _scoreValue->GetTransform()->position = Vector2(100.f, hudY);
+        _scoreValue->GetTransform()->scale = Vector2(textScale, textScale);
+        _scoreValue->SetColor(cyanColor);
+        _ui.push_back(_scoreValue);
 
-        _laserAmmoText = new TextObject("LA: 0", "resources/fonts/arial.ttf");
-        _laserAmmoText->GetTransform()->position = Vector2(20.f, RM.WINDOW_HEIGHT - 50.f);
-        _laserAmmoText->GetTransform()->scale = Vector2(0.4f, 0.4f);
-        _laserAmmoText->SetColor({ 255, 0, 255, 255 });
-        _ui.push_back(_laserAmmoText);
+        _energyLabel = new TextObject("EN:", "resources/fonts/arial.ttf");
+        _energyLabel->GetTransform()->position = Vector2(270.f, hudY);
+        _energyLabel->GetTransform()->scale = Vector2(textScale, textScale);
+        _energyLabel->SetColor(cyanColor);
+        _ui.push_back(_energyLabel);
+
+        _energyBars = new TextObject("==========", "resources/fonts/arial.ttf");
+        _energyBars->GetTransform()->position = Vector2(330.f, hudY);
+        _energyBars->GetTransform()->scale = Vector2(textScale, textScale);
+        _energyBars->SetColor(cyanColor);
+        _ui.push_back(_energyBars);
+
+        _cannonLabel = new TextObject("CA:", "resources/fonts/arial.ttf");
+        _cannonLabel->GetTransform()->position = Vector2(600.f, hudY);
+        _cannonLabel->GetTransform()->scale = Vector2(textScale, textScale);
+        _cannonLabel->SetColor(cyanColor);
+        _ui.push_back(_cannonLabel);
+
+        _cannonBars = new TextObject("==========", "resources/fonts/arial.ttf");
+        _cannonBars->GetTransform()->position = Vector2(660.f, hudY);
+        _cannonBars->GetTransform()->scale = Vector2(textScale, textScale);
+        _cannonBars->SetColor(cyanColor);
+        _ui.push_back(_cannonBars);
+
+        _laserLabel = new TextObject("LA:", "resources/fonts/arial.ttf");
+        _laserLabel->GetTransform()->position = Vector2(930.f, hudY);
+        _laserLabel->GetTransform()->scale = Vector2(textScale, textScale);
+        _laserLabel->SetColor(cyanColor);
+        _ui.push_back(_laserLabel);
+
+        _laserBars = new TextObject("==========", "resources/fonts/arial.ttf");
+        _laserBars->GetTransform()->position = Vector2(990.f, hudY);
+        _laserBars->GetTransform()->scale = Vector2(textScale, textScale);
+        _laserBars->SetColor(cyanColor);
+        _ui.push_back(_laserBars);
 
         _powerUpInfoText = new TextObject("NEXT: +1000 SCORE", "resources/fonts/arial.ttf");
         _powerUpInfoText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, 20.f);
@@ -444,20 +531,32 @@ private:
             return;
 
         std::ostringstream scoreStream;
-        scoreStream << "SCORE: " << std::setfill('0') << std::setw(6) << _player->GetScore();
-        _scoreText->SetText(scoreStream.str());
+        scoreStream << std::setfill('0') << std::setw(6) << _player->GetScore();
+        _scoreValue->SetText(scoreStream.str());
 
-        std::ostringstream shieldStream;
-        shieldStream << "SHIELD: " << _player->GetShield();
-        _shieldText->SetText(shieldStream.str());
+        int shield = _player->GetShield();
+        int maxShield = 100;
+        int numBars = (shield * 10) / maxShield; 
+        std::string energyBars = "";
+        for (int i = 0; i < numBars; i++)
+            energyBars += "=";
+        _energyBars->SetText(energyBars);
 
-        std::ostringstream cannonStream;
-        cannonStream << "CA: " << _player->GetCannonAmmo();
-        _cannonAmmoText->SetText(cannonStream.str());
+        int cannonAmmo = _player->GetCannonAmmo();
+        int maxCannonAmmo = 100;  
+        int cannonBars = (cannonAmmo * 10) / maxCannonAmmo;  
+        std::string cannonBarsStr = "";
+        for (int i = 0; i < cannonBars; i++)
+            cannonBarsStr += "=";
+        _cannonBars->SetText(cannonBarsStr);
 
-        std::ostringstream laserStream;
-        laserStream << "LA: " << _player->GetLaserAmmo();
-        _laserAmmoText->SetText(laserStream.str());
+        int laserAmmo = _player->GetLaserAmmo();
+        int maxLaserAmmo = 60;  
+        int laserBars = (laserAmmo * 10) / maxLaserAmmo;  
+        std::string laserBarsStr = "";
+        for (int i = 0; i < laserBars; i++)
+            laserBarsStr += "=";
+        _laserBars->SetText(laserBarsStr);
 
         std::string powerUpInfo = "NO POWERUP";
         if (!_powerups.empty() && _powerups[0] != nullptr && !_powerups[0]->IsPendingDestroy())
@@ -484,9 +583,9 @@ private:
     void SpawnPowerUp(Vector2 position)
     {
         PowerUp* powerup = new PowerUp(
-            "resources/powerup.png",
+            "resources/powerups/powerup_score.png",
             Vector2(0.f, 0.f),
-            Vector2(48.f, 48.f),
+            Vector2(60.f, 32.f),
             position
         );
         _powerups.push_back(powerup);
@@ -522,6 +621,9 @@ private:
             break;
         case POWERUP_TURRETS:
             _player->ApplyPowerUp(STATE_TURRETS);
+            break;
+        case POWERUP_FULL_SHIELD: 
+            _player->ApplyPowerUp(STATE_FULL_SHIELD);
             break;
         }
     }

@@ -131,13 +131,13 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData bubbleTop;
         bubbleTop.type = ENEMY_BUBBLE;
         bubbleTop.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);
-        bubbleTop.spawnDelay = i * 1.0f; 
+        bubbleTop.spawnDelay = i * 0.3f; 
         wave1->AddEnemy(bubbleTop);
 
         EnemySpawnData bubbleBottom;
         bubbleBottom.type = ENEMY_BUBBLE;
         bubbleBottom.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);
-        bubbleBottom.spawnDelay = (i * 1.0f) + 0.5f;  
+        bubbleBottom.spawnDelay = (i * 0.3f) + 0.3f;
         wave1->AddEnemy(bubbleBottom);
     }
 
@@ -155,7 +155,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale2;
     whale2.type = ENEMY_KILLER_WHALE;
     whale2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale2.spawnDelay = 1.5f;
+    whale2.spawnDelay = 2.0f;
     whale2.onCeiling = false;
     wave2->AddEnemy(whale2);
 
@@ -164,14 +164,14 @@ void WaveManager::LoadLevel1Waves()
     Wave* wave3 = new Wave(3);
 
     float medusaPositions[8] = {
-        80.f,
-        180.f,
-        280.f,
+        200.f,
         380.f,
-        480.f,
-        580.f,
-        680.f,
-        120.f
+        560.f,
+        320.f,
+        200.f,
+        300.f,
+        260.f,
+        520.f
     };
 
     for (int i = 0; i < 8; i++)
@@ -179,7 +179,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData medusa;
         medusa.type = ENEMY_HORIZONTAL_MEDUSA;
         medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
-        medusa.spawnDelay = i * 0.6f;
+        medusa.spawnDelay = i * 0.3f;
         wave3->AddEnemy(medusa);
     }
 
@@ -189,7 +189,7 @@ void WaveManager::LoadLevel1Waves()
 
     EnemySpawnData circler;
     circler.type = ENEMY_CIRCLER;
-    circler.spawnPosition = Vector2(RM.WINDOW_WIDTH / 2.f, RM.WINDOW_HEIGHT / 2.f);
+    circler.spawnPosition = Vector2(RM.WINDOW_WIDTH / 2.f, -100.f);
     circler.spawnDelay = 0.f;
     wave4->AddEnemy(circler);
 
@@ -229,7 +229,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), cornerOffset);
-        beholder.spawnDelay = i * 0.3f;
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 
@@ -238,7 +238,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), cornerOffset);
-        beholder.spawnDelay = 0.8f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f;
         wave6->AddEnemy(beholder);
     }
 
@@ -247,7 +247,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(cornerOffset + (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
-        beholder.spawnDelay = 1.6f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 
@@ -256,7 +256,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData beholder;
         beholder.type = ENEMY_BEHOLDER;
         beholder.spawnPosition = Vector2(RM.WINDOW_WIDTH - cornerOffset - (i * pairSpacing), RM.WINDOW_HEIGHT - cornerOffset);
-        beholder.spawnDelay = 2.4f + (i * 0.3f);
+        beholder.spawnDelay = 0.0f; 
         wave6->AddEnemy(beholder);
     }
 
@@ -274,7 +274,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale7_2;
     whale7_2.type = ENEMY_KILLER_WHALE;
     whale7_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale7_2.spawnDelay = 1.5f;
+    whale7_2.spawnDelay = 2.0f;
     whale7_2.onCeiling = false;
     wave7->AddEnemy(whale7_2);
 
@@ -282,16 +282,16 @@ void WaveManager::LoadLevel1Waves()
 
     Wave* wave8 = new Wave(8);
 
-    float chomperSpacing = 90.0f;
-    float chomperStartY = 50.0f;
+    float chomperSpacing = 30.0f; 
+    float chomperStartY = 250.0f;
 
     for (int i = 0; i < 8; i++)
     {
         EnemySpawnData chomper;
         chomper.type = ENEMY_CHOMPER;
         chomper.spawnPosition = Vector2(RM.WINDOW_WIDTH + 50.f, chomperStartY + (i * chomperSpacing));
-        chomper.spawnDelay = i * 0.2f;
-        chomper.startAngle = (i * 3.14159f / 4.0f); 
+        chomper.spawnDelay = 0.0f;
+        chomper.startAngle = (i * 3.14159f / 4.0f);
         wave8->AddEnemy(chomper);
     }
 
@@ -314,13 +314,13 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData bubbleTop;
         bubbleTop.type = ENEMY_BUBBLE;
         bubbleTop.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY);
-        bubbleTop.spawnDelay = i * 1.0f; 
+        bubbleTop.spawnDelay = i * 0.3f;
         wave10->AddEnemy(bubbleTop);
 
         EnemySpawnData bubbleBottom;
         bubbleBottom.type = ENEMY_BUBBLE;
         bubbleBottom.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, bottomY);
-        bubbleBottom.spawnDelay = (i * 1.0f) + 0.5f; 
+        bubbleBottom.spawnDelay = (i * 0.3f) + 0.3f;
         wave10->AddEnemy(bubbleBottom);
     }
 
@@ -338,7 +338,7 @@ void WaveManager::LoadLevel1Waves()
     EnemySpawnData whale11_2;
     whale11_2.type = ENEMY_KILLER_WHALE;
     whale11_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
-    whale11_2.spawnDelay = 1.5f;
+    whale11_2.spawnDelay = 2.0f;
     whale11_2.onCeiling = false;
     wave11->AddEnemy(whale11_2);
 
@@ -351,7 +351,7 @@ void WaveManager::LoadLevel1Waves()
         EnemySpawnData medusa;
         medusa.type = ENEMY_HORIZONTAL_MEDUSA;
         medusa.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, medusaPositions[i]);
-        medusa.spawnDelay = i * 0.6f;
+        medusa.spawnDelay = i * 0.3f;
         wave12->AddEnemy(medusa);
     }
 
@@ -361,7 +361,7 @@ void WaveManager::LoadLevel1Waves()
 
     EnemySpawnData boss;
     boss.type = ENEMY_BIO_TITAN_BOSS;
-    boss.spawnPosition = Vector2(RM.WINDOW_WIDTH - 300.f, RM.WINDOW_HEIGHT / 2.f);
+    boss.spawnPosition = Vector2(RM.WINDOW_WIDTH + 200.f, RM.WINDOW_HEIGHT / 2.f);
     boss.spawnDelay = 0.f;
     waveBoss->AddEnemy(boss);
 

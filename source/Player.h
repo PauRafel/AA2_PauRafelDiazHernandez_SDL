@@ -15,7 +15,8 @@ enum PowerUpState
     STATE_CA2,      
     STATE_LA2,      
     STATE_SHIELD,   
-    STATE_TURRETS 
+    STATE_TURRETS,
+    STATE_FULL_SHIELD
 };
 
 class Player : public ImageObject
@@ -32,6 +33,10 @@ private:
     int _shield = 100;    
     int _score = 0;
 
+    bool _isInvulnerable = false;
+    float _invulnerabilityTimer = 0.0f;
+    float _invulnerabilityDuration = 10.0f;
+
     float _distanceTraveled = 0.0f;
     float _turretAngle = 0.0f;  
 
@@ -47,6 +52,7 @@ public:
     int GetShield() const { return _shield; }
     int GetCannonAmmo() const { return _cannonAmmo; }
     int GetLaserAmmo() const { return _laserAmmo; }
+    bool IsInvulnerable() const { return _isInvulnerable; }
 
     void AddScore(int amount) { _score += amount; }
     void TakeDamage(int damage);

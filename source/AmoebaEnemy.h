@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Enemy.h"
 #include "RenderManager.h"
 #include <iostream>
@@ -15,30 +14,38 @@ private:
     Vector2 _size;
     Vector2 _scale;
     std::string _texturePath;
-    float _circleAngle;          
-    Vector2 _targetPosition;   
+    Vector2 _offsetFromCenter;
+    bool _isDestroyed;
 
 public:
-    AmoebaClone(Vector2 position, std::string texturePath, float startAngle)
+    AmoebaClone(Vector2 position, std::string texturePath, Vector2 offsetFromCenter)
     {
         _position = position;
         _texturePath = texturePath;
-        _size = Vector2(48.f, 48.f);
-        _scale = Vector2(0.8f, 0.8f); 
-        _circleAngle = startAngle;
+        _size = Vector2(64.f, 64.f);
+        _scale = Vector2(1.0f, 1.0f);
+        _offsetFromCenter = offsetFromCenter;
+        _isDestroyed = false;
     }
 
     void SetPosition(Vector2 pos) { _position = pos; }
     Vector2 GetPosition() const { return _position; }
+    Vector2 GetOffsetFromCenter() const { return _offsetFromCenter; }
+    bool IsDestroyed() const { return _isDestroyed; }
+    void SetDestroyed(bool destroyed) { _isDestroyed = destroyed; }
 
-    void SetCircleAngle(float angle) { _circleAngle = angle; }
-    float GetCircleAngle() const { return _circleAngle; }
+    bool CheckCollision(Vector2 point, float radius)
+    {
+        if (_isDestroyed) return false;
 
-    void SetTargetPosition(Vector2 target) { _targetPosition = target; }
-    Vector2 GetTargetPosition() const { return _targetPosition; }
+        float distance = (_position - point).Magnitude();
+        return distance < (32.0f + radius); 
+    }
 
     void Render()
     {
+        if (_isDestroyed) return;
+
         SDL_FRect destRect;
         destRect.x = _position.x - (_size.x * _scale.x) / 2.0f;
         destRect.y = _position.y - (_size.y * _scale.y) / 2.0f;
@@ -61,11 +68,11 @@ class AmoebaEnemy : public Enemy
 private:
     enum AmoebaPhase
     {
-        PHASE_APPROACHING,   
-        PHASE_SPLITTING,     
-        PHASE_CIRCLING,     
-        PHASE_RECOMBINING,  
-        PHASE_LEAVING   
+        PHASE_APPROACHING,
+        PHASE_SPLITTING,
+        PHASE_CIRCLING,
+        PHASE_RECOMBINING,
+        PHASE_LEAVING
     };
 
     AmoebaPhase _currentPhase;
@@ -74,31 +81,43 @@ private:
     float _approachSpeed;
 
     std::vector<AmoebaClone*> _clones;
-    Vector2 _circleCenter;
+    Vector2 _blockCenter;
+    float _circleAngle;
     float _circleRadius;
     float _angularSpeed;
-    float _totalAngleRotated; 
+    float _totalAngleRotated;
+    float _gridSpacing;
 
     float _recombineSpeed;
-    bool _clonesRecombined;
+
+    int _totalClones;
+    int _clonesDestroyed;
+    int _scorePerClone;
+
+    std::vector<Vector2> _bulletPositionsToCheck;
 
 public:
     AmoebaEnemy(Vector2 spawnPosition)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
+        : Enemy("resources/AmoebaEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
     {
-        _health = 5;  
-        _scoreValue = 500; 
+        _health = 8;             
+        _scoreValue = 800;
+        _totalClones = 8;
+        _clonesDestroyed = 0;
+        _scorePerClone = 100;
+
         _currentPhase = PHASE_APPROACHING;
 
         _targetCenter = Vector2(RM.WINDOW_WIDTH / 2.0f, RM.WINDOW_HEIGHT / 2.0f);
         _approachSpeed = 150.0f;
 
-        _circleRadius = 120.0f;
-        _angularSpeed = 2.0f; 
+        _gridSpacing = 80.0f;
+        _circleAngle = 0.0f;
+        _circleRadius = 30.0f;
+        _angularSpeed = 2.0f;
         _totalAngleRotated = 0.0f;
 
         _recombineSpeed = 200.0f;
-        _clonesRecombined = false;
 
         Vector2 direction = _targetCenter - _transform->position;
         direction.Normalize();
@@ -140,8 +159,7 @@ public:
         if (_renderer != nullptr)
             _renderer->Update(dt);
 
-        Vector2 offset = (Vector2(-_transform->size.x, -_transform->size.y) / 2.0f) * _transform->scale;
-        _physics->AddCollider(new AABB(_transform->position + offset, _transform->size * _transform->scale));
+        UpdateColliders();
     }
 
     void Render() override
@@ -157,7 +175,77 @@ public:
         }
     }
 
+    void TakeDamage(int damage)
+    {
+        if (_currentPhase == PHASE_CIRCLING || _currentPhase == PHASE_RECOMBINING)
+        {
+            Vector2 hitPosition = _transform->position; 
+
+            for (AmoebaClone* clone : _clones)
+            {
+                if (!clone->IsDestroyed() && clone->CheckCollision(hitPosition, 32.0f))
+                {
+                    clone->SetDestroyed(true);
+                    _clonesDestroyed++;
+                    _health--;
+
+                    std::cout << "Clone destroyed! Remaining: " << (_totalClones - _clonesDestroyed) << std::endl;
+
+                    if (_health <= 0)
+                    {
+                        _escapedOffScreen = false;
+                        Destroy();
+                    }
+                    return;
+                }
+            }
+        }
+        else
+        {
+            _health -= damage;
+            if (_health <= 0)
+            {
+                _escapedOffScreen = false;
+                Destroy();
+            }
+        }
+    }
+
+    int GetScoreValue() const 
+    {
+        if (_currentPhase == PHASE_CIRCLING || _currentPhase == PHASE_RECOMBINING)
+        {
+            return _scorePerClone;
+        }
+        else
+        {
+            return (_totalClones - _clonesDestroyed) * _scorePerClone;
+        }
+    }
+
 private:
+    void UpdateColliders()
+    {
+        if (_currentPhase == PHASE_APPROACHING || _currentPhase == PHASE_LEAVING)
+        {
+            Vector2 offset = (Vector2(-_transform->size.x, -_transform->size.y) / 2.0f) * _transform->scale;
+            _physics->AddCollider(new AABB(_transform->position + offset, _transform->size * _transform->scale));
+        }
+        else if (_currentPhase == PHASE_CIRCLING || _currentPhase == PHASE_RECOMBINING)
+        {
+            for (AmoebaClone* clone : _clones)
+            {
+                if (!clone->IsDestroyed())
+                {
+                    Vector2 clonePos = clone->GetPosition();
+                    Vector2 cloneSize(64.f, 64.f);
+                    Vector2 offset = (Vector2(-cloneSize.x, -cloneSize.y) / 2.0f);
+                    _physics->AddCollider(new AABB(clonePos + offset, cloneSize));
+                }
+            }
+        }
+    }
+
     void UpdateApproaching(float dt)
     {
         float distance = (_transform->position - _targetCenter).Magnitude();
@@ -175,48 +263,47 @@ private:
 
     void UpdateSplitting(float dt)
     {
-        _circleCenter = _transform->position;
+        _blockCenter = _transform->position;
+
+        Vector2 gridOffsets[8] = {
+            Vector2(0, -_gridSpacing),
+            Vector2(_gridSpacing, -_gridSpacing),
+            Vector2(_gridSpacing, 0),
+            Vector2(_gridSpacing, _gridSpacing),
+            Vector2(0, _gridSpacing),
+            Vector2(-_gridSpacing, _gridSpacing),
+            Vector2(-_gridSpacing, 0),
+            Vector2(-_gridSpacing, -_gridSpacing)
+        };
 
         for (int i = 0; i < 8; i++)
         {
-            float angle = (i * 2.0f * 3.14159f) / 8.0f;
-
-            Vector2 clonePos = Vector2(
-                _circleCenter.x + _circleRadius * cos(angle),
-                _circleCenter.y + _circleRadius * sin(angle)
-            );
-
-            AmoebaClone* clone = new AmoebaClone(clonePos, "resources/enemy.png", angle);
+            Vector2 clonePos = _blockCenter + gridOffsets[i];
+            AmoebaClone* clone = new AmoebaClone(clonePos, "resources/AmoebaEnemy.png", gridOffsets[i]);
             _clones.push_back(clone);
         }
 
+        _circleAngle = 0.0f;
         _totalAngleRotated = 0.0f;
         _currentPhase = PHASE_CIRCLING;
     }
 
     void UpdateCircling(float dt)
     {
+        _circleAngle += _angularSpeed * dt;
+        _totalAngleRotated += _angularSpeed * dt;
+
+        _blockCenter.x = _targetCenter.x + _circleRadius * cos(_circleAngle);
+        _blockCenter.y = _targetCenter.y + _circleRadius * sin(_circleAngle);
+
         for (AmoebaClone* clone : _clones)
         {
-            float currentAngle = clone->GetCircleAngle();
-            currentAngle += _angularSpeed * dt;
-            clone->SetCircleAngle(currentAngle);
-
-            Vector2 newPos = Vector2(
-                _circleCenter.x + _circleRadius * cos(currentAngle),
-                _circleCenter.y + _circleRadius * sin(currentAngle)
-            );
+            Vector2 newPos = _blockCenter + clone->GetOffsetFromCenter();
             clone->SetPosition(newPos);
         }
 
-        _totalAngleRotated += _angularSpeed * dt;
-
         if (_totalAngleRotated >= 4.0f * 3.14159f)
         {
-            for (AmoebaClone* clone : _clones)
-                clone->SetTargetPosition(_circleCenter);
-
-            _clonesRecombined = false;
             _currentPhase = PHASE_RECOMBINING;
         }
     }
@@ -227,7 +314,10 @@ private:
 
         for (AmoebaClone* clone : _clones)
         {
-            Vector2 direction = clone->GetTargetPosition() - clone->GetPosition();
+            if (clone->IsDestroyed())
+                continue;
+
+            Vector2 direction = _blockCenter - clone->GetPosition();
             float distance = direction.Magnitude();
 
             if (distance > 5.0f)
@@ -238,7 +328,7 @@ private:
             }
             else
             {
-                clone->SetPosition(clone->GetTargetPosition());
+                clone->SetPosition(_blockCenter);
             }
         }
 
@@ -248,10 +338,20 @@ private:
                 delete clone;
             _clones.clear();
 
-            _transform->position = _circleCenter;
+            _transform->position = _blockCenter;
 
-            _stateMachine->SetStateSimpleMove(Vector2(-1.0f, 0.0f), 150.0f);
-            _currentPhase = PHASE_LEAVING;
+            _health = _totalClones - _clonesDestroyed;
+            _scoreValue = (_totalClones - _clonesDestroyed) * _scorePerClone;
+
+            if (_health <= 0)
+            {
+                Destroy();
+            }
+            else
+            {
+                _stateMachine->SetStateSimpleMove(Vector2(-1.0f, 0.0f), 150.0f);
+                _currentPhase = PHASE_LEAVING;
+            }
         }
     }
 
@@ -260,6 +360,9 @@ private:
         _stateMachine->Update(dt);
 
         if (_transform->position.x + _transform->size.x < 0)
+        {
+            _escapedOffScreen = true;
             Destroy();
+        }
     }
 };

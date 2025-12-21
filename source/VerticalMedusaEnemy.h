@@ -20,14 +20,14 @@ private:
 
 public:
     VerticalMedusaEnemy(Vector2 spawnPosition)
-        : Enemy("resources/enemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
+        : Enemy("resources/VerticalMedusaEnemy.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), spawnPosition)
     {
         _health = 1;
-        _scoreValue = 120;
+        _scoreValue = 150;
         _currentPhase = PHASE_MOVING_UP;
-        _moveDistance = 120.0f;  
-        _stopDuration = 0.8f;    
-        _moveSpeed = 150.0f;    
+        _moveDistance = 100.0f;  
+        _stopDuration = 0.5f;    
+        _moveSpeed = 250.0f;    
         _phaseStartPos = spawnPosition;
 
         _stateMachine->SetStateSimpleMove(Vector2(0.0f, -1.0f), _moveSpeed);

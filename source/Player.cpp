@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
+#include <iostream>
 
 Player::Player(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize, std::vector<Bullet*>* bulletsVector)
     : ImageObject(texturePath, sourceOffset, sourceSize)
@@ -65,6 +66,17 @@ void Player::Update(float dt)
         {
             _turretAngle += 45.0f;
             _distanceTraveled += 100.0f;
+        }
+    }
+
+    if (_isInvulnerable)
+    {
+        _invulnerabilityTimer += dt;
+        if (_invulnerabilityTimer >= _invulnerabilityDuration)
+        {
+            _isInvulnerable = false;
+            _invulnerabilityTimer = 0.0f;
+            std::cout << "Invulnerability ended!" << std::endl;
         }
     }
 
@@ -136,18 +148,31 @@ void Player::ApplyPowerUp(PowerUpState newState)
         _currentState = STATE_LA2;
         break;
     case STATE_SHIELD:
-        _shield = 100;
+        _isInvulnerable = true;
+        _invulnerabilityTimer = 0.0f;
         _currentState = STATE_SHIELD;
+        std::cout << "INVULNERABLE for " << _invulnerabilityDuration << " seconds!" << std::endl;
         break;
     case STATE_TURRETS:
         _hasTurrets = true;
         _currentState = STATE_TURRETS;
+        break;
+    case STATE_FULL_SHIELD:
+        _shield = 100;
+        _currentState = STATE_FULL_SHIELD;
+        std::cout << "SHIELD FULLY RESTORED!" << std::endl;
         break;
     }
 }
 
 void Player::TakeDamage(int damage)
 {
+    if (_isInvulnerable)
+    {
+        std::cout << "Damage blocked! (Invulnerable)" << std::endl;
+        return;
+    }
+
     _shield -= damage;
     if (_shield < 0)
         _shield = 0;

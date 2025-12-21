@@ -11,7 +11,8 @@ enum PowerUpType
     POWERUP_CA2,       
     POWERUP_LA2,      
     POWERUP_SHIELD,   
-    POWERUP_TURRETS 
+    POWERUP_TURRETS,
+    POWERUP_FULL_SHIELD
 };
 
 class PowerUp : public ImageObject
@@ -23,7 +24,7 @@ private:
     int _currentHits;      
     float _scrollSpeed;    
 
-    PowerUpType _powerUpCycle[8] = {
+    PowerUpType _powerUpCycle[9] = {
         POWERUP_SCORE,
         POWERUP_CA1,
         POWERUP_LA1,
@@ -31,8 +32,23 @@ private:
         POWERUP_CA2,
         POWERUP_LA2,
         POWERUP_SHIELD,
-        POWERUP_TURRETS
+        POWERUP_TURRETS,
+        POWERUP_FULL_SHIELD
     };
+
+    std::string _powerUpTextures[9] = {
+       "resources/powerups/powerup_score.png",
+       "resources/powerups/powerup_ca1.png",
+       "resources/powerups/powerup_la1.png",
+       "resources/powerups/powerup_speed.png",
+       "resources/powerups/powerup_ca2.png",
+       "resources/powerups/powerup_la2.png",
+       "resources/powerups/powerup_shield.png",
+       "resources/powerups/powerup_turrets.png",
+       "resources/powerups/powerup_full_shield.png"
+    };
+
+    void UpdateSprite();
 
 public:
     PowerUp(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize, Vector2 spawnPosition);
