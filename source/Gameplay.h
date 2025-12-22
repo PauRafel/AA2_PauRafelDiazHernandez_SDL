@@ -361,6 +361,8 @@ public:
                     if (_player->GetShield() <= 0)
                     {
                         std::cout << "PLAYER DIED!" << std::endl;
+                        SM.SetNextScene("GameOver");
+                        return;
                     }
                 }
             }

@@ -176,5 +176,8 @@
     <ClInclude Include="source\IntroSequence.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\GameOverScreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
