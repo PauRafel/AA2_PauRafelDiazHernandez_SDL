@@ -25,6 +25,7 @@ void Game::Init()
     RM.LoadTexture("resources/player.png");
     RM.LoadTexture("resources/bullet.png");
 
+    RM.LoadTexture("resources/shield_effect.png");
 
     RM.LoadTexture("resources/enemy.png");
     RM.LoadTexture("resources/background.png");
