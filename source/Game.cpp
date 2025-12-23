@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "IntroSequence.h"
+#include "GameOverScreen.h"
 #include <cassert>
 #include <iostream>
 
@@ -19,10 +20,20 @@ void Game::Init()
     RM.LoadTexture("resources/intro/panel_powerups.png");
     RM.LoadTexture("resources/intro/splash_level1.png");
 
+    RM.LoadTexture("resources/gameover_splash.png");
 
-    RM.LoadTexture("resources/player.png");
+    RM.LoadTexture("resources/player.png");                    
+    RM.LoadTexture("resources/player_cannon.png");              
+    RM.LoadTexture("resources/player_laser.png");               
+    RM.LoadTexture("resources/player_turrets.png");             
+    RM.LoadTexture("resources/player_cannon_laser.png");        
+    RM.LoadTexture("resources/player_cannon_turrets.png");       
+    RM.LoadTexture("resources/player_laser_turrets.png");       
+    RM.LoadTexture("resources/player_full.png"); 
+
     RM.LoadTexture("resources/bullet.png");
 
+    RM.LoadTexture("resources/shield_effect.png");
 
     RM.LoadTexture("resources/enemy.png");
     RM.LoadTexture("resources/background.png");
@@ -54,6 +65,7 @@ void Game::Init()
     
 
     assert(SM.AddScene("IntroSequence", new IntroSequence()));
+    assert(SM.AddScene("GameOver", new GameOverScreen()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
 

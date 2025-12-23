@@ -2,6 +2,7 @@
 #include "ImageObject.h"
 #include "InputManager.h"
 #include "RenderManager.h"
+#include "ImageRenderer.h"
 #include <vector>
 
 class Bullet;
@@ -40,10 +41,18 @@ private:
     float _distanceTraveled = 0.0f;
     float _turretAngle = 0.0f;  
 
+    bool _hasCannonUpgrade = false;
+    bool _hasLaserUpgrade = false;
+
+    SDL_Texture* _shieldTexture;
+    float _shieldAnimationTimer;
+    float _shieldPulseSpeed;
+
 public:
     Player(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize, std::vector<Bullet*>* bulletsVector);
 
     void Update(float dt) override;
+    void Render() override;
     void Shoot();
 
     void ApplyPowerUp(PowerUpState newState);
@@ -56,4 +65,7 @@ public:
 
     void AddScore(int amount) { _score += amount; }
     void TakeDamage(int damage);
+
+private:
+    void UpdateSprite();
 };
