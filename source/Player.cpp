@@ -204,6 +204,7 @@ void Player::ApplyPowerUp(PowerUpState newState)
         _invulnerabilityTimer = 0.0f;
         _shieldAnimationTimer = 0.0f;
         _currentState = STATE_SHIELD;
+        _shieldTexture = RM.GetTexture("resources/shield_effect.png");
         std::cout << "INVULNERABLE for " << _invulnerabilityDuration << " seconds!" << std::endl;
         break;
     case STATE_TURRETS:
