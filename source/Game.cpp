@@ -22,7 +22,15 @@ void Game::Init()
 
     RM.LoadTexture("resources/gameover_splash.png");
 
-    RM.LoadTexture("resources/player.png");
+    RM.LoadTexture("resources/player.png");                    
+    RM.LoadTexture("resources/player_cannon.png");              
+    RM.LoadTexture("resources/player_laser.png");               
+    RM.LoadTexture("resources/player_turrets.png");             
+    RM.LoadTexture("resources/player_cannon_laser.png");        
+    RM.LoadTexture("resources/player_cannon_turrets.png");       
+    RM.LoadTexture("resources/player_laser_turrets.png");       
+    RM.LoadTexture("resources/player_full.png"); 
+
     RM.LoadTexture("resources/bullet.png");
 
     RM.LoadTexture("resources/shield_effect.png");

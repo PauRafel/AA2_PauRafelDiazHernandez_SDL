@@ -235,35 +235,35 @@ void Player::TakeDamage(int damage)
 
 void Player::UpdateSprite()
 {
-    std::string newTexture = "resources/player.png"; 
+    std::string newTexture = "resources/player.png";
 
     if (_hasTurrets && _hasCannonUpgrade && _hasLaserUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_full.png"; 
     }
     else if (_hasTurrets && _hasCannonUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_cannon_turrets.png"; 
     }
     else if (_hasTurrets && _hasLaserUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_laser_turrets.png"; 
     }
     else if (_hasCannonUpgrade && _hasLaserUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_cannon_laser.png"; 
     }
     else if (_hasTurrets)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_turrets.png"; 
     }
     else if (_hasCannonUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_cannon.png"; 
     }
     else if (_hasLaserUpgrade)
     {
-        newTexture = "resources/player.png"; 
+        newTexture = "resources/player_laser.png";
     }
 
     if (_renderer != nullptr)
