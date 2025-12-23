@@ -2,15 +2,16 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "BubbleEnemy.h"
-#include "HorizontalMedusaEnemy.h"
-#include "KillerWhaleEnemy.h"
-#include "CirclerEnemy.h"
-#include "VerticalMedusaEnemy.h"
-#include "BeholderEnemy.h"
-#include "ChomperEnemy.h"
-#include "AmoebaEnemy.h"
-#include "BioTitanBoss.h"
+#include "TorpedoEnemy.h"
+#include "TurboChainsaw.h"
+#include "RoboKrabsEnemy.h"
+#include "NukeEnemy.h"
+#include "MissileEnemy.h"
+#include "DanielsEnemy.h"
+#include "UfoEnemy.h"
+#include "AnnoyerEnemy.h"
+#include "AngrygonsEnemy.h"
+#include "SpaceBoss.h"
 #include "Bullet.h"
 #include "Background.h"
 #include "PowerUp.h"
@@ -24,7 +25,7 @@
 #include <cstdlib>
 #include <ctime>
 
-class Gameplay : public Scene
+class GameplayLevel2 : public Scene
 {
 private:
     Player* _player = nullptr;
@@ -50,9 +51,9 @@ private:
 
     bool _isBossFight = false;
     bool _bossIntroStarted = false;
-    bool _bossWaveStarted = false;     
-    bool _bossFullyVisible = false;    
-    BioTitanBoss* _boss = nullptr;   
+    bool _bossWaveStarted = false;
+    bool _bossFullyVisible = false;
+    Enemy* _boss = nullptr;
 
     PowerUpType _powerUpCycle[9] = {
         POWERUP_SCORE,
@@ -83,11 +84,11 @@ private:
     bool _waitingForNextWave = false;
 
 public:
-    Gameplay() = default;
+    GameplayLevel2() = default;
 
     void OnEnter() override
     {
-        _background = new Background("resources/background.png");
+        _background = new Background("resources/background2.png");
 
         _player = new Player("resources/player.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), &_bullets);
         _objects.push_back(_player);
@@ -98,7 +99,7 @@ public:
             this->SpawnEnemy(data);
             });
 
-        WAVE_MANAGER.LoadLevel1Waves();
+        WAVE_MANAGER.LoadLevel2Waves();
 
         WAVE_MANAGER.StartNextWave();
 
@@ -149,18 +150,18 @@ public:
         if (WAVE_MANAGER.IsCurrentWaveBoss() && !_bossWaveStarted)
         {
             _bossWaveStarted = true;
-            std::cout << "=== BOSS WAVE STARTED - Keep scrolling... ===" << std::endl;
+            std::cout << "=== SPACE BOSS WAVE STARTED - Keep scrolling... ===" << std::endl;
         }
 
         if (_bossWaveStarted && _boss == nullptr && !_enemies.empty())
         {
             for (Enemy* enemy : _enemies)
             {
-                BioTitanBoss* potentialBoss = dynamic_cast<BioTitanBoss*>(enemy);
+                SpaceBoss* potentialBoss = dynamic_cast<SpaceBoss*>(enemy);
                 if (potentialBoss != nullptr)
                 {
                     _boss = potentialBoss;
-                    std::cout << "Boss found in enemy list!" << std::endl;
+                    std::cout << "Space Boss found in enemy list!" << std::endl;
                     break;
                 }
             }
@@ -168,7 +169,8 @@ public:
 
         if (_boss != nullptr && !_bossFullyVisible && !_isBossFight)
         {
-            if (_boss->IsFullyVisible())
+            SpaceBoss* spaceBoss = dynamic_cast<SpaceBoss*>(_boss);
+            if (spaceBoss != nullptr && spaceBoss->IsFullyVisible())
             {
                 _bossFullyVisible = true;
                 _isBossFight = true;
@@ -176,7 +178,7 @@ public:
                 if (_background != nullptr)
                 {
                     _background->StopScrolling();
-                    std::cout << "=== BOSS FULLY VISIBLE ===" << std::endl;
+                    std::cout << "=== SPACE BOSS FULLY VISIBLE ===" << std::endl;
                     std::cout << "Background scroll STOPPED!" << std::endl;
                     std::cout << "=== BOSS FIGHT START ===" << std::endl;
                 }
@@ -194,7 +196,7 @@ public:
                     WAVE_MANAGER.StartNextWave();
                     _waitingForNextWave = false;
                     _waveTransitionTimer = 0.0f;
-                    _powerUpSpawned = false; 
+                    _powerUpSpawned = false;
                 }
                 else
                 {
@@ -285,15 +287,6 @@ public:
                             _player->AddScore(scoreValue);
 
                         WAVE_MANAGER.OnEnemyKilled();
-
-                        BioTitanBoss* bioTitanBoss = dynamic_cast<BioTitanBoss*>(enemy);
-                        if (bioTitanBoss != nullptr)
-                        {
-                            std::cout << "=== LEVEL 1 COMPLETED! ===" << std::endl;
-                            std::cout << "Transitioning to Level 2..." << std::endl;
-                            SM.SetNextScene("Level2Intro");
-                            return;
-                        }
 
                         Wave* currentWave = WAVE_MANAGER.GetCurrentWave();
                         if (currentWave != nullptr && currentWave->IsCompleted())
@@ -422,43 +415,44 @@ private:
 
         switch (data.type)
         {
-        case ENEMY_BUBBLE:
-            newEnemy = new BubbleEnemy(data.spawnPosition);
+        case ENEMY_TORPEDO:
+            newEnemy = new TorpedoEnemy(data.spawnPosition);
             break;
 
-        case ENEMY_HORIZONTAL_MEDUSA:
-            newEnemy = new HorizontalMedusaEnemy(data.spawnPosition);
+        case ENEMY_TURBO_CHAINSAW:
+            newEnemy = new TurboChainsaw(data.spawnPosition);
             break;
 
-        case ENEMY_KILLER_WHALE:
-        {
-            Vector2* playerPos = (_player != nullptr) ? &(_player->GetTransform()->position) : nullptr;
-            newEnemy = new KillerWhaleEnemy(data.spawnPosition, data.onCeiling, playerPos);
-            break;
-        }
-
-        case ENEMY_CIRCLER:
-            newEnemy = new CirclerEnemy(data.spawnPosition);
+        case ENEMY_ROBO_KRABS:
+            newEnemy = new RoboKrabsEnemy(data.spawnPosition, data.onCeiling);
             break;
 
-        case ENEMY_VERTICAL_MEDUSA:
-            newEnemy = new VerticalMedusaEnemy(data.spawnPosition);
+        case ENEMY_NUKE:
+            newEnemy = new NukeEnemy(data.spawnPosition);
             break;
 
-        case ENEMY_BEHOLDER:
-            newEnemy = new BeholderEnemy(data.spawnPosition);
+        case ENEMY_MISSILE:
+            newEnemy = new MissileEnemy(data.spawnPosition);
             break;
 
-        case ENEMY_CHOMPER:
-            newEnemy = new ChomperEnemy(data.spawnPosition, data.startAngle);
+        case ENEMY_DANIELS:
+            newEnemy = new DanielsEnemy(data.spawnPosition);
             break;
 
-        case ENEMY_AMOEBA:
-            newEnemy = new AmoebaEnemy(data.spawnPosition);
+        case ENEMY_UFO:
+            newEnemy = new UfoEnemy(data.spawnPosition);
             break;
 
-        case ENEMY_BIO_TITAN_BOSS:
-            newEnemy = new BioTitanBoss(data.spawnPosition, &_bullets);
+        case ENEMY_ANNOYER:
+            newEnemy = new AnnoyerEnemy(data.spawnPosition);
+            break;
+
+        case ENEMY_ANGRYGONS:
+            newEnemy = new AngrygonsEnemy(data.spawnPosition);
+            break;
+
+        case ENEMY_SPACE_BOSS:
+            newEnemy = new SpaceBoss(data.spawnPosition, &_bullets);
             break;
         }
 
@@ -471,8 +465,8 @@ private:
 
     void CreateHUD()
     {
-        float hudY = RM.WINDOW_HEIGHT - 15.f; 
-        SDL_Color cyanColor = { 0, 255, 255, 255 };  
+        float hudY = RM.WINDOW_HEIGHT - 15.f;
+        SDL_Color cyanColor = { 0, 255, 255, 255 };
         float textScale = 0.6f;
 
         _scoreLabel = new TextObject("SC:", "resources/fonts/arial.ttf");
@@ -547,23 +541,23 @@ private:
 
         int shield = _player->GetShield();
         int maxShield = 100;
-        int numBars = (shield * 10) / maxShield; 
+        int numBars = (shield * 10) / maxShield;
         std::string energyBars = "";
         for (int i = 0; i < numBars; i++)
             energyBars += "=";
         _energyBars->SetText(energyBars);
 
         int cannonAmmo = _player->GetCannonAmmo();
-        int maxCannonAmmo = 100;  
-        int cannonBars = (cannonAmmo * 10) / maxCannonAmmo;  
+        int maxCannonAmmo = 100;
+        int cannonBars = (cannonAmmo * 10) / maxCannonAmmo;
         std::string cannonBarsStr = "";
         for (int i = 0; i < cannonBars; i++)
             cannonBarsStr += "=";
         _cannonBars->SetText(cannonBarsStr);
 
         int laserAmmo = _player->GetLaserAmmo();
-        int maxLaserAmmo = 60;  
-        int laserBars = (laserAmmo * 10) / maxLaserAmmo;  
+        int maxLaserAmmo = 60;
+        int laserBars = (laserAmmo * 10) / maxLaserAmmo;
         std::string laserBarsStr = "";
         for (int i = 0; i < laserBars; i++)
             laserBarsStr += "=";
@@ -633,7 +627,7 @@ private:
         case POWERUP_TURRETS:
             _player->ApplyPowerUp(STATE_TURRETS);
             break;
-        case POWERUP_FULL_SHIELD: 
+        case POWERUP_FULL_SHIELD:
             _player->ApplyPowerUp(STATE_FULL_SHIELD);
             break;
         }

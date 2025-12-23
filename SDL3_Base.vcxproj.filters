@@ -212,5 +212,8 @@
     <ClInclude Include="source\Level2Intro.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\GameplayLevel2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

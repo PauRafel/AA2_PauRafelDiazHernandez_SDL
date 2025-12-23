@@ -17,7 +17,19 @@ enum EnemyType
     ENEMY_BEHOLDER,
     ENEMY_CHOMPER,
     ENEMY_AMOEBA,
-    ENEMY_BIO_TITAN_BOSS
+    ENEMY_BIO_TITAN_BOSS,
+
+
+    ENEMY_TORPEDO,
+    ENEMY_TURBO_CHAINSAW,
+    ENEMY_ROBO_KRABS,
+    ENEMY_NUKE,
+    ENEMY_MISSILE,
+    ENEMY_DANIELS,
+    ENEMY_UFO,
+    ENEMY_ANNOYER,
+    ENEMY_ANGRYGONS,
+    ENEMY_SPACE_BOSS
 };
 
 struct EnemySpawnData
@@ -96,7 +108,16 @@ public:
         if (currentWave == nullptr)
             return false;
 
-        return currentWave->GetWaveNumber() == 13;
+        return currentWave->GetWaveNumber() == 13 || currentWave->GetWaveNumber() == 21;
+    }
+
+    bool IsCurrentWaveLevel2Boss() const
+    {
+        Wave* currentWave = GetCurrentWave();
+        if (currentWave == nullptr)
+            return false;
+
+        return currentWave->GetWaveNumber() == 21;
     }
 
     static WaveManager& Instance()
@@ -107,6 +128,7 @@ public:
 
     void Initialize(SpawnEnemyCallback spawnCallback);
     void LoadLevel1Waves();
+    void LoadLevel2Waves();
     void StartNextWave();
     void Update(float dt);
     void OnEnemyKilled();
