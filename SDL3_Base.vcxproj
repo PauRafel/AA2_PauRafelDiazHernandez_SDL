@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\AmoebaEnemy.h" />
+    <ClInclude Include="source\AnnoyerEnemy.h" />
     <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
     <ClInclude Include="source\BioTitanBoss.h" />
