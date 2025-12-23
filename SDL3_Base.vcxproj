@@ -71,6 +71,7 @@
     <ClInclude Include="source\TextObject.h" />
     <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />
+    <ClInclude Include="source\TorpedoEnemy.h" />
     <ClInclude Include="source\Transform.h" />
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\VerticalMedusaEnemy.h" />
