@@ -2,7 +2,7 @@
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "GameplayLevel2.h"  
-#include "IntroSequence.h"
+#include "SplashScreen.h"
 #include "Level2Intro.h"   
 #include "GameOverScreen.h" 
 #include <cassert>
@@ -17,9 +17,8 @@ void Game::Init()
 
     RM.LoadTexture("resources/intro/splash_title.png");
     RM.LoadTexture("resources/intro/splash_art.png");
-    RM.LoadTexture("resources/intro/panel_settings.png");
-    RM.LoadTexture("resources/intro/panel_scoreboard.png");
-    RM.LoadTexture("resources/intro/panel_powerups.png");
+
+
     RM.LoadTexture("resources/intro/splash_level1.png");
     RM.LoadTexture("resources/intro/splash_level2.png");
     RM.LoadTexture("resources/gameover_splash.png");
@@ -79,14 +78,14 @@ void Game::Init()
     RM.LoadTexture("resources/SpaceBoss_Bullet.png");
     
 
-    assert(SM.AddScene("IntroSequence", new IntroSequence()));
+    assert(SM.AddScene("SplashScreen", new SplashScreen()));
     assert(SM.AddScene("GameOver", new GameOverScreen()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
     assert(SM.AddScene("Level2Intro", new Level2Intro()));    
     assert(SM.AddScene("GameplayLevel2", new GameplayLevel2()));  
 
-    assert(SM.InitFirstScene("IntroSequence"));
+    assert(SM.InitFirstScene("SplashScreen"));
 
     _isRunning = true;
 
