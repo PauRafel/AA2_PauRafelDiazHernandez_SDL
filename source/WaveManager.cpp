@@ -370,6 +370,258 @@ void WaveManager::LoadLevel1Waves()
     std::cout << "Loaded " << _waves.size() << " waves for Level 1: SEA OF KARNAUGH" << std::endl;
 }
 
+void WaveManager::LoadLevel2Waves()
+{
+    Clear();
+
+    std::cout << "Loading Level 2 Waves: SPACE ODYSSEY..." << std::endl;
+
+    float topY = 150.0f;
+    float bottomY = RM.WINDOW_HEIGHT - 150.0f;
+    float midY = RM.WINDOW_HEIGHT / 2.0f;
+
+    Wave* wave1 = new Wave(1);
+    for (int i = 0; i < 6; i++)
+    {
+        EnemySpawnData torpedo;
+        torpedo.type = ENEMY_TORPEDO;
+        torpedo.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY + (i * 80.0f));
+        torpedo.spawnDelay = i * 0.4f;
+        wave1->AddEnemy(torpedo);
+    }
+    _waves.push_back(wave1);
+
+    Wave* wave2 = new Wave(2);
+    for (int i = 0; i < 3; i++)
+    {
+        EnemySpawnData chainsaw;
+        chainsaw.type = ENEMY_TURBO_CHAINSAW;
+        chainsaw.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, midY);
+        chainsaw.spawnDelay = i * 1.5f;
+        wave2->AddEnemy(chainsaw);
+    }
+    _waves.push_back(wave2);
+
+    Wave* wave3 = new Wave(3);
+    EnemySpawnData krabs1;
+    krabs1.type = ENEMY_ROBO_KRABS;
+    krabs1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
+    krabs1.spawnDelay = 0.f;
+    krabs1.onCeiling = false;
+    wave3->AddEnemy(krabs1);
+
+    EnemySpawnData krabs2;
+    krabs2.type = ENEMY_ROBO_KRABS;
+    krabs2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 50.f);
+    krabs2.spawnDelay = 2.0f;
+    krabs2.onCeiling = true;
+    wave3->AddEnemy(krabs2);
+    _waves.push_back(wave3);
+
+    Wave* wave4 = new Wave(4);
+    float nukePositionsX[5] = { 200.f, 400.f, 600.f, 800.f, 1000.f };
+    for (int i = 0; i < 5; i++)
+    {
+        EnemySpawnData nuke;
+        nuke.type = ENEMY_NUKE;
+        nuke.spawnPosition = Vector2(nukePositionsX[i], RM.WINDOW_HEIGHT + 50.f);
+        nuke.spawnDelay = i * 0.5f;
+        wave4->AddEnemy(nuke);
+    }
+    _waves.push_back(wave4);
+
+    Wave* wave5 = new Wave(5);
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData missile;
+        missile.type = ENEMY_MISSILE;
+        missile.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 200.f + (i * 50.0f));
+        missile.spawnDelay = i * 0.3f;
+        wave5->AddEnemy(missile);
+    }
+    _waves.push_back(wave5);
+
+    Wave* wave6 = new Wave(6);
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData daniels;
+        daniels.type = ENEMY_DANIELS;
+        daniels.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY + (i * 100.0f));
+        daniels.spawnDelay = i * 0.6f;
+        wave6->AddEnemy(daniels);
+    }
+    _waves.push_back(wave6);
+
+    Wave* wave7 = new Wave(7);
+    for (int i = 0; i < 5; i++)
+    {
+        EnemySpawnData ufo;
+        ufo.type = ENEMY_UFO;
+        ufo.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 150.f + (i * 90.0f));
+        ufo.spawnDelay = i * 0.8f;
+        wave7->AddEnemy(ufo);
+    }
+    _waves.push_back(wave7);
+
+    Wave* wave8 = new Wave(8);
+    for (int i = 0; i < 6; i++)
+    {
+        EnemySpawnData annoyer;
+        annoyer.type = ENEMY_ANNOYER;
+        annoyer.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, midY + ((i % 2 == 0 ? 1 : -1) * (i * 40.0f)));
+        annoyer.spawnDelay = i * 0.4f;
+        wave8->AddEnemy(annoyer);
+    }
+    _waves.push_back(wave8);
+
+    Wave* wave9 = new Wave(9);
+    for (int i = 0; i < 7; i++)
+    {
+        EnemySpawnData angrygons;
+        angrygons.type = ENEMY_ANGRYGONS;
+        angrygons.spawnPosition = Vector2(300.f + (i * 120.0f), RM.WINDOW_HEIGHT + 50.f);
+        angrygons.spawnDelay = i * 0.3f;
+        wave9->AddEnemy(angrygons);
+    }
+    _waves.push_back(wave9);
+
+    Wave* wave10 = new Wave(10);
+    for (int i = 0; i < 6; i++)
+    {
+        EnemySpawnData nuke;
+        nuke.type = ENEMY_NUKE;
+        nuke.spawnPosition = Vector2(250.f + (i * 150.0f), RM.WINDOW_HEIGHT + 50.f);
+        nuke.spawnDelay = i * 0.4f;
+        wave10->AddEnemy(nuke);
+    }
+    _waves.push_back(wave10);
+
+    Wave* wave11 = new Wave(11);
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData torpedo;
+        torpedo.type = ENEMY_TORPEDO;
+        torpedo.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 150.f + (i * 60.0f));
+        torpedo.spawnDelay = i * 0.3f;
+        wave11->AddEnemy(torpedo);
+    }
+    _waves.push_back(wave11);
+
+    Wave* wave12 = new Wave(12);
+    for (int i = 0; i < 4; i++)
+    {
+        EnemySpawnData chainsaw;
+        chainsaw.type = ENEMY_TURBO_CHAINSAW;
+        chainsaw.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, midY);
+        chainsaw.spawnDelay = i * 1.0f;
+        wave12->AddEnemy(chainsaw);
+    }
+    _waves.push_back(wave12);
+
+    Wave* wave13 = new Wave(13);
+    EnemySpawnData krabs13_1;
+    krabs13_1.type = ENEMY_ROBO_KRABS;
+    krabs13_1.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, RM.WINDOW_HEIGHT - 50.f);
+    krabs13_1.spawnDelay = 0.f;
+    krabs13_1.onCeiling = false;
+    wave13->AddEnemy(krabs13_1);
+
+    EnemySpawnData krabs13_2;
+    krabs13_2.type = ENEMY_ROBO_KRABS;
+    krabs13_2.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 50.f);
+    krabs13_2.spawnDelay = 1.5f;
+    krabs13_2.onCeiling = true;
+    wave13->AddEnemy(krabs13_2);
+    _waves.push_back(wave13);
+
+    Wave* wave14 = new Wave(14);
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData nuke;
+        nuke.type = ENEMY_NUKE;
+        nuke.spawnPosition = Vector2(200.f + (i * 130.0f), RM.WINDOW_HEIGHT + 50.f);
+        nuke.spawnDelay = i * 0.3f;
+        wave14->AddEnemy(nuke);
+    }
+    _waves.push_back(wave14);
+
+    Wave* wave15 = new Wave(15);
+    for (int i = 0; i < 10; i++)
+    {
+        EnemySpawnData missile;
+        missile.type = ENEMY_MISSILE;
+        missile.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, 180.f + (i * 45.0f));
+        missile.spawnDelay = i * 0.25f;
+        wave15->AddEnemy(missile);
+    }
+    _waves.push_back(wave15);
+
+    Wave* wave16 = new Wave(16);
+    for (int i = 0; i < 5; i++)
+    {
+        EnemySpawnData daniels;
+        daniels.type = ENEMY_DANIELS;
+        daniels.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, topY + (i * 90.0f));
+        daniels.spawnDelay = i * 0.5f;
+        wave16->AddEnemy(daniels);
+    }
+    _waves.push_back(wave16);
+
+    Wave* wave17 = new Wave(17);
+    for (int i = 0; i < 6; i++)
+    {
+        EnemySpawnData ufo;
+        ufo.type = ENEMY_UFO;
+        ufo.spawnPosition = Vector2(RM.WINDOW_WIDTH - 100.f, 120.f + (i * 100.0f));
+        ufo.spawnDelay = i * 0.7f;
+        wave17->AddEnemy(ufo);
+    }
+    _waves.push_back(wave17);
+
+    Wave* wave18 = new Wave(18);
+    for (int i = 0; i < 8; i++)
+    {
+        EnemySpawnData annoyer;
+        annoyer.type = ENEMY_ANNOYER;
+        annoyer.spawnPosition = Vector2(RM.WINDOW_WIDTH - 50.f, midY + ((i % 2 == 0 ? 1 : -1) * (i * 35.0f)));
+        annoyer.spawnDelay = i * 0.35f;
+        wave18->AddEnemy(annoyer);
+    }
+    _waves.push_back(wave18);
+
+    Wave* wave19 = new Wave(19);
+    for (int i = 0; i < 9; i++)
+    {
+        EnemySpawnData angrygons;
+        angrygons.type = ENEMY_ANGRYGONS;
+        angrygons.spawnPosition = Vector2(250.f + (i * 110.0f), RM.WINDOW_HEIGHT + 50.f);
+        angrygons.spawnDelay = i * 0.25f;
+        wave19->AddEnemy(angrygons);
+    }
+    _waves.push_back(wave19);
+
+    Wave* wave20 = new Wave(20);
+    for (int i = 0; i < 10; i++)
+    {
+        EnemySpawnData nuke;
+        nuke.type = ENEMY_NUKE;
+        nuke.spawnPosition = Vector2(180.f + (i * 110.0f), RM.WINDOW_HEIGHT + 50.f);
+        nuke.spawnDelay = i * 0.3f;
+        wave20->AddEnemy(nuke);
+    }
+    _waves.push_back(wave20);
+
+    Wave* waveBoss = new Wave(21);
+    EnemySpawnData boss;
+    boss.type = ENEMY_SPACE_BOSS;
+    boss.spawnPosition = Vector2(RM.WINDOW_WIDTH + 200.f, RM.WINDOW_HEIGHT / 2.f);
+    boss.spawnDelay = 0.f;
+    waveBoss->AddEnemy(boss);
+    _waves.push_back(waveBoss);
+
+    std::cout << "Loaded " << _waves.size() << " waves for Level 2: SPACE ODYSSEY" << std::endl;
+}
+
 void WaveManager::StartNextWave()
 {
     _currentWaveIndex++;

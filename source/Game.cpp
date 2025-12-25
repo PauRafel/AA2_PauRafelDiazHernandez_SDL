@@ -1,8 +1,10 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
+#include "GameplayLevel2.h"  
 #include "IntroSequence.h"
-#include "GameOverScreen.h"
+#include "Level2Intro.h"   
+#include "GameOverScreen.h" 
 #include <cassert>
 #include <iostream>
 
@@ -19,8 +21,9 @@ void Game::Init()
     RM.LoadTexture("resources/intro/panel_scoreboard.png");
     RM.LoadTexture("resources/intro/panel_powerups.png");
     RM.LoadTexture("resources/intro/splash_level1.png");
-
+    RM.LoadTexture("resources/intro/splash_level2.png");
     RM.LoadTexture("resources/gameover_splash.png");
+
 
     RM.LoadTexture("resources/player.png");                    
     RM.LoadTexture("resources/player_cannon.png");              
@@ -30,13 +33,14 @@ void Game::Init()
     RM.LoadTexture("resources/player_cannon_turrets.png");       
     RM.LoadTexture("resources/player_laser_turrets.png");       
     RM.LoadTexture("resources/player_full.png"); 
+    RM.LoadTexture("resources/shield_effect.png");
+
 
     RM.LoadTexture("resources/bullet.png");
 
-    RM.LoadTexture("resources/shield_effect.png");
 
-    RM.LoadTexture("resources/enemy.png");
     RM.LoadTexture("resources/background.png");
+    RM.LoadTexture("resources/background2.png");
 
 
     RM.LoadTexture("resources/powerup.png");
@@ -50,7 +54,6 @@ void Game::Init()
     RM.LoadTexture("resources/powerups/powerup_turrets.png");
     RM.LoadTexture("resources/powerups/powerup_full_shield.png");
 
-
     RM.LoadTexture("resources/BubbleEnemy.png");
     RM.LoadTexture("resources/KillerWhaleEnemy.png");
     RM.LoadTexture("resources/HorizontalMedusaEnemy.png");
@@ -62,12 +65,26 @@ void Game::Init()
     RM.LoadTexture("resources/AmoebaEnemy.png");
     RM.LoadTexture("resources/BioTitanBoss_Bullet.png");
     RM.LoadTexture("resources/BioTitanBossEnemy.png");
+
+    RM.LoadTexture("resources/TorpedoEnemy.png");             
+    RM.LoadTexture("resources/TurboChainsawEnemy.png");       
+    RM.LoadTexture("resources/RoboKrabsEnemy.png");          
+    RM.LoadTexture("resources/NukeEnemy.png");                
+    RM.LoadTexture("resources/MissileEnemy.png");          
+    RM.LoadTexture("resources/DanielsEnemy.png");           
+    RM.LoadTexture("resources/UfoEnemy.png");                 
+    RM.LoadTexture("resources/AnnoyerEnemy.png");             
+    RM.LoadTexture("resources/AngrygonsEnemy.png");           
+    RM.LoadTexture("resources/SpaceBossEnemy.png");          
+    RM.LoadTexture("resources/SpaceBoss_Bullet.png");
     
 
     assert(SM.AddScene("IntroSequence", new IntroSequence()));
     assert(SM.AddScene("GameOver", new GameOverScreen()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
+    assert(SM.AddScene("Level2Intro", new Level2Intro()));    
+    assert(SM.AddScene("GameplayLevel2", new GameplayLevel2()));  
 
     assert(SM.InitFirstScene("IntroSequence"));
 
