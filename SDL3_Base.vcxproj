@@ -61,7 +61,6 @@
     <ClInclude Include="source\ImageObject.h" />
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
-    <ClInclude Include="source\IntroSequence.h" />
     <ClInclude Include="source\KillerWhaleEnemy.h" />
     <ClInclude Include="source\Level2Intro.h" />
     <ClInclude Include="source\MainMenu.h" />
@@ -77,6 +76,7 @@
     <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\SceneManager.h" />
     <ClInclude Include="source\SpaceBoss.h" />
+    <ClInclude Include="source\SplashScreen.h" />
     <ClInclude Include="source\TextObject.h" />
     <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />
