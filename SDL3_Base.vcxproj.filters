@@ -215,5 +215,17 @@
     <ClInclude Include="source\SplashScreen.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="AtomicWraper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AtomicWrapper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stream.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AudioManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
