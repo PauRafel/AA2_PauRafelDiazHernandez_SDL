@@ -221,5 +221,8 @@
     <ClInclude Include="source\AtomicWrapper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Stream.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -79,6 +79,7 @@
     <ClInclude Include="source\SceneManager.h" />
     <ClInclude Include="source\SpaceBoss.h" />
     <ClInclude Include="source\SplashScreen.h" />
+    <ClInclude Include="source\Stream.h" />
     <ClInclude Include="source\TextObject.h" />
     <ClInclude Include="source\TextRenderer.h" />
     <ClInclude Include="source\TimeManager.h" />
