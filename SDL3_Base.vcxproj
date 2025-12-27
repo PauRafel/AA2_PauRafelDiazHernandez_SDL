@@ -39,10 +39,12 @@
     <ClCompile Include="source\WaveManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AtomicWraper.h" />
     <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\AmoebaEnemy.h" />
     <ClInclude Include="source\AngrygonsEnemy.h" />
     <ClInclude Include="source\AnnoyerEnemy.h" />
+    <ClInclude Include="source\AtomicWrapper.h" />
     <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
     <ClInclude Include="source\BioTitanBoss.h" />
