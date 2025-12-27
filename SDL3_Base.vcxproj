@@ -45,6 +45,7 @@
     <ClInclude Include="source\AngrygonsEnemy.h" />
     <ClInclude Include="source\AnnoyerEnemy.h" />
     <ClInclude Include="source\AtomicWrapper.h" />
+    <ClInclude Include="source\AudioManager.h" />
     <ClInclude Include="source\Background.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
     <ClInclude Include="source\BioTitanBoss.h" />
