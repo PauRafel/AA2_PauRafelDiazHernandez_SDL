@@ -24,15 +24,15 @@ public:
 
     void OnEnter() override
     {
-        _titleText = new TextObject("MENACE 2025", "resources/fonts/arial.ttf");
-        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f, 120.f);
-        _titleText->GetTransform()->scale = Vector2(2.5f, 2.5f);
+        _titleText = new TextObject("MAIN MENU", "resources/fonts/arial.ttf");
+        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.1f - 120.f, 120.f);
+        _titleText->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _titleText->SetColor({ 255, 255, 0, 255 }); 
         _ui.push_back(_titleText);
 
-        float centerX = RM.WINDOW_WIDTH / 2.0f;
+        float centerX = RM.WINDOW_WIDTH / 2.0f;  
         float startY = 280.f;
-        float buttonSpacing = 120.f;
+        float buttonSpacing = 100.f;
 
         _playButton = new Button(
             "PLAY",
@@ -43,7 +43,6 @@ public:
                 //SM.SetNextScene("LevelSelector");
             }
         );
-        _playButton->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _ui.push_back(_playButton);
 
         _rankingButton = new Button(
@@ -55,7 +54,6 @@ public:
                 //SM.SetNextScene("Ranking");
             }
         );
-        _rankingButton->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _ui.push_back(_rankingButton);
 
         _audioButton = new Button(
@@ -66,7 +64,6 @@ public:
                 ToggleAudio();
             }
         );
-        _audioButton->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _ui.push_back(_audioButton);
 
         _exitButton = new Button(
@@ -80,7 +77,6 @@ public:
                 SDL_PushEvent(&quitEvent);
             }
         );
-        _exitButton->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _ui.push_back(_exitButton);
 
         std::cout << "MainMenu scene loaded!" << std::endl;

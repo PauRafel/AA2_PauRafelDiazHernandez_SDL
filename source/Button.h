@@ -39,6 +39,7 @@ private:
 
     Vector2 _buttonSize;
     SDL_FRect _backgroundRect;
+    AABB* _buttonCollider; 
 
 public:
     Button(std::string text, std::string fontPath, Vector2 position, ButtonCallback onClick)
@@ -52,12 +53,12 @@ public:
         _clickDuration = 0.15f;
 
         _normalColor = { 200, 200, 200, 255 };   
-        _hoverColor = { 0, 255, 255, 255 };       
-        _clickedColor = { 255, 255, 0, 255 };   
+        _hoverColor = { 0, 255, 255, 255 };      
+        _clickedColor = { 255, 255, 0, 255 };     
 
         _normalBgColor = { 40, 40, 40, 255 };     
-        _hoverBgColor = { 60, 60, 80, 255 };      
-        _clickedBgColor = { 80, 80, 40, 255 };   
+        _hoverBgColor = { 60, 60, 80, 255 };     
+        _clickedBgColor = { 80, 80, 40, 255 }; 
 
         _normalScale = Vector2(1.0f, 1.0f);
         _hoverScale = Vector2(1.15f, 1.15f);
@@ -69,14 +70,25 @@ public:
 
         SetColor(_normalColor);
 
+        _buttonCollider = new AABB(Vector2(0.f, 0.f), _buttonSize);
+
         UpdateCollider();
+    }
+
+    ~Button()
+    {
+        if (_buttonCollider != nullptr)
+        {
+            delete _buttonCollider;
+            _buttonCollider = nullptr;
+        }
     }
 
     void Update(float dt) override
     {
         Vector2 mousePos(IM.GetMouseX(), IM.GetMouseY());
 
-        bool isHovering = _physics->CheckOverlappingPoint(mousePos);
+        bool isHovering = _buttonCollider->CheckOverlappingPoint(mousePos);
         bool isMousePressed = IM.GetLeftClick();
 
         if (_state == BUTTON_CLICKED)
@@ -112,7 +124,8 @@ public:
 
         UpdateCollider();
 
-        TextObject::Update(dt);
+        if (_renderer != nullptr)
+            _renderer->Update(dt);
     }
 
     void Render() override
@@ -135,7 +148,8 @@ public:
         SDL_SetRenderDrawColor(RM.GetRenderer(), borderColor.r, borderColor.g, borderColor.b, borderColor.a);
         SDL_RenderRect(RM.GetRenderer(), &_backgroundRect);
 
-        TextObject::Render();
+        if (_renderer != nullptr)
+            _renderer->Render();
     }
 
     void SetNormalColor(SDL_Color color) { _normalColor = color; }
@@ -149,15 +163,15 @@ public:
 private:
     void UpdateCollider()
     {
-        Vector2 scaledSize = _buttonSize * _transform->scale;
-        Vector2 offset = scaledSize / -2.0f;
+        Vector2 offset = _buttonSize / -2.0f;
 
-        _physics->AddCollider(new AABB(_transform->position + offset, scaledSize));
+        _buttonCollider->SetTopLeft(_transform->position + offset);
+        _buttonCollider->SetSize(_buttonSize);
 
         _backgroundRect.x = _transform->position.x + offset.x;
         _backgroundRect.y = _transform->position.y + offset.y;
-        _backgroundRect.w = scaledSize.x;
-        _backgroundRect.h = scaledSize.y;
+        _backgroundRect.w = _buttonSize.x;
+        _backgroundRect.h = _buttonSize.y;
     }
 
     void OnHoverEnter()
