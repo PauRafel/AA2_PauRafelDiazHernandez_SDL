@@ -12,6 +12,7 @@ protected:
     std::string _text;
     SDL_Texture* _textTexture;
     bool _autoSize = true;
+    Vector2 _renderOffset;
 
 public:
     TextRenderer(Transform* transform, std::string text, std::string fontPath);
@@ -21,4 +22,5 @@ public:
     virtual void Render() override;
 
     void SetText(std::string text);
+    void SetRenderOffset(Vector2 offset) { _renderOffset = offset; }
 };

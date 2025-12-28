@@ -5,6 +5,7 @@ TextRenderer::TextRenderer(Transform* transform, std::string text, std::string f
     : Renderer(transform, fontPath)
 {
     _textTexture = nullptr;
+    _renderOffset = Vector2(0.f, 0.f);
     SetText(text);
 }
 
@@ -21,8 +22,8 @@ void TextRenderer::Update(float dt)
 {
     Vector2 offset = (Vector2(-_transform->size.x, -_transform->size.y) / 2.0f) * _transform->scale;
 
-    _destRect.x = _transform->position.x + offset.x;
-    _destRect.y = _transform->position.y + offset.y;
+    _destRect.x = _transform->position.x + offset.x + _renderOffset.x; 
+    _destRect.y = _transform->position.y + offset.y + _renderOffset.y; 
 
     if (_autoSize)
     {

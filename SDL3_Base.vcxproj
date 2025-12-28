@@ -51,6 +51,7 @@
     <ClInclude Include="source\BioTitanBoss.h" />
     <ClInclude Include="source\BubbleEnemy.h" />
     <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\ChomperEnemy.h" />
     <ClInclude Include="source\CirclerEnemy.h" />
     <ClInclude Include="source\DanielsEnemy.h" />
