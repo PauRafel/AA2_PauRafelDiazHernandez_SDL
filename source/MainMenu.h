@@ -46,7 +46,7 @@ public:
         _ui.push_back(_playButton);
 
         _rankingButton = new Button(
-            "CHECK RANKING",
+            "RANKING",
             "resources/fonts/arial.ttf",
             Vector2(centerX, startY + buttonSpacing),
             [this]() {
@@ -57,7 +57,7 @@ public:
         _ui.push_back(_rankingButton);
 
         _audioButton = new Button(
-            _audioEnabled ? "DISABLE AUDIO" : "ENABLE AUDIO",
+            _audioEnabled ? "AUDIO" : "AUDIO",
             "resources/fonts/arial.ttf",
             Vector2(centerX, startY + buttonSpacing * 2),
             [this]() {
@@ -114,12 +114,12 @@ private:
         if (_audioEnabled)
         {
             std::cout << "Audio ENABLED" << std::endl;
-            _audioButton->SetText("DISABLE AUDIO");
+            _audioButton->SetText("AUDIO ON");
         }
         else
         {
             std::cout << "Audio DISABLED" << std::endl;
-            _audioButton->SetText("ENABLE AUDIO");
+            _audioButton->SetText("AUDIO OFF");
         }
     }
 };

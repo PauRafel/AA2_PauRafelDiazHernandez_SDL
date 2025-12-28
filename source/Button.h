@@ -70,6 +70,8 @@ public:
 
         SetColor(_normalColor);
 
+        dynamic_cast<TextRenderer*>(_renderer)->SetRenderOffset(Vector2(-100.f, 20.f));
+
         _buttonCollider = new AABB(Vector2(0.f, 0.f), _buttonSize);
 
         UpdateCollider();
