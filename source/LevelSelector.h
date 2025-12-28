@@ -40,7 +40,7 @@ public:
                 SM.SetNextScene("Gameplay"); 
             }
         );
-        dynamic_cast<TextRenderer*>(_level1Button->GetRenderer())->SetRenderOffset(Vector2(-10.f, 5.f));
+        dynamic_cast<TextRenderer*>(_level1Button->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
         _ui.push_back(_level1Button);
 
         _level2Button = new Button(
@@ -52,7 +52,7 @@ public:
                 SM.SetNextScene("GameplayLevel2"); 
             }
         );
-        dynamic_cast<TextRenderer*>(_level2Button->GetRenderer())->SetRenderOffset(Vector2(-10.f, 5.f));
+        dynamic_cast<TextRenderer*>(_level2Button->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
         _ui.push_back(_level2Button);
 
         _level3Button = new Button(
@@ -64,7 +64,7 @@ public:
                 //SM.SetNextScene("GameplayLevel3");
             }
         );
-        dynamic_cast<TextRenderer*>(_level3Button->GetRenderer())->SetRenderOffset(Vector2(-10.f, 5.f));
+        dynamic_cast<TextRenderer*>(_level3Button->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
         _ui.push_back(_level3Button);
 
         _backButton = new Button(
@@ -76,7 +76,7 @@ public:
                 SM.SetNextScene("MainMenu");
             }
         );
-        dynamic_cast<TextRenderer*>(_backButton->GetRenderer())->SetRenderOffset(Vector2(-10.f, 5.f));
+        dynamic_cast<TextRenderer*>(_backButton->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
         _ui.push_back(_backButton);
 
         std::cout << "LevelSelector scene loaded!" << std::endl;
