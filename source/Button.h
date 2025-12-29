@@ -154,6 +154,8 @@ public:
             _renderer->Render();
     }
 
+    Renderer* GetRenderer() { return _renderer; }
+
     void SetNormalColor(SDL_Color color) { _normalColor = color; }
     void SetHoverColor(SDL_Color color) { _hoverColor = color; }
     void SetClickedColor(SDL_Color color) { _clickedColor = color; }

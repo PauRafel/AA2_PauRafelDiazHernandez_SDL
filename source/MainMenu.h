@@ -40,7 +40,7 @@ public:
             Vector2(centerX, startY),
             [this]() {
                 std::cout << "Play button clicked!" << std::endl;
-                //SM.SetNextScene("LevelSelector");
+                SM.SetNextScene("LevelSelector");
             }
         );
         _ui.push_back(_playButton);

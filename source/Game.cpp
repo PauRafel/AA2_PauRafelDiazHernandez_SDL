@@ -1,9 +1,10 @@
 #include "Game.h"
-#include "MainMenu.h"
-#include "Gameplay.h"
-#include "GameplayLevel2.h"  
 #include "SplashScreen.h"
+#include "MainMenu.h"
+#include "LevelSelector.h"
+#include "Gameplay.h"
 #include "Level2Intro.h"   
+#include "GameplayLevel2.h"  
 #include "GameOverScreen.h" 
 #include <cassert>
 #include <iostream>
@@ -79,11 +80,12 @@ void Game::Init()
     
 
     assert(SM.AddScene("SplashScreen", new SplashScreen()));
-    assert(SM.AddScene("GameOver", new GameOverScreen()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
+    assert(SM.AddScene("LevelSelector", new LevelSelector()));
     assert(SM.AddScene("Gameplay", new Gameplay()));
     assert(SM.AddScene("Level2Intro", new Level2Intro()));    
     assert(SM.AddScene("GameplayLevel2", new GameplayLevel2()));  
+    assert(SM.AddScene("GameOver", new GameOverScreen()));
 
     assert(SM.InitFirstScene("SplashScreen"));
 
