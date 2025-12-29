@@ -51,7 +51,7 @@ public:
             Vector2(centerX, startY + buttonSpacing),
             [this]() {
                 std::cout << "Ranking button clicked!" << std::endl;
-                //SM.SetNextScene("Ranking");
+                SM.SetNextScene("Ranking");
             }
         );
         _ui.push_back(_rankingButton);

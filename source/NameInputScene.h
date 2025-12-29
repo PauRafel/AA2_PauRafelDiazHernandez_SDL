@@ -11,6 +11,8 @@
 class NameInputScene : public Scene
 {
 private:
+    static int _pendingScore;
+
     TextObject* _titleText;
     TextObject* _instructionText;
     TextObject* _nameText;
@@ -25,6 +27,10 @@ private:
     bool _cursorVisible;
 
 public:
+    static void SetPendingScore(int score)
+    {
+        _pendingScore = score;
+    }
     NameInputScene() : _playerScore(0) {}
 
     void OnEnter() override
@@ -33,6 +39,9 @@ public:
         _cursorBlinkTimer = 0.0f;
         _cursorBlinkSpeed = 0.5f;
         _cursorVisible = true;
+
+        _playerScore = _pendingScore;
+        _pendingScore = 0;
 
         _titleText = new TextObject("ENTER YOUR NAME", "resources/fonts/arial.ttf");
         _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 180.f, 150.f);
@@ -190,3 +199,5 @@ private:
         SM.SetNextScene("Ranking");
     }
 };
+
+int NameInputScene::_pendingScore = 0;
