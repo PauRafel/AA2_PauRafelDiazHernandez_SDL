@@ -230,5 +230,8 @@
     <ClInclude Include="source\Button.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\RankingManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
