@@ -30,7 +30,7 @@ public:
 
         std::vector<RankingEntry> topScores = RANKING.GetTopScores();
 
-        float startY = 180.f;
+        float startY = 210.f;
         float lineSpacing = 45.f;
 
         for (int i = 0; i < 10; i++)
@@ -39,17 +39,13 @@ public:
 
             if (i < topScores.size())
             {
-                oss << std::setw(2) << (i + 1) << ".  ";
-                oss << std::left << std::setw(15) << topScores[i].GetName();
-                oss << " ...... ";
-                oss << std::right << std::setw(6) << topScores[i].score;
+                oss << std::right << std::setw(15) << topScores[i].GetName();
+                oss << std::left << std::setw(6) << topScores[i].score;
             }
             else
             {
-                oss << std::setw(2) << (i + 1) << ".  ";
-                oss << std::left << std::setw(15) << "---";
-                oss << " ...... ";
-                oss << std::right << std::setw(6) << "0";
+                oss << std::left << std::setw(6) << "000000";
+                oss << std::right << std::setw(15) << "------";
             }
 
             TextObject* rankingLine = new TextObject(oss.str(), "resources/fonts/arial.ttf");
