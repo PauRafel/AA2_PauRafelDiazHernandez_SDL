@@ -233,5 +233,8 @@
     <ClInclude Include="source\RankingManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\NameInputScene.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

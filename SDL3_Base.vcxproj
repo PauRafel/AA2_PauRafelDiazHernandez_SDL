@@ -69,6 +69,7 @@
     <ClInclude Include="source\Level2Intro.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\MissileEnemy.h" />
+    <ClInclude Include="source\NameInputScene.h" />
     <ClInclude Include="source\NukeEnemy.h" />
     <ClInclude Include="source\Object.h" />
     <ClInclude Include="source\Player.h" />
