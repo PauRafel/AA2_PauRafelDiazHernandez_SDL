@@ -23,8 +23,8 @@ public:
     void OnEnter() override
     {
         _titleText = new TextObject("TOP 10 RANKING", "resources/fonts/arial.ttf");
-        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 180.f, 80.f);
-        _titleText->GetTransform()->scale = Vector2(2.5f, 2.5f);
+        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.3f - 180.f, 80.f);
+        _titleText->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _titleText->SetColor({ 255, 255, 0, 255 }); 
         _ui.push_back(_titleText);
 
@@ -79,7 +79,7 @@ public:
                 SM.SetNextScene("MainMenu");
             }
         );
-        dynamic_cast<TextRenderer*>(_backButton->GetRenderer())->SetRenderOffset(Vector2(-30.f, 10.f));
+        dynamic_cast<TextRenderer*>(_backButton->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
         _ui.push_back(_backButton);
 
         std::cout << "RankingScene loaded!" << std::endl;
