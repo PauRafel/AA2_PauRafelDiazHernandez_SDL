@@ -75,6 +75,7 @@
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PowerUp.h" />
     <ClInclude Include="source\RankingManager.h" />
+    <ClInclude Include="source\RankingScene.h" />
     <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\RigidBody.h" />

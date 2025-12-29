@@ -236,5 +236,8 @@
     <ClInclude Include="source\NameInputScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\RankingScene.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
