@@ -9,21 +9,21 @@
 
 struct RankingEntry
 {
-    char name[20];
+    char name[9];
     int score;
 
     RankingEntry() : score(0)
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 9; i++)
             name[i] = '\0';
     }
 
     RankingEntry(std::string playerName, int playerScore) : score(playerScore)
     {
-        int length = playerName.length() > 19 ? 19 : playerName.length();
+        int length = playerName.length() > 8 ? 8 : playerName.length();
         for (int i = 0; i < length; i++)
             name[i] = playerName[i];
-        for (int i = length; i < 20; i++)
+        for (int i = length; i < 9; i++)
             name[i] = '\0';
     }
 
