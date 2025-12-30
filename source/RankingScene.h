@@ -39,18 +39,18 @@ public:
 
             if (i < topScores.size())
             {
-                oss << std::right << std::setw(15) << topScores[i].GetName();
-                oss << std::left << std::setw(6) << topScores[i].score;
+                oss << std::left << std::setw(0) << topScores[i].GetName();
+                oss << std::right << std::setw(13) << topScores[i].score;
             }
             else
             {
-                oss << std::left << std::setw(6) << "000000";
-                oss << std::right << std::setw(15) << "------";
+                oss << std::left << std::setw(0) << "....";
+                oss << std::right << std::setw(0) << "                             000000";
             }
 
             TextObject* rankingLine = new TextObject(oss.str(), "resources/fonts/arial.ttf");
             rankingLine->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 250.f, startY + (i * lineSpacing));
-            rankingLine->GetTransform()->scale = Vector2(1.2f, 1.2f);
+            rankingLine->GetTransform()->scale = Vector2(0.9f, 0.9f);
 
             if (i == 0)
                 rankingLine->SetColor({ 255, 215, 0, 255 }); 
