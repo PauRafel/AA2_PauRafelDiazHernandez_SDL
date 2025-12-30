@@ -20,7 +20,7 @@ private:
 
     std::string _playerName;
     int _playerScore;
-    const int MAX_NAME_LENGTH = 19;
+    const int MAX_NAME_LENGTH = 8;
 
     float _cursorBlinkTimer;
     float _cursorBlinkSpeed;
@@ -43,27 +43,27 @@ public:
         _playerScore = _pendingScore;
         _pendingScore = 0;
 
-        _titleText = new TextObject("ENTER YOUR NAME", "resources/fonts/arial.ttf");
-        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.1f - 180.f, 150.f);
-        _titleText->GetTransform()->scale = Vector2(1.3f, 1.3f);
+        _titleText = new TextObject("YOU HAVE QUALIFIED!", "resources/fonts/arial.ttf");
+        _titleText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.8f - 180.f, 150.f);
+        _titleText->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _titleText->SetColor({ 255, 255, 0, 255 }); 
         _ui.push_back(_titleText);
 
         _instructionText = new TextObject("Type your name and press ENTER", "resources/fonts/arial.ttf");
-        _instructionText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, 250.f);
-        _instructionText->GetTransform()->scale = Vector2(0.5f, 0.5f);
+        _instructionText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.4f - 200.f, 250.f);
+        _instructionText->GetTransform()->scale = Vector2(0.8f, 0.8f);
         _instructionText->SetColor({ 200, 200, 200, 255 });
         _ui.push_back(_instructionText);
 
         _nameText = new TextObject("_", "resources/fonts/arial.ttf");
-        _nameText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 150.f, 400.f);
-        _nameText->GetTransform()->scale = Vector2(0.5f, 0.5f);
+        _nameText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 150.f, 440.f);
+        _nameText->GetTransform()->scale = Vector2(1.5f, 1.5f);
         _nameText->SetColor({ 0, 255, 255, 255 }); 
         _ui.push_back(_nameText);
 
-        _cursorText = new TextObject("_", "resources/fonts/arial.ttf");
-        _cursorText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 150.f, 400.f);
-        _cursorText->GetTransform()->scale = Vector2(1.5f, 1.5f);
+        _cursorText = new TextObject(" ", "resources/fonts/arial.ttf");
+        _cursorText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 150.f, 440.f);
+        _cursorText->GetTransform()->scale = Vector2(0.0f, 0.0f);
         _cursorText->SetColor({ 0, 255, 255, 255 }); 
         _ui.push_back(_cursorText);
 
