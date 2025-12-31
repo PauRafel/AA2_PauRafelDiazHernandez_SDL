@@ -37,7 +37,7 @@ public:
             Vector2(centerX, startY),
             [this]() {
                 std::cout << "Level 1 selected!" << std::endl;
-                SM.SetNextScene("Gameplay"); 
+                SM.SetNextScene("GameplayLevel1"); 
             }
         );
         dynamic_cast<TextRenderer*>(_level1Button->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
