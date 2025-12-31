@@ -113,7 +113,7 @@
     <ClInclude Include="source\MainMenu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Gameplay.h">
+    <ClInclude Include="source\GameplayBase.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
