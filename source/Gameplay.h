@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "NameInputScene.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "BubbleEnemy.h"
@@ -370,7 +371,21 @@ public:
                     if (_player->GetShield() <= 0)
                     {
                         std::cout << "PLAYER DIED!" << std::endl;
-                        SM.SetNextScene("GameOver");
+
+                        int finalScore = _player->GetScore();
+
+                        if (RANKING.IsTopScore(finalScore))
+                        {
+                            std::cout << "Score qualifies for top 10! Going to name input..." << std::endl;
+                            NameInputScene::SetPendingScore(finalScore);
+                            SM.SetNextScene("NameInput");
+                        }
+                        else
+                        {
+                            std::cout << "Score doesn't qualify for top 10. Game Over." << std::endl;
+                            SM.SetNextScene("GameOver");
+                        }
+
                         return;
                     }
                 }

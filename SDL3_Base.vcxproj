@@ -69,10 +69,13 @@
     <ClInclude Include="source\Level2Intro.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\MissileEnemy.h" />
+    <ClInclude Include="source\NameInputScene.h" />
     <ClInclude Include="source\NukeEnemy.h" />
     <ClInclude Include="source\Object.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\PowerUp.h" />
+    <ClInclude Include="source\RankingManager.h" />
+    <ClInclude Include="source\RankingScene.h" />
     <ClInclude Include="source\Renderer.h" />
     <ClInclude Include="source\RenderManager.h" />
     <ClInclude Include="source\RigidBody.h" />
