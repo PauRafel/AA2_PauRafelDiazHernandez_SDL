@@ -14,7 +14,8 @@ class RankingScene : public Scene
 {
 private:
     TextObject* _titleText;
-    std::vector<TextObject*> _rankingTexts;
+    std::vector<TextObject*> _nameTexts;
+    std::vector<TextObject*> _scoreTexts;
     Button* _backButton;
 
 public:
@@ -33,36 +34,48 @@ public:
         float startY = 210.f;
         float lineSpacing = 45.f;
 
+        float nameColumnX = RM.WINDOW_WIDTH / 2.0f - 260.f;
+        float scoreColumnX = RM.WINDOW_WIDTH / 2.0f + 140.f;
+
         for (int i = 0; i < 10; i++)
         {
-            std::ostringstream oss;
+            std::string nameText;
+            std::string scoreText;
 
             if (i < topScores.size())
             {
-                oss << std::left << std::setw(0) << topScores[i].GetName();
-                oss << std::right << std::setw(13) << topScores[i].score;
+                nameText = topScores[i].GetName();
+                scoreText = std::to_string(topScores[i].score);
             }
             else
             {
-                oss << std::left << std::setw(0) << "....";
-                oss << std::right << std::setw(0) << "                             000000";
+                nameText = "....";
+                scoreText = "0";
             }
 
-            TextObject* rankingLine = new TextObject(oss.str(), "resources/fonts/arial.ttf");
-            rankingLine->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 250.f, startY + (i * lineSpacing));
-            rankingLine->GetTransform()->scale = Vector2(0.9f, 0.9f);
+            TextObject* name = new TextObject(nameText, "resources/fonts/arial.ttf");
+            TextObject* score = new TextObject(scoreText, "resources/fonts/arial.ttf");
 
-            if (i == 0)
-                rankingLine->SetColor({ 255, 215, 0, 255 }); 
-            else if (i == 1)
-                rankingLine->SetColor({ 192, 192, 192, 255 });
-            else if (i == 2)
-                rankingLine->SetColor({ 205, 127, 50, 255 }); 
-            else
-                rankingLine->SetColor({ 200, 200, 200, 255 }); 
+            name->GetTransform()->position = Vector2(nameColumnX, startY + i * lineSpacing);
+            score->GetTransform()->position = Vector2(scoreColumnX, startY + i * lineSpacing);
 
-            _rankingTexts.push_back(rankingLine);
-            _ui.push_back(rankingLine);
+            name->GetTransform()->scale = Vector2(0.9f, 0.9f);
+            score->GetTransform()->scale = Vector2(0.9f, 0.9f);
+
+            SDL_Color color;
+            if (i == 0)      color = { 255, 215, 0, 255 };
+            else if (i == 1) color = { 192, 192, 192, 255 };
+            else if (i == 2) color = { 205, 127, 50, 255 };
+            else             color = { 200, 200, 200, 255 };
+
+            name->SetColor(color);
+            score->SetColor(color);
+
+            _nameTexts.push_back(name);
+            _scoreTexts.push_back(score);
+
+            _ui.push_back(name);
+            _ui.push_back(score);
         }
 
         float centerX = RM.WINDOW_WIDTH / 2.0f;
@@ -85,7 +98,8 @@ public:
     void OnExit() override
     {
         _titleText = nullptr;
-        _rankingTexts.clear();
+        _nameTexts.clear();
+        _scoreTexts.clear();
         _backButton = nullptr;
 
         Scene::OnExit();
