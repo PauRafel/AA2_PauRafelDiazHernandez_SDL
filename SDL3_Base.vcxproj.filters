@@ -206,9 +206,6 @@
     <ClInclude Include="source\UfoEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Level2Intro.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\GameplayLevel2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -240,6 +237,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\GameplayLevel1.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LevelIntroScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

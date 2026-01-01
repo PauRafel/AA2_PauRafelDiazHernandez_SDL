@@ -4,7 +4,7 @@
 #include "LevelSelector.h"
 #include "RankingScene.h"
 #include "GameplayBase.h"
-#include "Level2Intro.h"   
+#include "LevelIntroScene.h"  
 #include "GameplayLevel1.h"  
 #include "GameplayLevel2.h"  
 #include "GameOverScreen.h" 
@@ -86,7 +86,15 @@ void Game::Init()
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("LevelSelector", new LevelSelector()));
     assert(SM.AddScene("Ranking", new RankingScene()));
-    assert(SM.AddScene("Level2Intro", new Level2Intro()));  
+
+    LevelIntroScene* level1Intro = new LevelIntroScene();
+    level1Intro->Configure("resources/intro/splash_level1.png", "GameplayLevel1");
+    assert(SM.AddScene("Level1Intro", level1Intro));
+
+    LevelIntroScene* level2Intro = new LevelIntroScene();
+    level2Intro->Configure("resources/intro/splash_level2.png", "GameplayLevel2");
+    assert(SM.AddScene("Level2Intro", level2Intro));
+
     assert(SM.AddScene("GameplayLevel1", new GameplayLevel1()));
     assert(SM.AddScene("GameplayLevel2", new GameplayLevel2()));  
     assert(SM.AddScene("GameOver", new GameOverScreen()));

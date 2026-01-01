@@ -67,7 +67,7 @@
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\KillerWhaleEnemy.h" />
-    <ClInclude Include="source\Level2Intro.h" />
+    <ClInclude Include="source\LevelIntroScene.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\MissileEnemy.h" />
     <ClInclude Include="source\NameInputScene.h" />
