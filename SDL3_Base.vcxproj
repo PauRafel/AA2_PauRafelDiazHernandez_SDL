@@ -24,6 +24,7 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\EnemyStateMachine.cpp" />
     <ClCompile Include="source\Game.cpp" />
+    <ClCompile Include="source\GameplayBase.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
