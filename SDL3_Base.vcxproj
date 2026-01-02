@@ -28,6 +28,7 @@
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\NameInputScene.cpp" />
     <ClCompile Include="source\Object.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PowerUp.cpp" />
