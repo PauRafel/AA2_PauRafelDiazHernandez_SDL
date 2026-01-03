@@ -237,7 +237,7 @@ void GameplayBase::UpdatePausedState(float dt)
 
 void GameplayBase::UpdateFinishStageState(float dt)
 {
-    if (IM.GetEvent(SDLK_SPACE, DOWN) || IM.GetEvent(SDLK_RETURN, DOWN))
+    if (IM.GetEvent(SDLK_RETURN, DOWN))
     {
         if (!WAVE_MANAGER.AllWavesCompleted())
         {
@@ -626,13 +626,13 @@ void GameplayBase::ShowPauseUI(bool show)
 void GameplayBase::CreateFinishStageUI()
 {
     _finishStageText = new TextObject("WAVE COMPLETED!", "resources/fonts/arial.ttf");
-    _finishStageText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, RM.WINDOW_HEIGHT / 2.0f - 50.f);
+    _finishStageText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.4f - 200.f, RM.WINDOW_HEIGHT / 2.0f - 50.f);
     _finishStageText->GetTransform()->scale = Vector2(1.5f, 1.5f);
     _finishStageText->SetColor({ 0, 255, 0, 255 });
     _ui.push_back(_finishStageText);
 
-    _finishStageInstructions = new TextObject("Press SPACE or ENTER to continue", "resources/fonts/arial.ttf");
-    _finishStageInstructions->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 250.f, RM.WINDOW_HEIGHT / 2.0f + 50.f);
+    _finishStageInstructions = new TextObject("Press ENTER to continue", "resources/fonts/arial.ttf");
+    _finishStageInstructions->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 1.9f - 250.f, RM.WINDOW_HEIGHT / 2.0f + 50.f);
     _finishStageInstructions->GetTransform()->scale = Vector2(0.8f, 0.8f);
     _finishStageInstructions->SetColor({ 200, 200, 200, 255 });
     _ui.push_back(_finishStageInstructions);
