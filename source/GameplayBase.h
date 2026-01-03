@@ -10,6 +10,7 @@
 #include "RenderManager.h"
 #include "TimeManager.h"
 #include "WaveManager.h"
+#include "Button.h"
 #include <vector>
 #include <string>
 
@@ -46,6 +47,7 @@ protected:
 
     TextObject* _pauseText;
     TextObject* _pauseInstructions;
+    Button* _pauseBackButton;
 
     TextObject* _finishStageText;
     TextObject* _finishStageInstructions;

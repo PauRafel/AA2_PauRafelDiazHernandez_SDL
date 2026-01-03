@@ -29,6 +29,7 @@ GameplayBase::GameplayBase()
 
     _pauseText = nullptr;
     _pauseInstructions = nullptr;
+    _pauseBackButton = nullptr;
 
     _finishStageText = nullptr;
     _finishStageInstructions = nullptr;
@@ -571,16 +572,28 @@ void GameplayBase::UpdateHUD()
 void GameplayBase::CreatePauseUI()
 {
     _pauseText = new TextObject("PAUSED", "resources/fonts/arial.ttf");
-    _pauseText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 100.f, RM.WINDOW_HEIGHT / 2.0f - 50.f);
+    _pauseText->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.1f - 100.f, RM.WINDOW_HEIGHT / 2.0f - 100.f);
     _pauseText->GetTransform()->scale = Vector2(2.0f, 2.0f);
     _pauseText->SetColor({ 255, 255, 0, 255 });
     _ui.push_back(_pauseText);
 
     _pauseInstructions = new TextObject("Press ESC or P to resume", "resources/fonts/arial.ttf");
-    _pauseInstructions->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f - 200.f, RM.WINDOW_HEIGHT / 2.0f + 50.f);
+    _pauseInstructions->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.1f - 200.f, RM.WINDOW_HEIGHT / 2.0f - 20.f);
     _pauseInstructions->GetTransform()->scale = Vector2(0.8f, 0.8f);
     _pauseInstructions->SetColor({ 200, 200, 200, 255 });
     _ui.push_back(_pauseInstructions);
+
+    _pauseBackButton = new Button(
+        "MAIN MENU",
+        "resources/fonts/arial.ttf",
+        Vector2(RM.WINDOW_WIDTH / 2.0f, RM.WINDOW_HEIGHT / 2.0f + 80.f),
+        [this]() {
+            std::cout << "Returning to Main Menu from pause..." << std::endl;
+            SM.SetNextScene("MainMenu");
+        }
+    );
+    dynamic_cast<TextRenderer*>(_pauseBackButton->GetRenderer())->SetRenderOffset(Vector2(-100.f, 20.f));
+    _ui.push_back(_pauseBackButton);
 }
 
 void GameplayBase::ShowPauseUI(bool show)
@@ -593,6 +606,20 @@ void GameplayBase::ShowPauseUI(bool show)
     if (_pauseInstructions != nullptr)
     {
         _pauseInstructions->GetTransform()->scale = show ? Vector2(0.8f, 0.8f) : Vector2(0.0f, 0.0f);
+    }
+
+    if (_pauseBackButton != nullptr)
+    {
+        _pauseBackButton->GetTransform()->scale = show ? Vector2(1.0f, 1.0f) : Vector2(0.0f, 0.0f);
+
+        if (!show)
+        {
+            _pauseBackButton->GetTransform()->position = Vector2(-1000.f, -1000.f);
+        }
+        else
+        {
+            _pauseBackButton->GetTransform()->position = Vector2(RM.WINDOW_WIDTH / 2.0f, RM.WINDOW_HEIGHT / 2.0f + 80.f);
+        }
     }
 }
 
