@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level>
+    <!-- Wave 1: Torpedos -->
+    <wave>
+        <enemy id="9" count="6">
+            <spawn_delay>0.4</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="230"/>
+                <position x="1310" y="310"/>
+                <position x="1310" y="390"/>
+                <position x="1310" y="470"/>
+                <position x="1310" y="550"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 2: Turbo Chainsaws -->
+    <wave>
+        <enemy id="10" count="3">
+            <spawn_delay>1.5</spawn_delay>
+            <positions>
+                <position x="1260" y="384"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 3: Robo Krabs -->
+    <wave>
+        <enemy id="11" count="2">
+            <spawn_delay>2.0</spawn_delay>
+            <positions>
+                <position x="1260" y="718" on_ceiling="false"/>
+                <position x="1260" y="50" on_ceiling="true"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 4: Nukes -->
+    <wave>
+        <enemy id="12" count="5">
+            <spawn_delay>0.5</spawn_delay>
+            <positions>
+                <position x="200" y="818"/>
+                <position x="400" y="818"/>
+                <position x="600" y="818"/>
+                <position x="800" y="818"/>
+                <position x="1000" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 5: Missiles -->
+    <wave>
+        <enemy id="13" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="200"/>
+                <position x="1310" y="250"/>
+                <position x="1310" y="300"/>
+                <position x="1310" y="350"/>
+                <position x="1310" y="400"/>
+                <position x="1310" y="450"/>
+                <position x="1310" y="500"/>
+                <position x="1310" y="550"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 6: Daniels -->
+    <wave>
+        <enemy id="14" count="4">
+            <spawn_delay>0.6</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="250"/>
+                <position x="1310" y="350"/>
+                <position x="1310" y="450"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 7: UFOs -->
+    <wave>
+        <enemy id="15" count="5">
+            <spawn_delay>0.8</spawn_delay>
+            <positions>
+                <position x="1260" y="150"/>
+                <position x="1260" y="240"/>
+                <position x="1260" y="330"/>
+                <position x="1260" y="420"/>
+                <position x="1260" y="510"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 8: Annoyers -->
+    <wave>
+        <enemy id="16" count="6">
+            <spawn_delay>0.4</spawn_delay>
+            <positions>
+                <position x="1310" y="384"/>
+                <position x="1310" y="344"/>
+                <position x="1310" y="424"/>
+                <position x="1310" y="304"/>
+                <position x="1310" y="464"/>
+                <position x="1310" y="264"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 9: Angrygons -->
+    <wave>
+        <enemy id="17" count="7">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="300" y="818"/>
+                <position x="420" y="818"/>
+                <position x="540" y="818"/>
+                <position x="660" y="818"/>
+                <position x="780" y="818"/>
+                <position x="900" y="818"/>
+                <position x="1020" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 10: More Nukes -->
+    <wave>
+        <enemy id="12" count="6">
+            <spawn_delay>0.4</spawn_delay>
+            <positions>
+                <position x="250" y="818"/>
+                <position x="400" y="818"/>
+                <position x="550" y="818"/>
+                <position x="700" y="818"/>
+                <position x="850" y="818"/>
+                <position x="1000" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 11: More Torpedos -->
+    <wave>
+        <enemy id="9" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="210"/>
+                <position x="1310" y="270"/>
+                <position x="1310" y="330"/>
+                <position x="1310" y="390"/>
+                <position x="1310" y="450"/>
+                <position x="1310" y="510"/>
+                <position x="1310" y="570"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 12: More Chainsaws -->
+    <wave>
+        <enemy id="10" count="4">
+            <spawn_delay>1.0</spawn_delay>
+            <positions>
+                <position x="1260" y="384"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 13: More Krabs -->
+    <wave>
+        <enemy id="11" count="2">
+            <spawn_delay>1.5</spawn_delay>
+            <positions>
+                <position x="1260" y="718" on_ceiling="false"/>
+                <position x="1260" y="50" on_ceiling="true"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 14: Even more Nukes -->
+    <wave>
+        <enemy id="12" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="200" y="818"/>
+                <position x="330" y="818"/>
+                <position x="460" y="818"/>
+                <position x="590" y="818"/>
+                <position x="720" y="818"/>
+                <position x="850" y="818"/>
+                <position x="980" y="818"/>
+                <position x="1110" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 15: More Missiles -->
+    <wave>
+        <enemy id="13" count="10">
+            <spawn_delay>0.25</spawn_delay>
+            <positions>
+                <position x="1310" y="180"/>
+                <position x="1310" y="225"/>
+                <position x="1310" y="270"/>
+                <position x="1310" y="315"/>
+                <position x="1310" y="360"/>
+                <position x="1310" y="405"/>
+                <position x="1310" y="450"/>
+                <position x="1310" y="495"/>
+                <position x="1310" y="540"/>
+                <position x="1310" y="585"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 16: More Daniels -->
+    <wave>
+        <enemy id="14" count="5">
+            <spawn_delay>0.5</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="240"/>
+                <position x="1310" y="330"/>
+                <position x="1310" y="420"/>
+                <position x="1310" y="510"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 17: More UFOs -->
+    <wave>
+        <enemy id="15" count="6">
+            <spawn_delay>0.7</spawn_delay>
+            <positions>
+                <position x="1260" y="120"/>
+                <position x="1260" y="220"/>
+                <position x="1260" y="320"/>
+                <position x="1260" y="420"/>
+                <position x="1260" y="520"/>
+                <position x="1260" y="620"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 18: More Annoyers -->
+    <wave>
+        <enemy id="16" count="8">
+            <spawn_delay>0.35</spawn_delay>
+            <positions>
+                <position x="1310" y="384"/>
+                <position x="1310" y="349"/>
+                <position x="1310" y="419"/>
+                <position x="1310" y="314"/>
+                <position x="1310" y="454"/>
+                <position x="1310" y="279"/>
+                <position x="1310" y="489"/>
+                <position x="1310" y="244"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 19: More Angrygons -->
+    <wave>
+        <enemy id="17" count="9">
+            <spawn_delay>0.25</spawn_delay>
+            <positions>
+                <position x="250" y="818"/>
+                <position x="360" y="818"/>
+                <position x="470" y="818"/>
+                <position x="580" y="818"/>
+                <position x="690" y="818"/>
+                <position x="800" y="818"/>
+                <position x="910" y="818"/>
+                <position x="1020" y="818"/>
+                <position x="1130" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 20: Final Nuke Wave -->
+    <wave>
+        <enemy id="12" count="10">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="180" y="818"/>
+                <position x="290" y="818"/>
+                <position x="400" y="818"/>
+                <position x="510" y="818"/>
+                <position x="620" y="818"/>
+                <position x="730" y="818"/>
+                <position x="840" y="818"/>
+                <position x="950" y="818"/>
+                <position x="1060" y="818"/>
+                <position x="1170" y="818"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 21: BOSS -->
+    <wave is_boss="true">
+        <enemy id="18" count="1">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="1560" y="384"/>
+            </positions>
+        </enemy>
+    </wave>
+</level>
