@@ -101,6 +101,8 @@ private:
     int _currentWaveIndex;
     SpawnEnemyCallback _spawnCallback;
 
+    friend class XMLWaveLoader;
+
 public:
     bool IsCurrentWaveBoss() const
     {
@@ -127,8 +129,6 @@ public:
     }
 
     void Initialize(SpawnEnemyCallback spawnCallback);
-    void LoadLevel1Waves();
-    void LoadLevel2Waves();
     void StartNextWave();
     void Update(float dt);
     void OnEnemyKilled();

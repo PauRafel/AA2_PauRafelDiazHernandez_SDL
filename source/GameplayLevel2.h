@@ -10,6 +10,7 @@
 #include "AnnoyerEnemy.h"
 #include "AngrygonsEnemy.h"
 #include "SpaceBoss.h"
+#include "XMLWaveLoader.h"
 
 class GameplayLevel2 : public GameplayBase
 {
@@ -20,7 +21,11 @@ public:
 protected:
     void LoadLevel() override
     {
-        WAVE_MANAGER.LoadLevel2Waves();
+        if (!XMLWaveLoader::LoadWavesFromXML("resources/levels/level2.xml"))
+        {
+            std::cerr << "ERROR: Failed to load Level 2 waves from XML!" << std::endl;
+            std::cerr << "Falling back to hardcoded waves..." << std::endl;
+        }
     }
 
     void SpawnEnemy(EnemySpawnData data) override

@@ -39,6 +39,7 @@
     <ClCompile Include="source\TextRenderer.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
     <ClCompile Include="source\WaveManager.cpp" />
+    <ClCompile Include="source\XMLWaveLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AtomicWraper.h" />
@@ -99,6 +100,7 @@
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\VerticalMedusaEnemy.h" />
     <ClInclude Include="source\WaveManager.h" />
+    <ClInclude Include="source\XMLWaveLoader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
