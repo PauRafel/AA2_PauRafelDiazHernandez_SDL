@@ -14,6 +14,7 @@ GameplayBase::GameplayBase()
 
     _player = nullptr;
     _background = nullptr;
+    _backgroundDecorations = nullptr;
     _boss = nullptr;
 
     _scoreLabel = nullptr;
@@ -85,6 +86,7 @@ void GameplayBase::OnEnter()
     _currentState = GAMEPLAY_STATE_GAMEPLAY;
 
     _background = new Background(GetBackgroundPath());
+    _backgroundDecorations = new BackgroundDecorations(GetCurrentLevel());
 
     _player = new Player("resources/player.png", Vector2(0.f, 0.f), Vector2(64.f, 64.f), &_bullets);
     _objects.push_back(_player);
@@ -130,6 +132,12 @@ void GameplayBase::OnExit()
         _background = nullptr;
     }
 
+    if (_backgroundDecorations != nullptr)
+    {
+        delete _backgroundDecorations;
+        _backgroundDecorations = nullptr;
+    }
+
     for (Bullet* bullet : _bullets)
         delete bullet;
     _bullets.clear();
@@ -151,6 +159,9 @@ void GameplayBase::Update(float dt)
 {
     if (_background != nullptr && _currentState != GAMEPLAY_STATE_PAUSED)
         _background->Update(dt);
+
+    if (_backgroundDecorations != nullptr && _currentState != GAMEPLAY_STATE_PAUSED)
+        _backgroundDecorations->Update(dt);
 
     switch (_currentState)
     {
@@ -363,6 +374,9 @@ void GameplayBase::Render()
     if (_background != nullptr)
         _background->Render();
 
+    if (_backgroundDecorations != nullptr)
+        _backgroundDecorations->Render();
+
     for (Enemy* enemy : _enemies)
         enemy->Render();
 
@@ -430,6 +444,11 @@ void GameplayBase::CheckBossConditions(float dt)
             if (_background != nullptr)
             {
                 _background->StopScrolling();
+
+                if (_backgroundDecorations != nullptr) {
+                    _backgroundDecorations->StopScrolling();
+                }
+
                 std::cout << "=== BOSS FULLY VISIBLE ===" << std::endl;
                 std::cout << "Background scroll STOPPED!" << std::endl;
                 std::cout << "=== BOSS FIGHT START ===" << std::endl;

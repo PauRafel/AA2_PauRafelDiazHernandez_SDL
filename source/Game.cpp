@@ -80,6 +80,17 @@ void Game::Init()
     RM.LoadTexture("resources/AngrygonsEnemy.png");           
     RM.LoadTexture("resources/SpaceBossEnemy.png");          
     RM.LoadTexture("resources/SpaceBoss_Bullet.png");
+
+    RM.LoadTexture("resources/background_decos/deco_1_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_2_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_3_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_4_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_5_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_1_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_2_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_3_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_4_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_5_lvl2.png");
     
 
     assert(SM.AddScene("SplashScreen", new SplashScreen()));

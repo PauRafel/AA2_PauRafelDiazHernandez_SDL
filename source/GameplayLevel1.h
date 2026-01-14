@@ -18,6 +18,12 @@ public:
     ~GameplayLevel1() = default;
 
 protected:
+
+    int GetCurrentLevel() override
+    {
+        return 1;
+    }
+
     void LoadLevel() override
     {
         if (!XMLWaveLoader::LoadWavesFromXML("resources/levels/level1.xml"))

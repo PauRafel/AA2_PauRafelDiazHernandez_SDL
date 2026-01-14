@@ -78,6 +78,9 @@
     <ClCompile Include="source\XMLWaveLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\BackgroundDecorations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Vector2.h">
@@ -255,6 +258,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\XMLWaveLoader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BackgroundDecorations.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

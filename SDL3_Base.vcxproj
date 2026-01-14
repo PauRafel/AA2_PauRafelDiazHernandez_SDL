@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Background.cpp" />
+    <ClCompile Include="source\BackgroundDecorations.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\EnemyStateMachine.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="source\AtomicWrapper.h" />
     <ClInclude Include="source\AudioManager.h" />
     <ClInclude Include="source\Background.h" />
+    <ClInclude Include="source\BackgroundDecorations.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
     <ClInclude Include="source\BioTitanBoss.h" />
     <ClInclude Include="source\BubbleEnemy.h" />

@@ -11,6 +11,7 @@
 #include "TimeManager.h"
 #include "WaveManager.h"
 #include "Button.h"
+#include "BackgroundDecorations.h"
 #include <vector>
 #include <string>
 
@@ -30,6 +31,7 @@ protected:
 
     Player* _player;
     Background* _background;
+    BackgroundDecorations* _backgroundDecorations;
     std::vector<Enemy*> _enemies;
     std::vector<Bullet*> _bullets;
     std::vector<PowerUp*> _powerups;
@@ -81,6 +83,7 @@ protected:
     virtual void SpawnEnemy(EnemySpawnData data) = 0;
     virtual std::string GetNextSceneOnComplete() = 0;
     virtual std::string GetBackgroundPath() = 0;
+    virtual int GetCurrentLevel() = 0;
     virtual void CheckBossConditions(float dt);
     virtual bool IsBossFullyVisible();
 
