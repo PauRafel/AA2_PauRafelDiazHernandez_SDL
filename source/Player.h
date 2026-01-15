@@ -38,6 +38,11 @@ private:
     float _invulnerabilityTimer = 0.0f;
     float _invulnerabilityDuration = 10.0f;
 
+    float _invulnerabilityFromDamageDuration = 3.0f;
+    float _blinkTimer = 0.0f;                     
+    bool _isVisible = true;                
+    bool _isInvulnerableFromDamage = false;
+
     float _distanceTraveled = 0.0f;
     float _turretAngle = 0.0f;  
 
@@ -65,6 +70,7 @@ public:
 
     void AddScore(int amount) { _score += amount; }
     void TakeDamage(int damage);
+    void TakeDamageFromEnemy(int damage);
 
 private:
     void UpdateSprite();

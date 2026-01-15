@@ -732,12 +732,14 @@ void GameplayBase::HandleEnemyUpdates(float dt)
         }
     }
 }
+
 void GameplayBase::HandleCollisions()
 {
     for (Enemy* enemy : _enemies)
     {
         if (enemy->IsPendingDestroy())
             continue;
+
         for (Bullet* bullet : _bullets)
         {
             if (bullet->IsPendingDestroy() || !bullet->IsPlayerBullet())
@@ -845,7 +847,29 @@ void GameplayBase::HandleCollisions()
             }
         }
     }
+
+    if (_player != nullptr && !_player->IsInvulnerable())
+    {
+        for (Enemy* enemy : _enemies)
+        {
+            if (enemy->IsPendingDestroy())
+                continue;
+
+            if (_player->GetRigidBody()->CheckCollision(enemy->GetRigidBody()))
+            {
+                _player->TakeDamageFromEnemy(10);
+
+                if (_player->GetShield() <= 0)
+                {
+                    std::cout << "Player died from enemy collision!" << std::endl;
+                    ChangeState(GAMEPLAY_STATE_DEATH);
+                    return;
+                }
+            }
+        }
+    }
 }
+
 void GameplayBase::HandlePlayerDeath()
 {
     std::cout << "GAME OVER - PLAYER DIED!" << std::endl;
