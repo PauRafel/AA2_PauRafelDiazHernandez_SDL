@@ -160,8 +160,12 @@ void GameplayBase::Update(float dt)
     if (_background != nullptr && _currentState != GAMEPLAY_STATE_PAUSED)
         _background->Update(dt);
 
-    if (_backgroundDecorations != nullptr && _currentState != GAMEPLAY_STATE_PAUSED)
+    if (_backgroundDecorations != nullptr &&
+        _currentState != GAMEPLAY_STATE_PAUSED &&
+        !_isBossFight)
+    {
         _backgroundDecorations->Update(dt);
+    }
 
     switch (_currentState)
     {
@@ -419,6 +423,13 @@ void GameplayBase::CheckBossConditions(float dt)
     {
         _bossWaveStarted = true;
         std::cout << "=== BOSS WAVE STARTED - Keep scrolling... ===" << std::endl;
+
+        if (_backgroundDecorations != nullptr)
+        {
+            _backgroundDecorations->Clear();
+            _backgroundDecorations->StopScrolling();
+            std::cout << "Background decorations CLEARED and STOPPED!" << std::endl;
+        }
     }
 
     if (_bossWaveStarted && _boss == nullptr && !_enemies.empty())
@@ -444,11 +455,6 @@ void GameplayBase::CheckBossConditions(float dt)
             if (_background != nullptr)
             {
                 _background->StopScrolling();
-
-                if (_backgroundDecorations != nullptr) {
-                    _backgroundDecorations->StopScrolling();
-                }
-
                 std::cout << "=== BOSS FULLY VISIBLE ===" << std::endl;
                 std::cout << "Background scroll STOPPED!" << std::endl;
                 std::cout << "=== BOSS FIGHT START ===" << std::endl;

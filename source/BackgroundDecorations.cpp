@@ -98,20 +98,23 @@ void BackgroundDecorations::LoadDecorationsForLevel(int level)
 
 void BackgroundDecorations::Update(float dt)
 {
-    if (!_isScrolling)
-        return;
-
-    _spawnTimer += dt;
-
-    if (_spawnTimer >= _spawnInterval)
+    if (_isScrolling)
     {
-        SpawnRandomDecoration();
-        _spawnTimer = 0.0f;
+        _spawnTimer += dt;
+
+        if (_spawnTimer >= _spawnInterval)
+        {
+            SpawnRandomDecoration();
+            _spawnTimer = 0.0f;
+        }
     }
 
     for (int i = _decorations.size() - 1; i >= 0; i--)
     {
-        _decorations[i]->Update(dt);
+        if (_isScrolling)
+        {
+            _decorations[i]->Update(dt);
+        }
 
         if (_decorations[i]->IsOffScreen())
         {
