@@ -29,6 +29,12 @@ protected:
     int _extraLives;
     int _lastWaveIndex; 
 
+    TextObject* _livesLabel;       
+    TextObject* _livesValue;       
+    TextObject* _bestScoreLabel;   
+    TextObject* _bestScoreValue;   
+    bool _isNewHighScore;         
+
     Player* _player;
     Background* _background;
     BackgroundDecorations* _backgroundDecorations;

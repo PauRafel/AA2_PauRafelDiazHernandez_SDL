@@ -28,6 +28,12 @@ GameplayBase::GameplayBase()
     _powerUpInfoText = nullptr;
     _waveInfoText = nullptr;
 
+    _livesLabel = nullptr;
+    _livesValue = nullptr;
+    _bestScoreLabel = nullptr;
+    _bestScoreValue = nullptr;
+    _isNewHighScore = false;
+
     _pauseText = nullptr;
     _pauseInstructions = nullptr;
     _pauseBackButton = nullptr;
@@ -118,6 +124,7 @@ void GameplayBase::OnEnter()
 
     _extraLives = 3;
     _lastWaveIndex = 0;
+    _isNewHighScore = false;
 
     srand((unsigned int)time(NULL));
 }
@@ -399,6 +406,15 @@ void GameplayBase::Render()
     SDL_SetRenderDrawColor(RM.GetRenderer(), 0, 0, 0, 255);
     SDL_RenderFillRect(RM.GetRenderer(), &hudBackground);
 
+    SDL_FRect upperHudBackground;
+    upperHudBackground.x = 0.f;
+    upperHudBackground.y = RM.WINDOW_HEIGHT - 100.f; 
+    upperHudBackground.w = (float)RM.WINDOW_WIDTH / 4.0f; 
+    upperHudBackground.h = 50.f;
+
+    SDL_SetRenderDrawColor(RM.GetRenderer(), 0, 0, 0, 255);
+    SDL_RenderFillRect(RM.GetRenderer(), &upperHudBackground);
+
     Scene::Render();
 
     if (_currentState == GAMEPLAY_STATE_DEATH)
@@ -475,8 +491,33 @@ bool GameplayBase::IsBossFullyVisible()
 void GameplayBase::CreateHUD()
 {
     float hudY = RM.WINDOW_HEIGHT - 15.f;
+    float upperHudY = RM.WINDOW_HEIGHT - 65.f; 
     SDL_Color cyanColor = { 0, 255, 255, 255 };
     float textScale = 0.6f;
+
+    _bestScoreLabel = new TextObject("BS:", "resources/fonts/arial.ttf");
+    _bestScoreLabel->GetTransform()->position = Vector2(40.f, upperHudY);
+    _bestScoreLabel->GetTransform()->scale = Vector2(textScale, textScale);
+    _bestScoreLabel->SetColor({ 255, 215, 0, 255 }); 
+    _ui.push_back(_bestScoreLabel);
+
+    _bestScoreValue = new TextObject("000000", "resources/fonts/arial.ttf");
+    _bestScoreValue->GetTransform()->position = Vector2(100.f, upperHudY);
+    _bestScoreValue->GetTransform()->scale = Vector2(textScale, textScale);
+    _bestScoreValue->SetColor({ 255, 215, 0, 255 }); 
+    _ui.push_back(_bestScoreValue);
+
+    _livesLabel = new TextObject("LV:","resources/fonts/arial.ttf");
+    _livesLabel->GetTransform()->position = Vector2(270.f, upperHudY);
+    _livesLabel->GetTransform()->scale = Vector2(textScale, textScale);
+    _livesLabel->SetColor({ 255, 100, 100, 255 }); 
+    _ui.push_back(_livesLabel);
+
+    _livesValue = new TextObject("3", "resources/fonts/arial.ttf");
+    _livesValue->GetTransform()->position = Vector2(330.f, upperHudY);
+    _livesValue->GetTransform()->scale = Vector2(textScale, textScale);
+    _livesValue->SetColor({ 255, 100, 100, 255 }); 
+    _ui.push_back(_livesValue);
 
     _scoreLabel = new TextObject("SC:", "resources/fonts/arial.ttf");
     _scoreLabel->GetTransform()->position = Vector2(40.f, hudY);
@@ -544,9 +585,32 @@ void GameplayBase::UpdateHUD()
     if (_player == nullptr)
         return;
 
+    int currentScore = _player->GetScore();
+    int bestScore = 0;
+
+    std::vector<RankingEntry> rankings = RANKING.GetTopScores();
+    if (!rankings.empty())
+    {
+        bestScore = rankings[0].score;
+    }
+
     std::ostringstream scoreStream;
-    scoreStream << std::setfill('0') << std::setw(6) << _player->GetScore();
+    scoreStream << std::setfill('0') << std::setw(6) << currentScore;
     _scoreValue->SetText(scoreStream.str());
+
+    if (currentScore > bestScore && !_isNewHighScore)
+    {
+        _isNewHighScore = true;
+        _scoreLabel->SetColor({ 255, 215, 0, 255 }); 
+        _scoreValue->SetColor({ 255, 215, 0, 255 }); 
+        std::cout << "=== NEW HIGH SCORE! ===" << std::endl;
+    }
+
+    std::ostringstream bestStream;
+    bestStream << std::setfill('0') << std::setw(6) << bestScore;
+    _bestScoreValue->SetText(bestStream.str());
+
+    _livesValue->SetText(std::to_string(_extraLives));
 
     int shield = _player->GetShield();
     int maxShield = 100;
