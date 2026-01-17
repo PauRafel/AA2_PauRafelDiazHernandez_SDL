@@ -3,11 +3,15 @@
 #include "ImageObject.h"
 #include "SceneManager.h"
 #include "RenderManager.h"
+#include <string>
 
-class Level2Intro : public Scene
+class LevelIntroScene : public Scene
 {
 private:
     ImageObject* _splashImage;
+    std::string _splashTexturePath;
+    std::string _nextSceneName;
+
     float _timer;
     float _duration;
     float _alpha;
@@ -16,19 +20,25 @@ private:
     bool _isFadingOut;
 
 public:
-    Level2Intro() = default;
+    LevelIntroScene() = default;
+
+    void Configure(std::string splashTexturePath, std::string nextSceneName, float duration = 3.0f)
+    {
+        _splashTexturePath = splashTexturePath;
+        _nextSceneName = nextSceneName;
+        _duration = duration;
+    }
 
     void OnEnter() override
     {
         _timer = 0.0f;
-        _duration = 3.0f;
         _alpha = 0.0f;
         _fadeSpeed = 2.0f;
         _isFadingIn = true;
         _isFadingOut = false;
 
         _splashImage = new ImageObject(
-            "resources/intro/splash_level2.png",
+            _splashTexturePath,
             Vector2(0.0f, 0.0f),
             Vector2((float)RM.WINDOW_WIDTH, (float)RM.WINDOW_HEIGHT)
         );
@@ -71,7 +81,7 @@ public:
             if (_alpha <= 0.0f)
             {
                 _alpha = 0.0f;
-                SM.SetNextScene("GameplayLevel2");
+                SM.SetNextScene(_nextSceneName);
             }
         }
         else if (_timer >= _duration)

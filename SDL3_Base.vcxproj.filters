@@ -69,6 +69,18 @@
     <ClCompile Include="source\WaveManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\GameplayBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NameInputScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\XMLWaveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BackgroundDecorations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Vector2.h">
@@ -113,7 +125,7 @@
     <ClInclude Include="source\MainMenu.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Gameplay.h">
+    <ClInclude Include="source\GameplayBase.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
@@ -206,9 +218,6 @@
     <ClInclude Include="source\UfoEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Level2Intro.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\GameplayLevel2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -237,6 +246,21 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="source\RankingScene.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameplayLevel1.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LevelIntroScene.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameplayState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\XMLWaveLoader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BackgroundDecorations.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,14 +13,18 @@ Player::Player(std::string texturePath, Vector2 sourceOffset, Vector2 sourceSize
     _transform->scale = Vector2(1.f, 1.f);
 
     _physics->AddCollider(new AABB(_transform->position, _transform->size));
-    _physics->SetLinearDrag(1.5f);
+    _physics->SetLinearDrag(0.5f);
 
-    _hasCannonUpgrade = false;  
+    _hasCannonUpgrade = false;
     _hasLaserUpgrade = false;
 
     _shieldTexture = nullptr;
     _shieldAnimationTimer = 0.0f;
     _shieldPulseSpeed = 3.0f;
+
+    _blinkTimer = 0.0f;
+    _isVisible = true;
+    _isInvulnerableFromDamage = false;
 }
 
 void Player::Update(float dt)
@@ -77,7 +81,7 @@ void Player::Update(float dt)
         }
     }
 
-    if (_isInvulnerable)
+    if (_isInvulnerable && !_isInvulnerableFromDamage)
     {
         _invulnerabilityTimer += dt;
         _shieldAnimationTimer += dt;
@@ -87,7 +91,29 @@ void Player::Update(float dt)
             _isInvulnerable = false;
             _invulnerabilityTimer = 0.0f;
             _shieldAnimationTimer = 0.0f;
-            std::cout << "Invulnerability ended!" << std::endl;
+            std::cout << "Shield PowerUp invulnerability ended!" << std::endl;
+        }
+    }
+
+    if (_isInvulnerableFromDamage)
+    {
+        _invulnerabilityTimer += dt;
+        _blinkTimer += dt;
+
+        if (_blinkTimer >= 0.1f)
+        {
+            _isVisible = !_isVisible;
+            _blinkTimer = 0.0f;
+        }
+
+        if (_invulnerabilityTimer >= _invulnerabilityFromDamageDuration)
+        {
+            _isInvulnerable = false;
+            _isInvulnerableFromDamage = false;
+            _invulnerabilityTimer = 0.0f;
+            _blinkTimer = 0.0f;
+            _isVisible = true;
+            std::cout << "Invulnerability from enemy damage ended!" << std::endl;
         }
     }
 
@@ -96,33 +122,45 @@ void Player::Update(float dt)
 
 void Player::Render()
 {
+    if (_isInvulnerableFromDamage && !_isVisible)
+    {
+        if (_isInvulnerable && _shieldTexture != nullptr && !_isInvulnerableFromDamage)
+        {
+            float pulseScale = 1.0f + 0.2f * std::abs(std::sin(_shieldAnimationTimer * _shieldPulseSpeed));
+            Uint8 alpha = (Uint8)(150 + 105 * std::abs(std::sin(_shieldAnimationTimer * _shieldPulseSpeed * 2.0f)));
+
+            SDL_FRect shieldRect;
+            float shieldSize = 80.0f * pulseScale;
+            shieldRect.x = _transform->position.x - (shieldSize / 2.0f);
+            shieldRect.y = _transform->position.y - (shieldSize / 2.0f);
+            shieldRect.w = shieldSize;
+            shieldRect.h = shieldSize;
+
+            SDL_FRect shieldSource = { 0.0f, 0.0f, 64.0f, 64.0f };
+            SDL_SetTextureAlphaModFloat(_shieldTexture, alpha / 255.0f);
+            SDL_RenderTexture(RM.GetRenderer(), _shieldTexture, &shieldSource, &shieldRect);
+            SDL_SetTextureAlphaModFloat(_shieldTexture, 1.0f);
+        }
+        return; 
+    }
+
     Object::Render();
 
-    if (_isInvulnerable && _shieldTexture != nullptr)
+    if (_isInvulnerable && _shieldTexture != nullptr && !_isInvulnerableFromDamage)
     {
         float pulseScale = 1.0f + 0.2f * std::abs(std::sin(_shieldAnimationTimer * _shieldPulseSpeed));
-
         Uint8 alpha = (Uint8)(150 + 105 * std::abs(std::sin(_shieldAnimationTimer * _shieldPulseSpeed * 2.0f)));
 
         SDL_FRect shieldRect;
         float shieldSize = 80.0f * pulseScale;
-
         shieldRect.x = _transform->position.x - (shieldSize / 2.0f);
         shieldRect.y = _transform->position.y - (shieldSize / 2.0f);
         shieldRect.w = shieldSize;
         shieldRect.h = shieldSize;
 
         SDL_FRect shieldSource = { 0.0f, 0.0f, 64.0f, 64.0f };
-
         SDL_SetTextureAlphaModFloat(_shieldTexture, alpha / 255.0f);
-
-        SDL_RenderTexture(
-            RM.GetRenderer(),
-            _shieldTexture,
-            &shieldSource,
-            &shieldRect
-        );
-
+        SDL_RenderTexture(RM.GetRenderer(), _shieldTexture, &shieldSource, &shieldRect);
         SDL_SetTextureAlphaModFloat(_shieldTexture, 1.0f);
     }
 }
@@ -279,4 +317,27 @@ void Player::UpdateSprite()
     );
 
     std::cout << "Player sprite updated to: " << newTexture << std::endl;
+}
+
+void Player::TakeDamageFromEnemy(int damage)
+{
+    if (_isInvulnerable || _isInvulnerableFromDamage)
+    {
+        std::cout << "Damage blocked! (Invulnerable)" << std::endl;
+        return;
+    }
+
+    _shield -= damage;
+    if (_shield < 0)
+        _shield = 0;
+
+    std::cout << "Player hit by enemy! -" << damage << " HP (Current: " << _shield << ")" << std::endl;
+
+    _isInvulnerable = true;
+    _isInvulnerableFromDamage = true;
+    _invulnerabilityTimer = 0.0f;
+    _blinkTimer = 0.0f;
+    _isVisible = true;
+
+    std::cout << "Invulnerability activated for " << _invulnerabilityFromDamageDuration << " seconds!" << std::endl;
 }

@@ -3,8 +3,9 @@
 #include "MainMenu.h"
 #include "LevelSelector.h"
 #include "RankingScene.h"
-#include "Gameplay.h"
-#include "Level2Intro.h"   
+#include "GameplayBase.h"
+#include "LevelIntroScene.h"  
+#include "GameplayLevel1.h"  
 #include "GameplayLevel2.h"  
 #include "GameOverScreen.h" 
 #include "NameInputScene.h"
@@ -79,14 +80,33 @@ void Game::Init()
     RM.LoadTexture("resources/AngrygonsEnemy.png");           
     RM.LoadTexture("resources/SpaceBossEnemy.png");          
     RM.LoadTexture("resources/SpaceBoss_Bullet.png");
+
+    RM.LoadTexture("resources/background_decos/deco_1_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_2_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_3_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_4_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_5_lvl1.png");
+    RM.LoadTexture("resources/background_decos/deco_1_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_2_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_3_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_4_lvl2.png");
+    RM.LoadTexture("resources/background_decos/deco_5_lvl2.png");
     
 
     assert(SM.AddScene("SplashScreen", new SplashScreen()));
     assert(SM.AddScene("MainMenu", new MainMenu()));
     assert(SM.AddScene("LevelSelector", new LevelSelector()));
     assert(SM.AddScene("Ranking", new RankingScene()));
-    assert(SM.AddScene("Gameplay", new Gameplay()));
-    assert(SM.AddScene("Level2Intro", new Level2Intro()));    
+
+    LevelIntroScene* level1Intro = new LevelIntroScene();
+    level1Intro->Configure("resources/intro/splash_level1.png", "GameplayLevel1");
+    assert(SM.AddScene("Level1Intro", level1Intro));
+
+    LevelIntroScene* level2Intro = new LevelIntroScene();
+    level2Intro->Configure("resources/intro/splash_level2.png", "GameplayLevel2");
+    assert(SM.AddScene("Level2Intro", level2Intro));
+
+    assert(SM.AddScene("GameplayLevel1", new GameplayLevel1()));
     assert(SM.AddScene("GameplayLevel2", new GameplayLevel2()));  
     assert(SM.AddScene("GameOver", new GameOverScreen()));
     assert(SM.AddScene("NameInput", new NameInputScene()));

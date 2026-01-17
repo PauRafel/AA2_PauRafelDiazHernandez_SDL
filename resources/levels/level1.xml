@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level>
+    <!-- Wave 1: Bubbles -->
+    <wave>
+        <enemy id="0" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="618"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 2: Killer Whales -->
+    <wave>
+        <enemy id="2" count="2">
+            <spawn_delay>2.0</spawn_delay>
+            <positions>
+                <position x="1260" y="50" on_ceiling="true"/>
+                <position x="1260" y="718" on_ceiling="false"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 3: Horizontal Medusas -->
+    <wave>
+        <enemy id="1" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="200"/>
+                <position x="1310" y="380"/>
+                <position x="1310" y="560"/>
+                <position x="1310" y="320"/>
+                <position x="1310" y="200"/>
+                <position x="1310" y="300"/>
+                <position x="1310" y="260"/>
+                <position x="1310" y="520"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 4: Circler -->
+    <wave>
+        <enemy id="3" count="1">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="680" y="-100"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 5: Vertical Medusas -->
+    <wave>
+        <enemy id="4" count="8">
+            <spawn_delay>0.5</spawn_delay>
+            <positions>
+                <position x="200" y="688"/>
+                <position x="400" y="688"/>
+                <position x="600" y="688"/>
+                <position x="800" y="688"/>
+                <position x="1000" y="688"/>
+                <position x="300" y="688"/>
+                <position x="700" y="688"/>
+                <position x="900" y="688"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 6: Beholders -->
+    <wave>
+        <enemy id="5" count="8">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="100" y="100"/>
+                <position x="180" y="100"/>
+                <position x="1180" y="100"/>
+                <position x="1260" y="100"/>
+                <position x="100" y="668"/>
+                <position x="180" y="668"/>
+                <position x="1180" y="668"/>
+                <position x="1260" y="668"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 7: Killer Whales again -->
+    <wave>
+        <enemy id="2" count="2">
+            <spawn_delay>2.0</spawn_delay>
+            <positions>
+                <position x="1260" y="50" on_ceiling="true"/>
+                <position x="1260" y="718" on_ceiling="false"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 8: Chompers -->
+    <wave>
+        <enemy id="6" count="8">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="1410" y="250" start_angle="0.0"/>
+                <position x="1410" y="280" start_angle="0.785"/>
+                <position x="1410" y="310" start_angle="1.57"/>
+                <position x="1410" y="340" start_angle="2.355"/>
+                <position x="1410" y="370" start_angle="3.14"/>
+                <position x="1410" y="400" start_angle="3.925"/>
+                <position x="1410" y="430" start_angle="4.71"/>
+                <position x="1410" y="460" start_angle="5.495"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 9: Amoeba -->
+    <wave>
+        <enemy id="7" count="1">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="-100" y="384"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 10: Bubbles again -->
+    <wave>
+        <enemy id="0" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="150"/>
+                <position x="1310" y="618"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 11: Killer Whales again -->
+    <wave>
+        <enemy id="2" count="2">
+            <spawn_delay>2.0</spawn_delay>
+            <positions>
+                <position x="1260" y="50" on_ceiling="true"/>
+                <position x="1260" y="718" on_ceiling="false"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 12: Horizontal Medusas again -->
+    <wave>
+        <enemy id="1" count="8">
+            <spawn_delay>0.3</spawn_delay>
+            <positions>
+                <position x="1310" y="200"/>
+                <position x="1310" y="380"/>
+                <position x="1310" y="560"/>
+                <position x="1310" y="320"/>
+                <position x="1310" y="200"/>
+                <position x="1310" y="300"/>
+                <position x="1310" y="260"/>
+                <position x="1310" y="520"/>
+            </positions>
+        </enemy>
+    </wave>
+    
+    <!-- Wave 13: BOSS -->
+    <wave is_boss="true">
+        <enemy id="8" count="1">
+            <spawn_delay>0.0</spawn_delay>
+            <positions>
+                <position x="1560" y="384"/>
+            </positions>
+        </enemy>
+    </wave>
+</level>

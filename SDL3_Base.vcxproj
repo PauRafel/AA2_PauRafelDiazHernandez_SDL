@@ -20,13 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Background.cpp" />
+    <ClCompile Include="source\BackgroundDecorations.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\EnemyStateMachine.cpp" />
     <ClCompile Include="source\Game.cpp" />
+    <ClCompile Include="source\GameplayBase.cpp" />
     <ClCompile Include="source\ImageRenderer.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\NameInputScene.cpp" />
     <ClCompile Include="source\Object.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PowerUp.cpp" />
@@ -37,6 +40,7 @@
     <ClCompile Include="source\TextRenderer.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
     <ClCompile Include="source\WaveManager.cpp" />
+    <ClCompile Include="source\XMLWaveLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AtomicWraper.h" />
@@ -47,6 +51,7 @@
     <ClInclude Include="source\AtomicWrapper.h" />
     <ClInclude Include="source\AudioManager.h" />
     <ClInclude Include="source\Background.h" />
+    <ClInclude Include="source\BackgroundDecorations.h" />
     <ClInclude Include="source\BeholderEnemy.h" />
     <ClInclude Include="source\BioTitanBoss.h" />
     <ClInclude Include="source\BubbleEnemy.h" />
@@ -59,14 +64,16 @@
     <ClInclude Include="source\EnemyStateMachine.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\GameOverScreen.h" />
-    <ClInclude Include="source\Gameplay.h" />
+    <ClInclude Include="source\GameplayBase.h" />
+    <ClInclude Include="source\GameplayLevel1.h" />
     <ClInclude Include="source\GameplayLevel2.h" />
+    <ClInclude Include="source\GameplayState.h" />
     <ClInclude Include="source\HorizontalMedusaEnemy.h" />
     <ClInclude Include="source\ImageObject.h" />
     <ClInclude Include="source\ImageRenderer.h" />
     <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\KillerWhaleEnemy.h" />
-    <ClInclude Include="source\Level2Intro.h" />
+    <ClInclude Include="source\LevelIntroScene.h" />
     <ClInclude Include="source\MainMenu.h" />
     <ClInclude Include="source\MissileEnemy.h" />
     <ClInclude Include="source\NameInputScene.h" />
@@ -95,6 +102,7 @@
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\VerticalMedusaEnemy.h" />
     <ClInclude Include="source\WaveManager.h" />
+    <ClInclude Include="source\XMLWaveLoader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -170,7 +178,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\rapidXML;$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -194,7 +202,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\rapidXML;$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -218,7 +226,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\rapidXML;$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -242,7 +250,7 @@ xcopy /d /y "$(SolutionDir)\resources\*.*" "$(TargetDir)\resources\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\rapidXML;$(SolutionDir)\dependencies\SDL_3.2.22\include;$(SolutionDir)\dependencies\SDL_image_3.2.4\include;$(SolutionDir)\dependencies\SDL_mixer_2.8.1_compatible\include;$(SolutionDir)\dependencies\SDL_ttf-3.2.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
